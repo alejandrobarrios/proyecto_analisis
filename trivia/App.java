@@ -69,6 +69,7 @@ public class App
         Option option = new Option();
         option.set("category", bodyParams.get("category"));
         option.set("description", bodyParams.get("description"));
+        
         option.saveIt();
 
         res.type("application/json");
@@ -86,7 +87,7 @@ public class App
         return lista;
       });
 
-      get("/questions", (req, res) -> {//get all questions load
+      get("/questions/:category", (req, res) -> {//get all questions load of a given category
         LazyList<Question> question = Question.findAll();
         List<String> lista = new ArrayList<String>();
         for(Question q: question ){
@@ -96,11 +97,17 @@ public class App
         return lista;
       });    
 
+      get("/questions/:id", (req, res) -> {//return a question
+        LazyList<Option> option = Question.where("id = ?",req.params(":id"));
+        Option choice = option.findFirst();
+        return "Su categoria es: " + choice.get("category") + ", su descripcion es: " + choice.get("description");
+      }); 
+
       get("/options/:id", (req, res) -> {//get all options of a given question_id
         LazyList<Option> option = Option.where("question_id = ?",req.params(":id"));
         List<String> lista = new ArrayList<String>();
-        for(Option u: option ){
-          String opcion = "Su categoria es: " + u.get("category") + ", su descripcion es: " + u.get("description");
+        for(Option o: option ){
+          String opcion = "Su categoria es: " + o.get("category") + ", su descripcion es: " + o.get("description");
           lista.add(opcion);
         }
         return lista;
@@ -108,21 +115,9 @@ public class App
 
       get("/users/:id", (req, res) -> {//verfication that a user is load
         LazyList<User> user = User.where("id = ?", req.params(":id"));
-        return user.get(0);
+        User usuario = user.findFirst();
+        return "Su dni es: " + usuario.get("dni") + ", el nombre es: " + usuario.get("name") + " y su apellido es: " + usuario.get("lastname");
       });
-      
-      get("/questions/:id", (req, res) -> {//verification if a question is load
-        Question question = Question.findFirst("id = ?",req.params(":id"));
-        return "La pregunta pertenece a " + question.get("category") + " y es la siguiente: " + question.get("description");
-      });
-      
-      get("/questions/:id", (req, res) -> {//verification of a option i load
-        Option option = Option.findFirst("question_id = ?",req.params(":id"));
-        return option.get("description");
-      });
-      
-
-
 
 
     }
