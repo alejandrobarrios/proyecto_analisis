@@ -69,7 +69,7 @@ public class App
         Option option = new Option();
         option.set("category", bodyParams.get("category"));
         option.set("description", bodyParams.get("description"));
-        
+        option.set("question_id", bodyParams.get("question_id"));
         option.saveIt();
 
         res.type("application/json");
@@ -81,7 +81,7 @@ public class App
         LazyList<User> user = User.findAll();
         List<String> lista = new ArrayList<String>();
         for(User u: user ){
-          String usuario = "Su username es: " + u.get("username") + ", su dni es: " + u.get("dni");
+          String usuario = "Su username es: " + u.get("username") + ", su dni es: " + u.get("password");
           lista.add(usuario);
         }
         return lista;
@@ -99,7 +99,7 @@ public class App
 
       get("/questions/:id", (req, res) -> {//return a question
         LazyList<Option> option = Question.where("id = ?",req.params(":id"));
-        Option choice = option.findFirst();
+        Option choice = option.get(0);
         return "Su categoria es: " + choice.get("category") + ", su descripcion es: " + choice.get("description");
       }); 
 
@@ -115,8 +115,44 @@ public class App
 
       get("/users/:id", (req, res) -> {//verfication that a user is load
         LazyList<User> user = User.where("id = ?", req.params(":id"));
-        User usuario = user.findFirst();
+        User usuario = user.get(0);
         return "Su dni es: " + usuario.get("dni") + ", el nombre es: " + usuario.get("name") + " y su apellido es: " + usuario.get("lastname");
+      });
+
+      get("/users/delete/:username", (req, res) -> {//delete an user
+        User user = User.findFirst("username = ?", req.params(":username"));
+        user.delete();
+        return "borrado";
+      });
+
+      get("/questions/delete/:id", (req, res) -> {//delete an question
+        Question question = Question.findFirst("id = ?", req.params(":id"));
+        question.delete();
+        return "borrado";
+      });
+
+      post("/users/modify", (req,res) -> {//modify a password of a user with his username
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+        User user = User.findFirst("username = ?", bodyParams.get("username"));
+        user.set("password", bodyParams.get("password"));
+        user.saveIt();
+
+        res.type("application/json");
+
+        return user.toJson(true);
+      });
+
+      post("/questions/modify", (req,res) -> {//modify a password of a user with his username
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+        Question question = Question.findFirst("id = ?", bodyParams.get("id"));
+        question.set("description", bodyParams.get("description"));
+        question.saveIt();
+
+        res.type("application/json");
+
+        return question.toJson(true);
       });
 
 
