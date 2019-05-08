@@ -143,7 +143,7 @@ public class App
         return user.toJson(true);
       });
 
-      post("/questions/modify", (req,res) -> {//modify a password of a user with his username
+      post("/questions/modify", (req,res) -> {//modify the description of a question with his id
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Question question = Question.findFirst("id = ?", bodyParams.get("id"));
