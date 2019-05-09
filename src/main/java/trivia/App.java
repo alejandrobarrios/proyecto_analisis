@@ -67,8 +67,8 @@ public class App
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Option option = new Option();
+        option.set("category", bodyParams.get("category"));
         option.set("description", bodyParams.get("description"));
-        option.set("correct", bodyParams.get("correct"));
         option.set("question_id", bodyParams.get("question_id"));
         option.saveIt();
 
@@ -107,7 +107,7 @@ public class App
         LazyList<Option> option = Option.where("question_id = ?",req.params(":id"));
         List<String> lista = new ArrayList<String>();
         for(Option o: option ){
-          String opcion =  "su descripcion es: " + o.get("description");
+          String opcion = "Su categoria es: " + o.get("category") + ", su descripcion es: " + o.get("description");
           lista.add(opcion);
         }
         return lista;
@@ -143,7 +143,7 @@ public class App
         return user.toJson(true);
       });
 
-      post("/questions/modify", (req,res) -> {//modify a password of a user with his username
+      post("/questions/modify", (req,res) -> {//modify the description of a question with his id
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Question question = Question.findFirst("id = ?", bodyParams.get("id"));
