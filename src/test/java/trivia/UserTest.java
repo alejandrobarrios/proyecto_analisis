@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class UserTest {
   @Before
   public void before(){
-      Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:4567/trivia_test", "root", "root");
+      Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/trivia_test", "root", "root");
       System.out.println("UserTest setup");
       Base.openTransaction();
   }
@@ -26,7 +26,13 @@ public class UserTest {
 
   @Test
   public void validatePresenceOfUsername() {
-    User u = new User();
-    assertEquals("username can't be blank", u.isValid(), false);
+	  User user = new User();
+      user.set("username", "maxi");
+      user.set("password", "maxi123");
+      user.set("name", "maximiliano");
+      user.set("lastname","gaspero");
+      user.set("dni", "32456789");
+      
+    assertEquals("username can't be blank", user.isValid(), false);
   }
 }
