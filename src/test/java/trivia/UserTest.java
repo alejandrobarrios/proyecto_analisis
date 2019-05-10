@@ -26,13 +26,14 @@ public class UserTest {
 
   @Test
   public void validatePresenceOfUsername() {
-	  User user = new User();
+      User user = new User();
       user.set("username", "maxi");
       user.set("password", "maxi123");
       user.set("name", "maximiliano");
       user.set("lastname","gaspero");
       user.set("dni", "32456789");
+      user.set("admin", false);
       
-    assertEquals("username can't be blank", user.isValid(), false);
+    assertEquals("username can't be blank", user.isValid(), true);
   }
 }
