@@ -25,7 +25,7 @@ public class OptionTest {
   }
 
   @Test
-  public void validatePresenceOfUsername() {
+  public void validatePresenceOfOption() {
 	  Option option = new Option();
       option.set("description", "Cuatro");
       option.set("correct", true);
