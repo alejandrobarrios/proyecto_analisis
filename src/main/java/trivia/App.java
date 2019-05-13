@@ -34,7 +34,7 @@ public class App
         return "hola" + req.params(":name");
       });
 
-      post("/users", (req, res) -> {
+      get("/game", (req, res) -> {
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = new User();
@@ -119,19 +119,19 @@ public class App
         return "Su dni es: " + usuario.get("dni") + ", el nombre es: " + usuario.get("name") + " y su apellido es: " + usuario.get("lastname");
       });
 
-      get("/users/delete/:username", (req, res) -> {//delete an user
+      delete("/users/:username", (req, res) -> {//delete an user 
         User user = User.findFirst("username = ?", req.params(":username"));
         user.delete();
         return "borrado";
       });
 
-      get("/questions/delete/:id", (req, res) -> {//delete an question
+      delete("/questions/:id", (req, res) -> {//delete an question
         Question question = Question.findFirst("id = ?", req.params(":id"));
         question.delete();
         return "borrado";
       });
 
-      post("/users/modify", (req,res) -> {//modify a password of a user with his username
+      put("/users/:username", (req,res) -> {//modify a password of a user with his username
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = User.findFirst("username = ?", bodyParams.get("username"));
@@ -143,7 +143,7 @@ public class App
         return user.toJson(true);
       });
 
-      post("/questions/modify", (req,res) -> {//modify the description of a question with his id
+      put("/questions/:id", (req,res) -> {//modify the description of a question with his id
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Question question = Question.findFirst("id = ?", bodyParams.get("id"));

@@ -62,9 +62,15 @@ public class UserIntegrationTest {
     public void canCreateUser() {
       String username = "Alan";
       String password = "Turing";
+      String name = "Turing";
+      String lastname = "Turing";
+      String dni = "39327496";
       Map<String, String> parameters = new HashMap<>();
       parameters.put("username", username);
       parameters.put("password", password);
+      parameters.put("name", name);
+      parameters.put("lastname", lastname);
+      parameters.put("dni", dni);
 
       UrlResponse response = doRequest("POST", "/users", parameters);
       Map<String, Object> jsonResponse = new Gson().fromJson(response.body, Map.class);
@@ -95,7 +101,7 @@ public class UserIntegrationTest {
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
       // set connection output to true (needs to be true since this request
-      // is carrying an input (response) body.)
+      // is carrying 1an input (response) body.)
       connection.setDoOutput(true);
 
       // set connection verb to user
