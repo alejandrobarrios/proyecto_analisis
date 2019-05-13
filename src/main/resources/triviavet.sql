@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS trivia_dev;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 use trivia_dev;
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users(
@@ -33,3 +34,16 @@ CREATE TABLE IF NOT EXISTS options(
     created_at DATETIME,
 	updated_at DATETIME
 );	
+
+DROP TABLE IF EXISTS games;
+CREATE TABLE IF NOT EXISTS games(
+	point int,
+    amount_right int,
+    amount_wrong int,
+    user_id integer primary key,
+    foreign key(user_id) references user(id) ON DELETE CASCADE,
+    created_at DATETIME,
+	updated_at DATETIME
+    
+);	
+
