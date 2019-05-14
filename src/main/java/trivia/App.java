@@ -2,8 +2,7 @@ package trivia;
 
 import static spark.Spark.after;
 import static spark.Spark.before;
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 import java.util.Map;
 import java.util.*;
@@ -34,7 +33,7 @@ public class App
         return "hola" + req.params(":name");
       });
 
-      get("/game", (req, res) -> {
+      post("/users", (req, res) -> {
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = new User();
@@ -44,6 +43,12 @@ public class App
         user.set("lastname", bodyParams.get("lastname"));
         user.set("dni", bodyParams.get("dni"));
         user.saveIt();
+
+        Game game = new Game();
+        game.set("point", 0);
+        game.set("amount_right", 0);
+        game.set("amount_wrong", 0);
+        game.set("user_id", user.get("id"));
 
         res.type("application/json");
 
@@ -67,9 +72,9 @@ public class App
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Option option = new Option();
-        option.set("category", bodyParams.get("category"));
         option.set("description", bodyParams.get("description"));
         option.set("question_id", bodyParams.get("question_id"));
+        option.set("correct", bodyParams.get("correct"));
         option.saveIt();
 
         res.type("application/json");
@@ -119,19 +124,23 @@ public class App
         return "Su dni es: " + usuario.get("dni") + ", el nombre es: " + usuario.get("name") + " y su apellido es: " + usuario.get("lastname");
       });
 
-      delete("/users/:username", (req, res) -> {//delete an user 
-        User user = User.findFirst("username = ?", req.params(":username"));
+      delete("/users", (req, res) -> {//delete an user 7
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+        User user = User.findFirst("username = ?", bodyParams.get("username"));
         user.delete();
         return "borrado";
       });
 
-      delete("/questions/:id", (req, res) -> {//delete an question
-        Question question = Question.findFirst("id = ?", req.params(":id"));
+      delete("/questions", (req, res) -> {//delete an question
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+        Question question = Question.findFirst("id = ?", bodyParams.get("id"));
         question.delete();
         return "borrado";
       });
 
-      put("/users/:username", (req,res) -> {//modify a password of a user with his username
+      put("/users", (req,res) -> {//modify a password of a user with his username
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = User.findFirst("username = ?", bodyParams.get("username"));
@@ -143,7 +152,7 @@ public class App
         return user.toJson(true);
       });
 
-      put("/questions/:id", (req,res) -> {//modify the description of a question with his id
+      put("/questions", (req,res) -> {//modify the description of a question with his id
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Question question = Question.findFirst("id = ?", bodyParams.get("id"));
@@ -154,6 +163,34 @@ public class App
 
         return question.toJson(true);
       });
+
+      get("/games", (req, res) -> {
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class); 
+        Question pregunta = new Question();
+        User user = User.findFirst("username = ?", bodyParams.get("username"));
+        if(user.get("password") == bodyParams.get("password")){
+          Game partida = Game.findFirst("user_id = ?", user.get("id"));
+          int puntaje = (int) partida.get("point");
+          pregunta = Question.findFirst("category = ?", bodyParams.get("category"));
+          LazyList<Option> opciones = Option.where("question_id = ?", pregunta.get("id"));
+          System.out.println("la pregunta es :" + pregunta.get("description"));
+          int i = 1;
+          Boolean asserto = false;
+          for(Option o: opciones ){
+            String opcion = "la opcion" + i + ": " + o.get("description");
+            i++;
+            System.out.println(opcion);
+          }
+          Option correct = Question.findFirst("question_id = ? and correct = ?",pregunta.get("id"),"true");
+          if(correct.get("description") == bodyParams.get("description")){
+            puntaje = puntaje +1;
+            partida.set("point", puntaje);
+         }
+         System.out.println(partida.get("point"));
+      }
+            
+        return "le assertaste";
+       });
 
 
     }
