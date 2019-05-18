@@ -10,7 +10,7 @@ import java.util.*;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DB;
 import org.javalite.activejdbc.LazyList;
-
+import trivia.BasicAuth;
 import trivia.User;
 import trivia.Question;
 import trivia.Option;
@@ -31,6 +31,7 @@ class OptionParam
 
 public class App
 {
+  static User currentUser;
     public static void main( String[] args )
     { before((request, response) -> {
         Base.open();
