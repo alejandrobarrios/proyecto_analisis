@@ -1,5 +1,5 @@
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+drop database if exists trivia_dev; 
+
 create database if not exists trivia_dev;
 use trivia_dev;
 DROP TABLE IF EXISTS users;
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users(
     name varchar(20),
     lastname varchar(20),
     dni integer,
-    admin bool,
+    admin BOOLEAN,
     created_at DATETIME,
 	updated_at DATETIME
 );
@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS questions(
     id integer auto_increment primary key,
 	category varchar(30),
     description varchar(100),
-    see bool,
     created_at DATETIME,
 	updated_at DATETIME
 );
@@ -29,7 +28,7 @@ DROP TABLE IF EXISTS options;
 CREATE TABLE IF NOT EXISTS options(
     id integer auto_increment primary key,
     description varchar(100),
-    correct bool,
+    correct varchar(10),
     question_id int,
     foreign key(question_id) references questions(id) ON DELETE CASCADE,
     created_at DATETIME,
@@ -38,11 +37,12 @@ CREATE TABLE IF NOT EXISTS options(
 
 DROP TABLE IF EXISTS games;
 CREATE TABLE IF NOT EXISTS games(
+	id int primary key auto_increment,
 	point int,
     amount_right int,
     amount_wrong int,
-    user_id integer primary key,
-    foreign key(user_id) references user(id) ON DELETE CASCADE,
+    user_id integer,
+    foreign key(user_id) references users(id) ON DELETE CASCADE,
     created_at DATETIME,
 	updated_at DATETIME
     
