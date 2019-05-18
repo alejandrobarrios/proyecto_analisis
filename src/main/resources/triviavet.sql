@@ -5,11 +5,11 @@ use trivia_dev;
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users(
     id integer auto_increment primary key,
-    username varchar(20),
+    username varchar(20) unique,
     password varchar(20),
     name varchar(20),
     lastname varchar(20),
-    dni integer,
+    dni integer unique,
     admin BOOLEAN,
     created_at DATETIME,
 	updated_at DATETIME
