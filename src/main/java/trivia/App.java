@@ -17,20 +17,47 @@ import trivia.Option;
 
 import com.google.gson.Gson;
 
+class QuestionParam
+{
+  String description;
+  ArrayList<OptionParam> options;
+}
+
+class OptionParam
+{
+  String description;
+  Boolean correct;
+}
+
 public class App
 {
     public static void main( String[] args )
-    {
-      before((request, response) -> {
+    { before((request, response) -> {
         Base.open();
+
+        String headerToken = (String) request.headers("Authorization");
+
+        if (
+          headerToken == null ||
+          headerToken.isEmpty() ||
+          !BasicAuth.authorize(headerToken)
+        ) {
+          halt(401);
+        }
+
+        currentUser = BasicAuth.getUser(headerToken);
       });
 
       after((request, response) -> {
         Base.close();
+        response.header("Access-Control-Allow-Origin", "*");
+        response.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+        response.header("Access-Control-Allow-Headers",
+          "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,");
       });
 
-      get("/hello/:name", (req, res) -> {
-        return "hola" + req.params(":name");
+      options("/*", (request, response) -> {
+        return "OK";
       });
 
       post("/users", (req, res) -> {
@@ -55,34 +82,23 @@ public class App
         return user.toJson(true);
       });
 
-      post("/questions", (req, res) -> {//create a question.
-        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+       post("/questions", (req, res) -> {
+        QuestionParam bodyParams = new Gson().fromJson(req.body(), QuestionParam.class);
 
         Question question = new Question();
-        question.set("category", bodyParams.get("category"));
-        question.set("description", bodyParams.get("description"));
-        question.saveIt();
+        question.set("description", bodyParams.description);
+        question.save();
 
-        res.type("application/json");
+        for(OptionParam item: bodyParams.options) {
+          Option option = new Option();
+          option.set("description", item.description).set("correct", item.correct);
+          question.add(option);
+        }
 
-        return question.toJson(true);
+        return question;
       });
 
-      post("/options", (req, res) -> {//create an option.
-        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-
-        Option option = new Option();
-        option.set("description", bodyParams.get("description"));
-        option.set("question_id", bodyParams.get("question_id"));
-        option.set("correct", bodyParams.get("correct"));
-        option.saveIt();
-
-        res.type("application/json");
-
-        return option.toJson(true);
-      });
-
-      get("/users", (req, res) -> {//get all users load
+      /*get("/users", (req, res) -> {//get all users load
         LazyList<User> user = User.findAll();
         List<String> lista = new ArrayList<String>();
         for(User u: user ){
@@ -90,9 +106,9 @@ public class App
           lista.add(usuario);
         }
         return lista;
-      });
+      });*/
 
-      get("/questions/:category", (req, res) -> {//get all questions load of a given category
+      get("/questions", (req, res) -> {//get all questions load of a given category
         LazyList<Question> question = Question.findAll();
         List<String> lista = new ArrayList<String>();
         for(Question q: question ){
@@ -102,13 +118,13 @@ public class App
         return lista;
       });    
 
-      get("/questions/:id", (req, res) -> {//return a question
+      get("/questions", (req, res) -> {//return a question
         LazyList<Option> option = Question.where("id = ?",req.params(":id"));
         Option choice = option.get(0);
         return "Su categoria es: " + choice.get("category") + ", su descripcion es: " + choice.get("description");
       }); 
 
-      get("/options/:id", (req, res) -> {//get all options of a given question_id
+      get("/options", (req, res) -> {//get all options of a given question_id
         LazyList<Option> option = Option.where("question_id = ?",req.params(":id"));
         List<String> lista = new ArrayList<String>();
         for(Option o: option ){
@@ -118,10 +134,16 @@ public class App
         return lista;
       });  
 
-      get("/users/:id", (req, res) -> {//verfication that a user is load
-        LazyList<User> user = User.where("id = ?", req.params(":id"));
-        User usuario = user.get(0);
-        return "Su dni es: " + usuario.get("dni") + ", el nombre es: " + usuario.get("name") + " y su apellido es: " + usuario.get("lastname");
+      get("/users", (req, res) -> {//verfication that a user is load
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+        User user = User.findFirst("username = ?", bodyParams.get("username"));
+        if(user != null){
+         return user; 
+        }else{
+          return "Usuario no encontrado.";
+        }
+
       });
 
       delete("/users", (req, res) -> {//delete an user 7
@@ -167,9 +189,10 @@ public class App
       get("/games", (req, res) -> {
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class); 
         Question pregunta = new Question();
+        Game partida = new Game();
         User user = User.findFirst("username = ?", bodyParams.get("username"));
         if(user.get("password") == bodyParams.get("password")){
-          Game partida = Game.findFirst("user_id = ?", user.get("id"));
+          partida = Game.findFirst("user_id = ?", user.get("id"));
           int puntaje = (int) partida.get("point");
           pregunta = Question.findFirst("category = ?", bodyParams.get("category"));
           LazyList<Option> opciones = Option.where("question_id = ?", pregunta.get("id"));
@@ -177,21 +200,37 @@ public class App
           int i = 1;
           Boolean asserto = false;
           for(Option o: opciones ){
-            String opcion = "la opcion" + i + ": " + o.get("description");
+            String opcion = "La opcion" + i + ": " + o.get("description");
             i++;
             System.out.println(opcion);
           }
           Option correct = Question.findFirst("question_id = ? and correct = ?",pregunta.get("id"),"true");
           if(correct.get("description") == bodyParams.get("description")){
-            puntaje = puntaje +1;
+            puntaje = puntaje + 1;
             partida.set("point", puntaje);
+            partida.saveIt();
          }
          System.out.println(partida.get("point"));
       }
             
-        return "le assertaste";
-       });
+        return "le assertaste" +  partida.get("point");
+      });
 
 
+      post("/login", (req, res) -> {
+        res.type("application/json");
+
+        // if there is currentUser is because headers are correct, so we only
+        // return the current user here
+        return currentUser.toJson(true);
+      });
+
+      /*post("/logout", (req, res) -> {
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+
+
+
+      });*/
     }
 }
