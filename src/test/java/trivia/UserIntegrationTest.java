@@ -65,12 +65,15 @@ public class UserIntegrationTest {
         User u = new User();
         u.set("username", ADMIN_USERNAME);
         u.set("password", ADMIN_PASSWORD);
+        u.set("name", "aleja");
+        u.set("lastname", "bar");
+        u.set("dni",456789);
         u.saveIt();
         Base.close();
     }
-
+    @Test
     public void canCreateUser() {
-      String username = "Alan";
+      String username = "Ale";
       String password = "Turing";
       String name = "Turing";
       String lastname = "Turing";

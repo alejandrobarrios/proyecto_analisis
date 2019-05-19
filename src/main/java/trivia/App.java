@@ -70,13 +70,8 @@ public class App
         user.set("name", bodyParams.get("name"));
         user.set("lastname", bodyParams.get("lastname"));
         user.set("dni", bodyParams.get("dni"));
+        user.set("admin", bodyParams.get("admin"));
         user.saveIt();
-
-        Game game = new Game();
-        game.set("point", 0);
-        game.set("amount_right", 0);
-        game.set("amount_wrong", 0);
-        game.set("user_id", user.get("id"));
 
         res.type("application/json");
 
@@ -147,7 +142,7 @@ public class App
 
       });
 
-      delete("/users", (req, res) -> {//delete an user 7
+      delete("/users", (req, res) -> {//delete an user 
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = User.findFirst("username = ?", bodyParams.get("username"));

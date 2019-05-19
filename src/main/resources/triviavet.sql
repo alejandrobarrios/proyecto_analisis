@@ -5,14 +5,15 @@ use trivia_dev;
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users(
     id integer auto_increment primary key,
-    username varchar(20) unique,
+    username varchar(20) ,
     password varchar(20),
     name varchar(20),
     lastname varchar(20),
     dni integer unique,
     admin BOOLEAN,
     created_at DATETIME,
-	updated_at DATETIME
+	updated_at DATETIME,
+    unique(username)
 );
 
 DROP TABLE IF EXISTS questions;
@@ -45,6 +46,4 @@ CREATE TABLE IF NOT EXISTS games(
     foreign key(user_id) references users(id) ON DELETE CASCADE,
     created_at DATETIME,
 	updated_at DATETIME
-    
 );	
-
