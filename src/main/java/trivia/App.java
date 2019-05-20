@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 class QuestionParam
 {
   String description;
+  String category;
+  Boolean see;
   ArrayList<OptionParam> options;
 }
 
@@ -71,11 +73,18 @@ public class App
         user.set("lastname", bodyParams.get("lastname"));
         user.set("dni", bodyParams.get("dni"));
         user.set("admin", bodyParams.get("admin"));
-        user.saveIt();
+        user.save();
 
-        res.type("application/json");
+        Game game = new Game();
+        game.set("point", 0);
+        game.set("amount_right", 0);
+        game.set("amount_wrong",0);
+        user.add(game);
+        
+        res.type("application/json");  
 
         return user.toJson(true);
+
       });
 
        post("/questions", (req, res) -> {
@@ -83,6 +92,8 @@ public class App
 
         Question question = new Question();
         question.set("description", bodyParams.description);
+        question.set("category", bodyParams.category);
+        question.set("see", bodyParams.see);
         question.save();
 
         for(OptionParam item: bodyParams.options) {
@@ -104,7 +115,7 @@ public class App
         return lista;
       });*/
 
-      get("/questions", (req, res) -> {//get all questions load of a given category
+      /*get("/questions", (req, res) -> {//get all questions load of a given category
         LazyList<Question> question = Question.findAll();
         List<String> lista = new ArrayList<String>();
         for(Question q: question ){
@@ -112,22 +123,33 @@ public class App
           lista.add(pregunta);
         }
         return lista;
-      });    
+      }); */    
 
-      get("/questions", (req, res) -> {//return a question
-        LazyList<Option> option = Question.where("id = ?",req.params(":id"));
-        Option choice = option.get(0);
-        return "Su categoria es: " + choice.get("category") + ", su descripcion es: " + choice.get("description");
-      }); 
+      get("/questions", (req, res) -> {//return a question whith his options
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
-      get("/options", (req, res) -> {//get all options of a given question_id
-        LazyList<Option> option = Option.where("question_id = ?",req.params(":id"));
+        Boolean flag = true;
+        LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
+        Question choice = new Question();
+
+        while(flag){
+          Random aux = new Random();
+          int a = aux.nextInt(question.size());       
+           choice = question.get(a);
+          if(!(Boolean)choice.get("see")){
+            flag = false;
+          }
+        }
+        int id = (int)choice.get("id");
+
+        LazyList<Option> option = Option.where("question_id = ?", id);
         List<String> lista = new ArrayList<String>();
         for(Option o: option ){
-          String opcion = "Su categoria es: " + o.get("category") + ", su descripcion es: " + o.get("description");
+          String opcion = "Su descripcion es: " + o.get("description");
           lista.add(opcion);
         }
-        return lista;
+
+        return "la pregunta es : " + choice.get("description") + "y las opciones son :" + lista;
       });  
 
       get("/users", (req, res) -> {//verfication that a user is load
@@ -186,30 +208,54 @@ public class App
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class); 
         Question pregunta = new Question();
         Game partida = new Game();
-        User user = User.findFirst("username = ?", bodyParams.get("username"));
-        if(user.get("password") == bodyParams.get("password")){
+        LazyList<User> users = User.where("username = ?", bodyParams.get("username"));
+        User user = users.get(0);
+        String pass = (String)bodyParams.get("password");
+        if(user.get("password").equals(pass)){
           partida = Game.findFirst("user_id = ?", user.get("id"));
           int puntaje = (int) partida.get("point");
-          pregunta = Question.findFirst("category = ?", bodyParams.get("category"));
-          LazyList<Option> opciones = Option.where("question_id = ?", pregunta.get("id"));
-          System.out.println("la pregunta es :" + pregunta.get("description"));
-          int i = 1;
-          Boolean asserto = false;
-          for(Option o: opciones ){
-            String opcion = "La opcion" + i + ": " + o.get("description");
-            i++;
-            System.out.println(opcion);
+          int correctas = (int) partida.get("amount_right");
+          int incorrectas = (int) partida.get("amount_wrong");
+
+          
+          Boolean flag = true;
+          LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
+          Question choice = new Question();
+
+          while(flag){
+            Random aux = new Random();
+            int a = aux.nextInt(question.size());       
+            choice = question.get(0);
+            if(!(Boolean)choice.get("see")){
+              flag = false;
+            }
           }
-          Option correct = Question.findFirst("question_id = ? and correct = ?",pregunta.get("id"),"true");
-          if(correct.get("description") == bodyParams.get("description")){
+          choice.set("see", true);
+          int id = (int)choice.get("id");
+
+          LazyList<Option> option = Option.where("question_id = ?", id);
+          List<String> lista = new ArrayList<String>();
+          for(Option o: option ){
+            String opcion = "Su descripcion es: " + o.get("description");
+            lista.add(opcion);
+          }
+
+          LazyList<Option> options = Option.where("question_id = ? and correct = ?", id, true);
+          Option correct = options.get(0);
+          if(correct.get("description").equals(bodyParams.get("description"))){
             puntaje = puntaje + 1;
+            correctas = correctas + 1;
             partida.set("point", puntaje);
+            partida.set("amount_right",correctas);
             partida.saveIt();
+            return "Le acertaste. " + "Su puntaje actual es: " +  partida.get("point");
          }
-         System.out.println(partida.get("point"));
-      }
-            
-        return "le assertaste" +  partida.get("point");
+         incorrectas = incorrectas + 1;
+         partida.set("amount_wrong", incorr);
+         return "Te has equivocado. " + "Su puntaje actual es: " +  partida.get("point");
+      }else{ 
+        return "Usuario o password incorrectos " + user + "     ";
+        } 
       });
 
 
