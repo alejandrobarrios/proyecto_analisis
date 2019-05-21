@@ -31,7 +31,10 @@ public class UserTest {
       user.set("password", "maxi123");
       user.set("name", "maximiliano");
       user.set("lastname","gaspero");
-      user.set("dni", "32456789");
+      user.set("dni", 89);
+      user.set("point", 0);
+      user.set("amount_right", 0);
+      user.set("amount_wrong",0);
       
     assertEquals("username can't be blank", user.isValid(), true);
   }

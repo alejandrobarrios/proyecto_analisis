@@ -47,6 +47,7 @@ public class UserIntegrationTest {
 
     @After
     public void clear() {
+      Base.close();
     }
 
 
@@ -67,7 +68,10 @@ public class UserIntegrationTest {
         u.set("password", ADMIN_PASSWORD);
         u.set("name", "aleja");
         u.set("lastname", "bar");
-        u.set("dni",456789);
+        u.set("dni",45);
+        u.set("point", 0);
+        u.set("amount_right", 0);
+        u.set("amount_wrong", 0);
         u.saveIt();
         Base.close();
     }
@@ -77,8 +81,11 @@ public class UserIntegrationTest {
       String password = "Turing";
       String name = "Turing";
       String lastname = "Turing";
-      String dni = "39327496";
+      int dni = 39327496;
       Boolean admin = true;
+      int points = 0;
+      int amount_right = 0;            
+      int amount_wrong = 0;
       Map<String, Object> parameters = new HashMap<>();
       parameters.put("username", username);
       parameters.put("password", password);
@@ -86,7 +93,9 @@ public class UserIntegrationTest {
       parameters.put("lastname", lastname);
       parameters.put("dni", dni);
       parameters.put("admin",admin);
-
+      parameters.put("point", points);
+      parameters.put("amount_right", amount_right);
+      parameters.put("amount_wrong", amount_wrong);
       UrlResponse response = doRequest("POST", "/users", parameters);
       Map<String, Object> jsonResponse = new Gson().fromJson(response.body, Map.class);
 

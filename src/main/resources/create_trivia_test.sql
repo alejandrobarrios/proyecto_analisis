@@ -1,7 +1,7 @@
-drop database if exists trivia_dev; 
+drop database if exists trivia_test; 
 
-create database if not exists trivia_dev;
-use trivia_dev;
+create database if not exists trivia_test;
+use trivia_test;
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users(
     id integer auto_increment primary key,

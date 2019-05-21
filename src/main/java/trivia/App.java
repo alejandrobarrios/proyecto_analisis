@@ -14,6 +14,7 @@ import trivia.BasicAuth;
 import trivia.User;
 import trivia.Question;
 import trivia.Option;
+import trivia.Statistics;
 
 import com.google.gson.Gson;
 
@@ -64,6 +65,7 @@ public class App
       });
 
       post("/users", (req, res) -> {
+        
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = new User();
@@ -73,21 +75,21 @@ public class App
         user.set("lastname", bodyParams.get("lastname"));
         user.set("dni", bodyParams.get("dni"));
         user.set("admin", bodyParams.get("admin"));
-        user.save();
+        user.set("point", bodyParams.get("point"));
+        user.set("amount_right", bodyParams.get("amount_right"));
+        user.set("amount_wrong",bodyParams.get("amount_wrong"));
 
-        Game game = new Game();
-        game.set("point", 0);
-        game.set("amount_right", 0);
-        game.set("amount_wrong",0);
-        user.add(game);
+        user.saveIt();
         
         res.type("application/json");  
-
+        
         return user.toJson(true);
+
 
       });
 
        post("/questions", (req, res) -> {
+        
         QuestionParam bodyParams = new Gson().fromJson(req.body(), QuestionParam.class);
 
         Question question = new Question();
@@ -96,13 +98,19 @@ public class App
         question.set("see", bodyParams.see);
         question.save();
 
+        Statistics estadisticas = new Statistics();
+        estadisticas.set("amount_user_right", 0);
+        estadisticas.set("amount_user_wrong", 0);
+        question.add(estadisticas);
+
         for(OptionParam item: bodyParams.options) {
           Option option = new Option();
           option.set("description", item.description).set("correct", item.correct);
           question.add(option);
         }
-
-        return question;
+        
+        res.type("application/json");
+        return question.toJson(true);
       });
 
       /*get("/users", (req, res) -> {//get all users load
@@ -126,6 +134,7 @@ public class App
       }); */    
 
       get("/questions", (req, res) -> {//return a question whith his options
+        
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Boolean flag = true;
@@ -145,42 +154,50 @@ public class App
         LazyList<Option> option = Option.where("question_id = ?", id);
         List<String> lista = new ArrayList<String>();
         for(Option o: option ){
-          String opcion = "Su descripcion es: " + o.get("description");
+          String opcion = (String)o.get("description");
           lista.add(opcion);
         }
-
+        
         return "la pregunta es : " + choice.get("description") + "y las opciones son :" + lista;
       });  
 
       get("/users", (req, res) -> {//verfication that a user is load
+        
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = User.findFirst("username = ?", bodyParams.get("username"));
         if(user != null){
+          
          return user; 
         }else{
+          
           return "Usuario no encontrado.";
         }
 
       });
 
-      delete("/users", (req, res) -> {//delete an user 
+      delete("/users", (req, res) -> {//delete an user
+        
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = User.findFirst("username = ?", bodyParams.get("username"));
         user.delete();
+        
         return "borrado";
       });
 
       delete("/questions", (req, res) -> {//delete an question
+        
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Question question = Question.findFirst("id = ?", bodyParams.get("id"));
         question.delete();
+        
         return "borrado";
       });
 
       put("/users", (req,res) -> {//modify a password of a user with his username
+        
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         User user = User.findFirst("username = ?", bodyParams.get("username"));
@@ -188,11 +205,12 @@ public class App
         user.saveIt();
 
         res.type("application/json");
-
+        
         return user.toJson(true);
       });
 
       put("/questions", (req,res) -> {//modify the description of a question with his id
+        
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
         Question question = Question.findFirst("id = ?", bodyParams.get("id"));
@@ -200,62 +218,103 @@ public class App
         question.saveIt();
 
         res.type("application/json");
-
+        
         return question.toJson(true);
       });
 
-      get("/games", (req, res) -> {
+      post("/games", (req, res) -> {
+        
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class); 
-        Question pregunta = new Question();
-        Game partida = new Game();
+    
+
+        Statistics statistics = new Statistics();
         LazyList<User> users = User.where("username = ?", bodyParams.get("username"));
-        User user = users.get(0);
-        String pass = (String)bodyParams.get("password");
-        if(user.get("password").equals(pass)){
-          partida = Game.findFirst("user_id = ?", user.get("id"));
-          int puntaje = (int) partida.get("point");
-          int correctas = (int) partida.get("amount_right");
-          int incorrectas = (int) partida.get("amount_wrong");
-
+        if(users.size() > 0){
+          User user = users.get(0);
+          String pass = (String)bodyParams.get("password");
+          if(user.get("password").equals(pass)){
           
-          Boolean flag = true;
-          LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
-          Question choice = new Question();
+            Boolean flag = true;
+            LazyList<Question> question = Question.where("category = ? and see = ?", bodyParams.get("category"),false);
+            Question choice = new Question();
 
-          while(flag){
-            Random aux = new Random();
-            int a = aux.nextInt(question.size());       
-            choice = question.get(0);
-            if(!(Boolean)choice.get("see")){
-              flag = false;
+            int point =(int) user.get("point");
+            int user_correct =(int) user.get("amount_right");            
+            int user_incorrect =(int) user.get("amount_wrong");
+
+
+            while(flag){
+              Random aux = new Random();
+              int a = aux.nextInt(question.size());       
+              choice = question.get(a);
+              if(!(Boolean)choice.get("see")){
+                flag = false;
+              }
             }
-          }
-          choice.set("see", true);
-          int id = (int)choice.get("id");
+            statistics = Statistics.findFirst("question_id = ?", choice.get("id"));
+            int correct = (int) statistics.get("amount_user_right");
+            int incorrect = (int) statistics.get("amount_user_wrong");
 
-          LazyList<Option> option = Option.where("question_id = ?", id);
-          List<String> lista = new ArrayList<String>();
-          for(Option o: option ){
-            String opcion = "Su descripcion es: " + o.get("description");
-            lista.add(opcion);
-          }
+            choice.set("see", true);
+            choice.save();
 
-          LazyList<Option> options = Option.where("question_id = ? and correct = ?", id, true);
-          Option correct = options.get(0);
-          if(correct.get("description").equals(bodyParams.get("description"))){
-            puntaje = puntaje + 1;
-            correctas = correctas + 1;
-            partida.set("point", puntaje);
-            partida.set("amount_right",correctas);
-            partida.saveIt();
-            return "Le acertaste. " + "Su puntaje actual es: " +  partida.get("point");
-         }
-         incorrectas = incorrectas + 1;
-         partida.set("amount_wrong", incorr);
-         return "Te has equivocado. " + "Su puntaje actual es: " +  partida.get("point");
-      }else{ 
-        return "Usuario o password incorrectos " + user + "     ";
-        } 
+            int id = (int)choice.get("id");
+
+            LazyList<Option> options = Option.where("question_id = ?", id);
+            List<String> list = new ArrayList<String>();
+            for(Option o: options ){
+              String option = "Su descripcion es: " + o.get("description");
+              list.add(option);
+            }
+
+            LazyList<Option> answer = Option.where("question_id = ? and correct = ?", id, true);
+            Option option_correct = answer.get(0);
+            if(option_correct.get("description").equals(bodyParams.get("description"))){
+              point = point + 1;
+              correct = correct + 1;
+              user_correct = user_correct + 1;
+              statistics.set("amount_user_right", correct);
+              user.set("point", point);
+              user.set("amount_right", user_correct);
+              user.save();
+              statistics.save();
+              return user.toJson(true);
+            }
+            incorrect = incorrect + 1;
+            user_incorrect = user_incorrect + 1;
+            statistics.set("amount_user_wrong", incorrect);
+            user.set("amount_wrong", user_incorrect);
+            user.save();
+            statistics.save();
+            
+            res.type("application/json");
+            return user.toJson(true);
+          }else{ 
+            
+            res.type("application/json");
+            return user.toJson(true);
+        }
+      }
+      
+      return "hola";     
+    });
+
+
+      post("/stats", (req, res) -> {
+        
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+        LazyList<User> users = User.where("username = ?", bodyParams.get("username"));
+        if(users.size() > 0){
+          User user = users.get(0);
+          res.type("application/json");
+          
+          return user.toJson(true);
+        }else{
+          
+          return "Username no encontrado";
+        }
+
       });
 
 
@@ -267,12 +326,5 @@ public class App
         return currentUser.toJson(true);
       });
 
-      /*post("/logout", (req, res) -> {
-        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-
-
-
-
-      });*/
     }
 }
