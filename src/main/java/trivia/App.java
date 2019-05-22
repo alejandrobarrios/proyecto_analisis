@@ -35,6 +35,8 @@ class OptionParam
 public class App
 {
   static User currentUser;
+  static int identificador;
+  static User jugador;
     public static void main( String[] args )
     { before((request, response) -> {
         Base.open();
@@ -113,7 +115,7 @@ public class App
         return question.toJson(true);
       });
 
-      /*get("/users", (req, res) -> {//get all users load
+      get("/allusers", (req, res) -> {//get all users load
         LazyList<User> user = User.findAll();
         List<String> lista = new ArrayList<String>();
         for(User u: user ){
@@ -121,9 +123,9 @@ public class App
           lista.add(usuario);
         }
         return lista;
-      });*/
+      });
 
-      /*get("/questions", (req, res) -> {//get all questions load of a given category
+      get("/catquestions", (req, res) -> {//get all questions load of a given category
         LazyList<Question> question = Question.findAll();
         List<String> lista = new ArrayList<String>();
         for(Question q: question ){
@@ -131,7 +133,7 @@ public class App
           lista.add(pregunta);
         }
         return lista;
-      }); */    
+      });   
 
       get("/questions", (req, res) -> {//return a question whith his options
         
@@ -149,9 +151,12 @@ public class App
             flag = false;
           }
         }
-        int id = (int)choice.get("id");
+        identificador = (int)choice.get("id");
 
-        LazyList<Option> option = Option.where("question_id = ?", id);
+        choice.set("see", true);
+        choice.save();
+
+        LazyList<Option> option = Option.where("question_id = ?", identificador);
         List<String> lista = new ArrayList<String>();
         for(Option o: option ){
           String opcion = (String)o.get("description");
@@ -159,21 +164,72 @@ public class App
         }
         
         return "la pregunta es : " + choice.get("description") + "y las opciones son :" + lista;
-      });  
+      });
+
+      get("/answer", (req, res) -> {//verfication that a user is load
+        
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+        Statistics statistics = new Statistics();
+        User user = jugador;
+
+        LazyList<Question> quest = Question.where("id = ?", identificador);
+
+        Question choice = quest.get(0);
+
+        
+        LazyList<Option> answer = Option.where("question_id = ? and correct = ?", identificador, true);
+        
+        Option option_correct = answer.get(0);
+        
+        int point =(int) user.get("point");
+        int user_correct =(int) user.get("amount_right");            
+        int user_incorrect =(int) user.get("amount_wrong");
+        
+        statistics = Statistics.findFirst("question_id = ?", choice.get("id"));
+
+        int correct = (int) statistics.get("amount_user_right");    
+        int incorrect = (int) statistics.get("amount_user_wrong");
+
+        if(option_correct.get("description").equals(bodyParams.get("description"))){
+          point = point + 1;
+          correct = correct + 1;
+          user_correct = user_correct + 1;
+          statistics.set("amount_user_right", correct);
+          user.set("point", point);
+          user.set("amount_right", user_correct);
+          user.save();
+          statistics.save();
+          return "Respuesta correcta. ";
+        }
+        incorrect = incorrect + 1;
+        user_incorrect = user_incorrect + 1;
+        statistics.set("amount_user_wrong", incorrect);
+        user.set("amount_wrong", user_incorrect);
+        user.save();
+        statistics.save();  
+        return "Respuesta incorrecta. ";
+          
+      });
+
+
 
       get("/users", (req, res) -> {//verfication that a user is load
         
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
-        User user = User.findFirst("username = ?", bodyParams.get("username"));
-        if(user != null){
-          
-         return user; 
-        }else{
-          
-          return "Usuario no encontrado.";
+        LazyList<User> users = User.where("username = ?", bodyParams.get("username"));
+        
+        if(users.size() > 0){
+          User user = users.get(0);
+          String pass = (String)bodyParams.get("password");
+          if(user.get("password").equals(pass)){
+            jugador = user;
+            return "Usuario logueado"; 
+          }else{ 
+            return "Password incorrecta.";
+            }
         }
-
+        return "Username incorrecto";
       });
 
       delete("/users", (req, res) -> {//delete an user
@@ -278,7 +334,7 @@ public class App
               user.set("amount_right", user_correct);
               user.save();
               statistics.save();
-              return user.toJson(true);
+              return "Respuesta correcta. ";
             }
             incorrect = incorrect + 1;
             user_incorrect = user_incorrect + 1;
@@ -287,16 +343,15 @@ public class App
             user.save();
             statistics.save();
             
-            res.type("application/json");
-            return user.toJson(true);
+            return "Respuesta incorrecta. ";
           }else{ 
             
             res.type("application/json");
-            return user.toJson(true);
+            return "Password incorrecta. ";
         }
       }
       
-      return "hola";     
+      return "Username incorrecto. ";     
     });
 
 
