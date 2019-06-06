@@ -57,7 +57,7 @@ export default class SignInScreen extends React.Component {
         />
 
         <View style={styles.button}>
-          <Button title="Sign in!" onPress={this._signIn} />
+          <Button title="Sign in" onPress={this._signIn} />
         </View>
           
         <View style={styles.button}>  
@@ -92,7 +92,7 @@ export default class SignInScreen extends React.Component {
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {
-        alert("Username or Password incorrect");
+        alert("Username o Password incorrecto");
         return;
       }
 

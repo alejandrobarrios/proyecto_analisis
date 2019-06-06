@@ -10,41 +10,20 @@ import {
 } from 'react-native';
 import axios from 'axios';
 
-export default class PlayScreen extends React.Component {
-  static navigationOptions = {
-    title: 'You are sign in',
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: ''
-    }
-  }
+export default class QuestionScreen extends React.Component {
 
   render() {
+    const { navigation } = this.props;
+    const itemId = navigation.getParam('Pregunta', 'NO-ID');
+    const otherParam = navigation.getParam('otherParam', 'some default value');
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}> Seleccione una categoria </Text>
-
-        <Button title="Anatomia" onPress={this._handleCategory} />
-
-        <Button title="Animales Grandes" onPress={this._handleCategory.bind(this,'Animales Grandes')} />
-
-        <Button title="Animales Pequeños" onPress={this._handleCategory} />
-
-        <Button title="Quimica" onPress={this._handleCategory} />
-
-        <Button title="Clinica" onPress={this._handleCategory} />
-
-        <Button title="Random" onPress={this._handleCategory} />
-
+        <Text>Pregunta {JSON.stringify(itemId)} </Text>
       </View>
     );
   }
 
-  _signIn = () => {
+  /*_signIn = () => {
     const { username, password } = this.state;
 
     axios.post("http://192.168.0.192:4567/login", {
@@ -70,7 +49,7 @@ export default class PlayScreen extends React.Component {
 
       alert("Networking Error");
     });
-  };
+  };*/
 }
 
 const styles = StyleSheet.create({

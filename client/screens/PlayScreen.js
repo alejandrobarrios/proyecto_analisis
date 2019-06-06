@@ -28,7 +28,7 @@ export default class PlayScreen extends React.Component {
         <Text style={styles.welcome}> Seleccione una categoria </Text>
         
         <View style={styles.button}> 
-          <Button title="Anatomia" onPress={this._handleCategory.bind(this,'Anatomia')} />
+          <Button title="Anatomia" onPress={this._handleCategory.bind(this,'anatomia')} />
         </View>
         
         <View style={styles.button}> 
@@ -63,16 +63,15 @@ export default class PlayScreen extends React.Component {
     this.props.navigation.navigate('App');
   };
 
-  _handleCategory = () => {
-    const {description} = this.state;
+  _handleCategory = (category) => {
+    const {description} = category;
 
     axios.get("http://192.168.0.17:4567/questions", {
-      description: description
+      category: description
     })
       .then(response => JSON.stringify(response))
       .then(response => {
-        AsyncStorage.setItem('userToken', response.data);
-        this.props.navigation.navigate('App');
+        this.props.navigation.navigate('Question',response.data);
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {

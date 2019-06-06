@@ -163,7 +163,7 @@ public class App
           lista.add(opcion);
         }
         
-        return "la pregunta es : " + choice.get("description") + "y las opciones son :" + lista;
+        return "{Pregunta: " + choice.get("description") + ", opciones:[{opcion 1:" + lista.get(0)+"},"+"{opcion2:"+lista.get(1)+"}]}";
       });
 
       get("/answer", (req, res) -> {//verfication that a user is load
