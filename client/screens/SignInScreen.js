@@ -8,12 +8,13 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
+  ImageBackground
 } from 'react-native';
 import axios from 'axios';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
-    title: 'Bienvenido a TriviaVet',
+    title: '¡Bienvenido a TriviaVet!!',
   };
 
   constructor(props) {
@@ -26,30 +27,33 @@ export default class SignInScreen extends React.Component {
 
   render() {
     return (
+      
       <View style={styles.container}>
-      <Text style={styles.getStartedText}>
-        Debe loguearse para poder ingresar
-      </Text>
-        <View style={styles.welcomeContainer}>
-         <Image
+       
+
+         <ImageBackground
             source={
             __DEV__
-                ? require('../assets/images/LogoBlue.png')
-                : require('../assets/images/robot-prod.png')
+                ? require('../assets/images/wallpaper.jpg')
+                : require('../assets/images/wallpaper.jpg')
             }
             style={styles.welcomeImage}
-          />
-        </View>
-
+        >
+        </ImageBackground>
+      <View style={styles.acomodar}>
+        <Text style={styles.getStartedText}>
+          Ingresar
+        </Text>
+      
         <TextInput
-          placeholder="Username"
+          placeholder="Usuario"
           style={styles.input}
           onChangeText={(value) => this.setState({ username: value })}
           value={this.state.username}
         />
 
         <TextInput
-          placeholder="Password"
+          placeholder="Contraseña"
           style={styles.input}
           secureTextEntry={true}
           onChangeText={(value) => this.setState({ password: value })}
@@ -63,7 +67,15 @@ export default class SignInScreen extends React.Component {
         <View style={styles.button}>  
           <Button title="Create Account" onPress={this._handleCreateAccount} />
         </View>
+
+        <View style={styles.button}>
+          <Button title="Instructions" onPress={this._Instructions} />
+        </View>
       </View>
+      
+      </View>
+      
+      
     );
   }
 
@@ -75,7 +87,7 @@ export default class SignInScreen extends React.Component {
   _signIn = () => {
     const { username, password } = this.state;
 
-    axios.post("http://192.168.0.17:4567/login", {
+    axios.post("http://192.168.0.31:4567/login", {
       username: username,
       password: password,
     }, {
@@ -105,14 +117,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#885110',
   },
   welcomeImage: {
-    width: 120,
-    height: 100,
+    width: '110%',
+    height: '110%',
     resizeMode: 'contain',
     marginTop: 3,
     marginLeft: 0,
+
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -137,11 +150,14 @@ const styles = StyleSheet.create({
   getStartedText: {
     marginTop: -150,
     fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
+    color: '#FFFFFF',
     lineHeight: 24,
     textAlign: 'center',
   },
   button: {
     margin:10,
+  },
+  acomodar:{
+    marginTop: -500,
   }
 })

@@ -26,7 +26,7 @@ export default class QuestionScreen extends React.Component {
   /*_signIn = () => {
     const { username, password } = this.state;
 
-    axios.post("http://192.168.0.192:4567/login", {
+    axios.post("http://192.168.0.31:4567/login", {
       username: username,
       password: password,
     }, {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FFFF',
   },
   welcome: {
     fontSize: 20,

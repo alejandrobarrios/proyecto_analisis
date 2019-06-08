@@ -28,7 +28,7 @@ export default class PlayScreen extends React.Component {
         <Text style={styles.welcome}> Seleccione una categoria </Text>
         
         <View style={styles.button}> 
-          <Button title="Anatomia" onPress={this._handleCategory.bind(this,'anatomia')} />
+          <Button title="Anatomía" onPress={this._handleCategory.bind(this,'anatomia')} />
         </View>
         
         <View style={styles.button}> 
@@ -40,11 +40,11 @@ export default class PlayScreen extends React.Component {
         </View>
         
         <View style={styles.button}> 
-          <Button title="Quimica" onPress={this._handleCategory.bind(this,'Quimica')} />
+          <Button title="Química" onPress={this._handleCategory.bind(this,'Quimica')} />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Clinica" onPress={this._handleCategory.bind(this,'Clinica')} />
+          <Button title="Clínica" onPress={this._handleCategory.bind(this,'Clinica')} />
         </View>
         
         <View style={styles.button}>
@@ -52,7 +52,7 @@ export default class PlayScreen extends React.Component {
         </View>
 
         <View style={styles.button}>
-          <Button title="Volver a la pantalla anterior" onPress={this._handleBack} />
+          <Button title="Volver atrás" onPress={this._handleBack} />
         </View>
 
       </View>
@@ -66,7 +66,7 @@ export default class PlayScreen extends React.Component {
   _handleCategory = (category) => {
     const {description} = category;
 
-    axios.get("http://192.168.0.17:4567/questions", {
+    axios.get("http://192.168.0.31:4567/questions", {
       category: description
     })
       .then(response => JSON.stringify(response))
