@@ -22,6 +22,8 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
+    const { navigation } = this.props;
+    const users = navigation.getParam('user','nada');
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -35,6 +37,8 @@ export default class HomeScreen extends React.Component {
               style={styles.welcomeImage}
             />
           </View>
+
+            <Text style={styles.welcome}> Hola {users}!! </Text>
             <View style={styles.button}>
               <Button title="Jugar" onPress={this._handlePlay} />
             </View>
@@ -44,7 +48,7 @@ export default class HomeScreen extends React.Component {
             </View>
 
             <View style={styles.button}>
-              <Button title="Instrucciones" onPress={this._Instructions} />
+              <Button title="Instrucciones" onPress={this._handleInstructions} />
             </View>
 
             <View style={styles.button}>
@@ -63,6 +67,10 @@ export default class HomeScreen extends React.Component {
   _handleStats = async () => {
     await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
+  };
+
+  handleInstructions =  () => {
+    this.props.navigation.navigate('Rules');
   };
 
   _handlePlay = async () => {
@@ -101,11 +109,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   welcomeImage: {
-    width: 100,
-    height: 80,
+    width: 150,
+    height: 150,
     resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
+    marginTop: 50,
+    marginLeft: 0,
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'white',
+    marginTop:-15,
   },
   getStartedContainer: {
     alignItems: 'center',
@@ -173,6 +187,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    marginTop:20,
+    marginTop:22,
+    color: 'rgba(0,0,0, 1)',
   }
 });

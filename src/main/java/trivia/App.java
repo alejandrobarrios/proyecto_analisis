@@ -293,6 +293,7 @@ public class App
         
         return question.toJson(true);
       });
+      
       post("/stats", (req, res) -> {
         
         User user = currentUser;
@@ -300,6 +301,18 @@ public class App
         res.type("application/json");
           
         String stat= "{\"Point"+"\" : "+user.toJson(true,"point");
+        stat=stat+"}";
+        return stat;
+
+      });
+
+      post("/allstats", (req, res) -> {
+        
+        User user = currentUser;
+        
+        res.type("application/json");
+          
+        String stat= "{\"Point"+"\" : "+user.toJson(true,"point") + ", \"Correctas\" : "+user.toJson(true,"amount_right")+ ", \"Incorrectas\" : "+user.toJson(true,"amount_wrong");
         stat=stat+"}";
         return stat;
 

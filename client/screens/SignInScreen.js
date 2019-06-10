@@ -92,9 +92,10 @@ export default class SignInScreen extends React.Component {
     })
       .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {
-        // Handle the JWT response here
+        var p = JSON.parse(JSON.stringify(response.data.username));
+        console.log(p);
         AsyncStorage.setItem('userToken', response.config.headers.Authorization);
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Home',{'user': p});
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {
