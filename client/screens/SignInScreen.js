@@ -1,4 +1,5 @@
 import React from 'react';
+import {API_HOST} from 'react-native-dotenv';
 import {
   AsyncStorage,
   View,
@@ -68,13 +69,11 @@ export default class SignInScreen extends React.Component {
   }
 
   _handleCreateAccount = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('Create');
+    this.props.navigation.navigate('CreateAccount');
   };
 
   _signIn = () => {
     const { username, password } = this.state;
-
     axios.post("http://192.168.0.17:4567/login", {
       username: username,
       password: password,
@@ -84,11 +83,11 @@ export default class SignInScreen extends React.Component {
         password: password
       }
     })
-      .then(response => JSON.stringify(response))
+      .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {
         // Handle the JWT response here
-        AsyncStorage.setItem('userToken', response.data);
-        this.props.navigation.navigate('App');
+        AsyncStorage.setItem('userToken', response.config.headers.Authorization);
+        this.props.navigation.navigate('Home');
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {

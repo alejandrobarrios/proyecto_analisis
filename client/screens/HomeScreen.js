@@ -1,4 +1,5 @@
 import React from 'react';
+import {API_HOST} from 'react-native-dotenv';
 import {
   AsyncStorage,
   Image,
@@ -11,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import axios from 'axios';
 
 import { MonoText } from '../components/StyledText';
 
@@ -64,41 +66,25 @@ export default class HomeScreen extends React.Component {
   };
 
   _handlePlay = async () => {
-    this.props.navigation.navigate('Play');
+    axios.post("http://192.168.0.17:4567/stats",{
+      },{
+        headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
+    })
+      .then(response => JSON.parse(JSON.stringify(response)))
+      .then(response => {
+      var p = JSON.parse(JSON.stringify(response.data.Point.point));
+      console.log(p);
+      this.props.navigation.navigate('Play',{'puntos': p});
+    })
+    .catch((error) => {
+      if(error.toString().match(/401/)) {
+        alert("Username o Password incorrecto");
+        return;
+      }
+      alert("Networking Error");
+    });
   };
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({

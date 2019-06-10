@@ -1,4 +1,5 @@
 import React from 'react';
+import {API_HOST} from 'react-native-dotenv';
 import {
   AsyncStorage,
   View,
@@ -12,43 +13,48 @@ import axios from 'axios';
 
 export default class PlayScreen extends React.Component {
   static navigationOptions = {
-    title: 'You are sign in',
+    title: 'Seleccione una categoria',
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      description: ''
+      category: ''
     }
   }
 
   render() {
+    const { navigation } = this.props;
+    const question = navigation.getParam('puntos','nada');
     return (
+
       <View style={styles.container}>
-        <Text style={styles.welcome}> Seleccione una categoria </Text>
+        <Text style={styles.welcome}> Su puntaje actual es : {question} </Text>
+        <Text style={styles.welcome}> Se le sumara un punto, si le acierta </Text>
+        <Text style={styles.welcome}> No se le sumara un punto, si no le acierta </Text>
         
         <View style={styles.button}> 
-          <Button title="Anatomia" onPress={this._handleCategory.bind(this,'anatomia')} />
+          <Button title="Anatomia" onPress={this._handleCategory.bind(this, 'anatomia')} />
         </View>
         
         <View style={styles.button}> 
-         <Button title="Animales Grandes" onPress={this._handleCategory.bind(this,'Animales Grandes')} />
+         <Button title="Animales Grandes" onPress={this._handleCategory.bind(this, 'animales grandes')} />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this,'Animales Pequños')} />
+          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this, 'animales pequeños')} />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Quimica" onPress={this._handleCategory.bind(this,'Quimica')} />
+          <Button title="Quimica" onPress={this._handleCategory.bind(this, 'quimica')} />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Clinica" onPress={this._handleCategory.bind(this,'Clinica')} />
+          <Button title="Clinica" onPress={this._handleCategory.bind(this, 'clinica')} />
         </View>
         
         <View style={styles.button}>
-          <Button title="Random" onPress={this._handleCategory.bind(this,'Random')} />
+          <Button title="Random" onPress={this._handleCategory.bind(this, 'random')} />
         </View>
 
         <View style={styles.button}>
@@ -59,29 +65,36 @@ export default class PlayScreen extends React.Component {
     );
   } 
   _handleBack = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('App');
+    this.props.navigation.navigate('Home');
   };
 
-  _handleCategory = (category) => {
-    const {description} = category;
 
-    axios.get("http://192.168.0.17:4567/questions", {
-      category: description
+  _handleCategory =  async (categoria) => {
+
+    axios.post("http://192.168.0.17:4567/getquestions", {
+      category: categoria,
+    }, {
+      headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
-      .then(response => JSON.stringify(response))
+      .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {
-        this.props.navigation.navigate('Question',response.data);
+        var q = JSON.parse(JSON.stringify(response.data.Question.description));
+        var op1 = JSON.parse(JSON.stringify(response.data.Opcion1.description));
+        var op2 = JSON.parse(JSON.stringify(response.data.Opcion2.description));
+        var op3 = JSON.parse(JSON.stringify(response.data.Opcion3.description));
+        var op4 = JSON.parse(JSON.stringify(response.data.Opcion4.description));
+        console.log(q);
+        this.props.navigation.navigate('Question',{'description': q, 'opcion1': op1, 'opcion2': op2, 'opcion3': op3,'opcion4': op4});
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {
-        alert("No hay preguntas en la categoria seleccionada");
+        alert("Username o Password incorrecto");
         return;
       }
 
       alert("Networking Error");
     });
-  };
+  };    
 }
 
 const styles = StyleSheet.create({
@@ -91,9 +104,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 15,
     textAlign: 'center',
-    margin: 10,
+    marginTop: 10,
   },
   input: {
     margin: 15,
