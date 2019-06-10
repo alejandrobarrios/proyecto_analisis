@@ -32,13 +32,16 @@ export default class QuestionScreen extends React.Component {
     const option3 = navigation.getParam('opcion3','nada');
     const option4 = navigation.getParam('opcion4','nada');
     console.log(navigation.getParam('description'));
-    //const otherParam = navigation.getParam('otherParam', 'some default value');
     return (
       <View style={styles.container}>
         <Text style={styles.question}>
           Pregunta : {question} 
         </Text>
 
+        <View style={styles.button}>
+          <Button title={option1} onPress={this._handlePlay} />
+        </View>
+        
         <Text style={styles.welcome}>
           {option1} 
         </Text>
@@ -56,7 +59,7 @@ export default class QuestionScreen extends React.Component {
         </Text>
 
         <TextInput
-          placeholder="Answer"
+          placeholder="Respuesta"
           style={styles.input}
           secureTextEntry={true}
           onChangeText={(value) => this.setState({ description: value })}
@@ -64,7 +67,7 @@ export default class QuestionScreen extends React.Component {
         />
 
          <View style={styles.button}>
-          <Button title="Send Answer" onPress={this._handleAnswer} />
+          <Button title="Enviar Respuesta" onPress={this._handleAnswer} />
         </View>
 
       </View>
@@ -73,15 +76,8 @@ export default class QuestionScreen extends React.Component {
 
   _handleAnswer = async () => {
     const { description } = this.state;
-
-<<<<<<< HEAD
-    axios.post("http://192.168.0.17:4567/getanswer", {
+    axios.post("http://192.168.0.126:4567/getanswer", {
       description: description,
-=======
-    axios.post("http://192.168.0.31:4567/login", {
-      username: username,
-      password: password,
->>>>>>> a638ddea5566fadca2069f4c847648f6c783dc96
     }, {
       headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })

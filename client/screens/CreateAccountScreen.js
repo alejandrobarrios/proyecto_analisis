@@ -85,7 +85,7 @@ export default class CreateAccountScreen extends React.Component {
   _signIn = () => {
     const { username, password, name, lastname, dni } = this.state;
 
-    axios.post(API_HOST+"/users", {
+    axios.post("http://192.168.0.126:4567/users", {
       username: username,
       password: password,
       name: name,

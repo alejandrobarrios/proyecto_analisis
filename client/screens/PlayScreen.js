@@ -34,11 +34,7 @@ export default class PlayScreen extends React.Component {
         <Text style={styles.welcome}> No se le sumara un punto, si no le acierta </Text>
         
         <View style={styles.button}> 
-<<<<<<< HEAD
           <Button title="Anatomia" onPress={this._handleCategory.bind(this, 'anatomia')} />
-=======
-          <Button title="Anatomía" onPress={this._handleCategory.bind(this,'anatomia')} />
->>>>>>> a638ddea5566fadca2069f4c847648f6c783dc96
         </View>
         
         <View style={styles.button}> 
@@ -50,19 +46,11 @@ export default class PlayScreen extends React.Component {
         </View>
         
         <View style={styles.button}> 
-<<<<<<< HEAD
           <Button title="Quimica" onPress={this._handleCategory.bind(this, 'quimica')} />
         </View>
         
         <View style={styles.button}> 
           <Button title="Clinica" onPress={this._handleCategory.bind(this, 'clinica')} />
-=======
-          <Button title="Química" onPress={this._handleCategory.bind(this,'Quimica')} />
-        </View>
-        
-        <View style={styles.button}> 
-          <Button title="Clínica" onPress={this._handleCategory.bind(this,'Clinica')} />
->>>>>>> a638ddea5566fadca2069f4c847648f6c783dc96
         </View>
         
         <View style={styles.button}>
@@ -80,18 +68,12 @@ export default class PlayScreen extends React.Component {
     this.props.navigation.navigate('Home');
   };
 
-
-<<<<<<< HEAD
   _handleCategory =  async (categoria) => {
 
-    axios.post("http://192.168.0.17:4567/getquestions", {
+    axios.post("http://192.168.0.126:4567/getquestions", {
       category: categoria,
     }, {
       headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
-=======
-    axios.get("http://192.168.0.31:4567/questions", {
-      category: description
->>>>>>> a638ddea5566fadca2069f4c847648f6c783dc96
     })
       .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {

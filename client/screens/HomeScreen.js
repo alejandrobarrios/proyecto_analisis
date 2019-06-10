@@ -44,6 +44,10 @@ export default class HomeScreen extends React.Component {
             </View>
 
             <View style={styles.button}>
+              <Button title="Instructions" onPress={this._Instructions} />
+            </View>
+
+            <View style={styles.button}>
               <Button title="Logout" onPress={this._handleLogout} />
             </View>
 
@@ -66,7 +70,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _handlePlay = async () => {
-    axios.post("http://192.168.0.17:4567/stats",{
+    axios.post("http://192.168.0.126:4567/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
