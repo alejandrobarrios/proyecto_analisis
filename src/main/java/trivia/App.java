@@ -36,9 +36,13 @@ public class App
 {
   static User currentUser;
   static int identificador;
-  static User jugador;
-    public static void main( String[] args )
-    { before((request, response) -> {
+  public static void main( String[] args ){ 
+      
+    before((request, response) -> {
+      if (Base.hasConnection()) {
+        Base.close();
+      }
+      if (!Base.hasConnection())
         Base.open();
 
         String headerToken = (String) request.headers("Authorization");
@@ -76,10 +80,10 @@ public class App
         user.set("name", bodyParams.get("name"));
         user.set("lastname", bodyParams.get("lastname"));
         user.set("dni", bodyParams.get("dni"));
-        user.set("admin", bodyParams.get("admin"));
-        user.set("point", bodyParams.get("point"));
-        user.set("amount_right", bodyParams.get("amount_right"));
-        user.set("amount_wrong",bodyParams.get("amount_wrong"));
+        user.set("admin", false);
+        user.set("point", 0);
+        user.set("amount_right", 0);
+        user.set("amount_wrong", 0);
 
         user.saveIt();
         
@@ -135,7 +139,8 @@ public class App
         return lista;
       });   
 
-      get("/questions", (req, res) -> {//return a question whith his options
+
+      post("/getquestions", (req, res) -> {//return a question whith his options
         
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
@@ -145,6 +150,7 @@ public class App
 
         while(flag){
           Random aux = new Random();
+          System.out.println(question.size());
           int a = aux.nextInt(question.size());       
            choice = question.get(a);
           if(!(Boolean)choice.get("see")){
@@ -155,22 +161,26 @@ public class App
 
         choice.set("see", true);
         choice.save();
-
+        String resp= "{\"Question\":"+ choice.toJson(true,"description");
         LazyList<Option> option = Option.where("question_id = ?", identificador);
         List<String> lista = new ArrayList<String>();
-        for(Option o: option ){
-          String opcion = (String)o.get("description");
-          lista.add(opcion);
+        int i=1;
+        for(Option o : option){
+          resp= resp+", \"Opcion"+i+"\" : "+o.toJson(true,"description");
+          i++;
         }
+        resp=resp+"}";
         
-        return "{Pregunta: " + choice.get("description") + ", opciones:[{opcion 1:" + lista.get(0)+"},"+"{opcion2:"+lista.get(1)+"}]}";
+        res.type("application/json");
+        
+        return resp;
       });
 
-      get("/answer", (req, res) -> {//verfication that a user is load
+      post("/getanswer", (req, res) -> {//verfication that a user is load
         
         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
         Statistics statistics = new Statistics();
-        User user = jugador;
+        User user = currentUser;
 
         LazyList<Question> quest = Question.where("id = ?", identificador);
 
@@ -199,15 +209,21 @@ public class App
           user.set("amount_right", user_correct);
           user.save();
           statistics.save();
-          return "Respuesta correcta. ";
+          String resp = "{\"Point"+"\" : "+user.toJson(true,"point");
+          resp=resp+"}";
+
+          return resp ;
         }
         incorrect = incorrect + 1;
         user_incorrect = user_incorrect + 1;
         statistics.set("amount_user_wrong", incorrect);
         user.set("amount_wrong", user_incorrect);
         user.save();
-        statistics.save();  
-        return "Respuesta incorrecta. ";
+        statistics.save();
+        String resp = "{\"Point"+"\" : "+user.toJson(true,"point");
+        resp=resp+"}";
+
+        return resp ;
           
       });
 
@@ -223,7 +239,7 @@ public class App
           User user = users.get(0);
           String pass = (String)bodyParams.get("password");
           if(user.get("password").equals(pass)){
-            jugador = user;
+            currentUser = user;
             return "Usuario logueado"; 
           }else{ 
             return "Password incorrecta.";
@@ -277,98 +293,15 @@ public class App
         
         return question.toJson(true);
       });
-
-      post("/games", (req, res) -> {
-        
-        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class); 
-    
-
-        Statistics statistics = new Statistics();
-        LazyList<User> users = User.where("username = ?", bodyParams.get("username"));
-        if(users.size() > 0){
-          User user = users.get(0);
-          String pass = (String)bodyParams.get("password");
-          if(user.get("password").equals(pass)){
-          
-            Boolean flag = true;
-            LazyList<Question> question = Question.where("category = ? and see = ?", bodyParams.get("category"),false);
-            Question choice = new Question();
-
-            int point =(int) user.get("point");
-            int user_correct =(int) user.get("amount_right");            
-            int user_incorrect =(int) user.get("amount_wrong");
-
-
-            while(flag){
-              Random aux = new Random();
-              int a = aux.nextInt(question.size());       
-              choice = question.get(a);
-              if(!(Boolean)choice.get("see")){
-                flag = false;
-              }
-            }
-            statistics = Statistics.findFirst("question_id = ?", choice.get("id"));
-            int correct = (int) statistics.get("amount_user_right");
-            int incorrect = (int) statistics.get("amount_user_wrong");
-
-            choice.set("see", true);
-            choice.save();
-
-            int id = (int)choice.get("id");
-
-            LazyList<Option> options = Option.where("question_id = ?", id);
-            List<String> list = new ArrayList<String>();
-            for(Option o: options ){
-              String option = "Su descripcion es: " + o.get("description");
-              list.add(option);
-            }
-
-            LazyList<Option> answer = Option.where("question_id = ? and correct = ?", id, true);
-            Option option_correct = answer.get(0);
-            if(option_correct.get("description").equals(bodyParams.get("description"))){
-              point = point + 1;
-              correct = correct + 1;
-              user_correct = user_correct + 1;
-              statistics.set("amount_user_right", correct);
-              user.set("point", point);
-              user.set("amount_right", user_correct);
-              user.save();
-              statistics.save();
-              return "Respuesta correcta. ";
-            }
-            incorrect = incorrect + 1;
-            user_incorrect = user_incorrect + 1;
-            statistics.set("amount_user_wrong", incorrect);
-            user.set("amount_wrong", user_incorrect);
-            user.save();
-            statistics.save();
-            
-            return "Respuesta incorrecta. ";
-          }else{ 
-            
-            res.type("application/json");
-            return "Password incorrecta. ";
-        }
-      }
-      
-      return "Username incorrecto. ";     
-    });
-
-
       post("/stats", (req, res) -> {
         
-        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-
-        LazyList<User> users = User.where("username = ?", bodyParams.get("username"));
-        if(users.size() > 0){
-          User user = users.get(0);
-          res.type("application/json");
+        User user = currentUser;
+        
+        res.type("application/json");
           
-          return user.toJson(true);
-        }else{
-          
-          return "Username no encontrado";
-        }
+        String stat= "{\"Point"+"\" : "+user.toJson(true,"point");
+        stat=stat+"}";
+        return stat;
 
       });
 

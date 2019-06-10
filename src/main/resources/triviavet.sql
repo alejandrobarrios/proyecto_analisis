@@ -50,3 +50,22 @@ CREATE TABLE IF NOT EXISTS statistics(
     created_at DATETIME,
 	updated_at DATETIME
 );	
+
+
+insert into questions(category,description,see) values
+ ("anatomia","que comen los leones?",false),
+ ("quimica","de ques esta hecho una celula?",false),
+ ("anatomia","que comen los gatos?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("anatomia","que comen los perros?",false),
+ ("animales grandes","que comen los toros?",false);
