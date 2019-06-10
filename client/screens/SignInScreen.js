@@ -28,7 +28,17 @@ export default class SignInScreen extends React.Component {
   render() {
     return (  
       <View style={styles.container}>
-        
+        <View style={styles.welcomeContainer}>
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/trviavetlogo.png')
+                  : require('../assets/images/robot-prod.png')
+              }
+              style={styles.welcomeImage}
+            />
+          </View>
+
         <View style={styles.acomodar}>
           <Text style={styles.getStartedText}>
             Iniciar Sesion
@@ -104,17 +114,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(77,94,129, 1)',
   },
   welcomeImage: {
-    width: '150%',
-    height: '150%',
+    width: 150,
+    height: 150,
     resizeMode: 'contain',
-    marginTop: -200,
+    marginTop: -10,
     marginLeft: 0,
-
   },
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 80,
+    marginBottom: 25,
   },
   welcome: {
     fontSize: 20,
@@ -123,7 +132,7 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 15,
-    marginTop: 15,
+    marginTop: 8,
     height: 30,
     padding: 5,
     fontSize: 16,
@@ -133,7 +142,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#4228F8'
   },
   getStartedText: {
-    marginTop: -15,
+    marginTop: -10,
     fontSize: 17,
     color: '#FFFFFF',
     lineHeight: 24,
