@@ -12,8 +12,13 @@ import {
 import axios from 'axios';
 
 export default class QuestionScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Escriba una de las opciones',
+  static navigationOptions ={ 
+    title: 'Responda',
+     headerStyle: {
+      backgroundColor: 'rgba(77,94,129, 1)',
+     },
+     headerTintColor: '#fff',
+
   };
 
   constructor(props) {
@@ -35,12 +40,8 @@ export default class QuestionScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.question}>
-          Pregunta : {question} 
+          {question} 
         </Text>
-
-        <View style={styles.button}>
-          <Button title={option1} onPress={this._handlePlay} />
-        </View>
         
         <Text style={styles.welcome}>
           {option1} 
@@ -61,7 +62,6 @@ export default class QuestionScreen extends React.Component {
         <TextInput
           placeholder="Respuesta"
           style={styles.input}
-          secureTextEntry={true}
           onChangeText={(value) => this.setState({ description: value })}
           value={this.state.description}
         />
@@ -102,23 +102,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F5FFFF',
+    backgroundColor: 'rgba(77,94,129, 1)',
   },
   question: {
     fontSize: 20,
     textAlign: 'center',
-    marginTop: -150,
+    color: 'white',
+    marginTop: -200,
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 7,
+    color: 'white',
+    marginTop:20,
   },
   input: {
     margin: 10,
     height: 40,
     padding: 5,
     fontSize: 16,
+    color: 'white',
     borderBottomWidth: 1,
     borderBottomColor: '#4228F8'
   },

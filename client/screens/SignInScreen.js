@@ -9,13 +9,12 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
-  ImageBackground
 } from 'react-native';
 import axios from 'axios';
 
 export default class SignInScreen extends React.Component {
-  static navigationOptions = {
-    title: '¡Bienvenido a TriviaVet!!',
+  static navigationOptions ={ 
+    header: null,
   };
 
   constructor(props) {
@@ -29,18 +28,10 @@ export default class SignInScreen extends React.Component {
   render() {
     return (  
       <View style={styles.container}>
-         <ImageBackground
-            source={
-            __DEV__
-                ? require('../assets/images/wallpaper.jpg')
-                : require('../assets/images/wallpaper.jpg')
-            }
-            style={styles.welcomeImage}
-            >
-        </ImageBackground>
+        
         <View style={styles.acomodar}>
           <Text style={styles.getStartedText}>
-            Ingresar
+            Iniciar Sesion
           </Text>
       
           <TextInput
@@ -110,11 +101,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#885110',
+    backgroundColor: 'rgba(77,94,129, 1)',
   },
   welcomeImage: {
-    width: '110%',
-    height: '110%',
+    width: '150%',
+    height: '150%',
     resizeMode: 'contain',
     marginTop: -200,
     marginLeft: 0,
@@ -132,16 +123,17 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 15,
-    marginTop: -10,
+    marginTop: 15,
     height: 30,
     padding: 5,
     fontSize: 16,
     marginBottom: 10,
+    color: 'white',
     borderBottomWidth: 1,
     borderBottomColor: '#4228F8'
   },
   getStartedText: {
-    marginTop: -150,
+    marginTop: -15,
     fontSize: 17,
     color: '#FFFFFF',
     lineHeight: 24,
@@ -151,6 +143,6 @@ const styles = StyleSheet.create({
     margin:10,
   },
   acomodar:{
-    marginTop: -100,
+    marginBottom: 50,
   }
 })

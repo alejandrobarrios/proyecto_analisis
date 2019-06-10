@@ -36,25 +36,21 @@ export default class HomeScreen extends React.Component {
             />
           </View>
             <View style={styles.button}>
-              <Button title="Play" onPress={this._handlePlay} />
+              <Button title="Jugar" onPress={this._handlePlay} />
             </View>
 
             <View style={styles.button}>
-              <Button title="Stats" onPress={this._handleStats} />
+              <Button title="Estadisticas" onPress={this._handleStats} />
             </View>
 
             <View style={styles.button}>
-              <Button title="Instructions" onPress={this._Instructions} />
+              <Button title="Instrucciones" onPress={this._Instructions} />
             </View>
 
             <View style={styles.button}>
-              <Button title="Logout" onPress={this._handleLogout} />
+              <Button title="Cerrar Sesion" onPress={this._handleLogout} />
             </View>
-
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-        </View>
       </View>
     );
   }
@@ -94,14 +90,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
+    backgroundColor: 'rgba(77,94,129, 1)',
   },
   contentContainer: {
     paddingTop: 30,

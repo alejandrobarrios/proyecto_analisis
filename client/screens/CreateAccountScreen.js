@@ -12,8 +12,12 @@ import {
 import axios from 'axios';
 
 export default class CreateAccountScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Crear Cuenta',
+  static navigationOptions ={ 
+    title: 'Crear una cuenta',
+     headerStyle: {
+      backgroundColor: 'rgba(77,94,129, 1)',
+     },headerTintColor: '#fff',
+
   };
 
   constructor(props) {
@@ -32,55 +36,59 @@ export default class CreateAccountScreen extends React.Component {
     return (
       <View style={styles.container}>
         
-        <Text style={styles.getStartedText}> A continuacion debera ingresar sus datos para crear un Usuario </Text>
 
-        <Text style={styles.welcome}> Usuario </Text>
           <TextInput
-          placeholder=""
-          style={styles.input}
+          placeholder="Usuario"
+          style={styles.inputFirst}
           onChangeText={(value) => this.setState({ username: value })}
           value={this.state.username}
         />
 
-        <Text style={styles.welcome}> Contraseña </Text>
         <TextInput
-          placeholder=""
+          placeholder="Contraseña"
           style={styles.input}
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
         />
 
-        <Text style={styles.welcome}> Nombre </Text>
         <TextInput
-          placeholder=""
+          placeholder="Nombre"
           style={styles.input}
           onChangeText={(value) => this.setState({ name: value })}
           value={this.state.name}
         />
 
-        <Text style={styles.welcome}> Apellido </Text>
         <TextInput
-          placeholder=""
+          placeholder="Apellido"
           style={styles.input}
           onChangeText={(value) => this.setState({ lastname: value })}
           value={this.state.lastname}
         />
 
-        <Text style={styles.welcome}> DNI </Text>
         <TextInput
-          placeholder=""
+          placeholder="DNI"
           style={styles.input}
           onChangeText={(value) => this.setState({ dni: value })}
           value={this.state.dni}
         />
 
+        <Text style={styles.getStartedText}> (*)Debe ingresar todos los datos para crear un Usuario </Text>
+
         <View style={styles.button}>
-          <Button title="Sign up" onPress={this._signIn} />
+          <Button title="Registrarse" onPress={this._signIn} />
+        </View>
+
+        <View style={styles.button}>
+          <Button title="Cancelar" onPress={this._handleHome} />
         </View>
 
       </View>
     );
   }
+
+  _handleHome = async () => {
+    this.props.navigation.navigate('Auth');
+  };
 
   _signIn = () => {
     const { username, password, name, lastname, dni } = this.state;
@@ -117,30 +125,45 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'rgba(77,94,129, 1)',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
+    color: 'white',
     margin: 5,
   },
   input: {
     margin: 15,
-    marginTop: -20,
+    marginTop: 0,
     height: 30,
     padding: 5,
     fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#4228F8'
+  },
+  inputFirst: {
+    margin: 15,
+    marginTop: 0,
+    height: 30,
+    padding: 5,
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
     marginBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#4228F8'
   },
   button: {
-    marginTop:0,
+    marginTop:10,
   },
   getStartedText: {
-    marginTop: -150,
+    marginTop: 30,
     fontSize: 17,
-    color: 'rgba(0,0,0, 1)',
+    color: 'white',
     lineHeight: 24,
     textAlign: 'center',
   }

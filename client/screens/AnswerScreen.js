@@ -13,8 +13,8 @@ import {
 import axios from 'axios';
 
 export default class AnswerScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Resultado de su eleccion',
+  static navigationOptions ={ 
+   header:null,
   };
 
   render() {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'rgba(77,94,129, 1)',
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 20,
     textAlign: 'center',
+    color: 'white',
     margin: 10,
   },
   input: {

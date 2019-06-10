@@ -12,8 +12,12 @@ import {
 import axios from 'axios';
 
 export default class PlayScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions ={ 
     title: 'Seleccione una categoria',
+     headerStyle: {
+      backgroundColor: 'rgba(77,94,129, 1)',
+     },headerTintColor: '#fff',
+
   };
 
   constructor(props) {
@@ -57,16 +61,9 @@ export default class PlayScreen extends React.Component {
           <Button title="Random" onPress={this._handleCategory.bind(this, 'random')} />
         </View>
 
-        <View style={styles.button}>
-          <Button title="Volver atrás" onPress={this._handleBack} />
-        </View>
-
       </View>
     );
   } 
-  _handleBack = async () => {
-    this.props.navigation.navigate('Home');
-  };
 
   _handleCategory =  async (categoria) => {
 
@@ -100,11 +97,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'rgba(77,94,129, 1)',
   },
   welcome: {
     fontSize: 15,
     textAlign: 'center',
+    color: 'white',
     marginTop: 10,
   },
   input: {
