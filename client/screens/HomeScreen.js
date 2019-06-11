@@ -66,15 +66,22 @@ export default class HomeScreen extends React.Component {
 
   _handleStats = async () => {
     await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
+    this.props.navigation.navigate('Stats');
   };
 
-  handleInstructions =  () => {
+   _handleInstructions =  () => {
     this.props.navigation.navigate('Rules');
   };
 
+<<<<<<< HEAD
+=======
+  handleInstructions =  () => {
+    this.props.navigation.navigate('Rules');
+  };
+>>>>>>> db495eb7d383df30306daa81bc2e573882a5cafb
+
   _handlePlay = async () => {
-    axios.post("http://192.168.0.126:4567/stats",{
+    axios.post("http://192.168.0.31:4567/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })

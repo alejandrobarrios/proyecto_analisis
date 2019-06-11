@@ -10,6 +10,7 @@ import {
   Button,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
@@ -30,9 +31,20 @@ export default class InstructionsScreen extends React.Component {
     return (
       <View style={styles.container}>
 
-        <Text>
-          Instrucciones de uso
-        </Text>
+        <FlatList
+          data={[
+            {key: '1. Seleccionar JUGAR'},
+            {key: '2. Elegir categoría'},
+            {key: '3. Para responder '},
+            {key: '4. Al responder se mostrará su puntaje'},
+            {key: '5. Para volver a jugar debera presionar VOLVER A SELECCIONAR UNA CATEGORÍA'},
+            {key: '6. Para salir, presionar VOLVER A LA PANTALLA PRINCIPAL'},
+            {key: '7. Ver estadisticas de su juego pulsando ESTADISTICAS'},
+            {key: '8. Para desloguearse, pulsar CERRAR SESIÓN'},
+          ]}
+          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+        />
+
         <View style={styles.button}>
           <Button title="Volver atrás" onPress={this._handleBack} />
         </View>
@@ -53,97 +65,18 @@ export default class InstructionsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(77,94,129, 1)',
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-  logout: {
-    fontSize: 14,
-    color: '#2e78b7',
-    textAlign: 'center',
-  },
+  
   button: {
     marginTop:20,
-  }
+  },
 
+  item: {
+    marginTop: 15,
+    padding: 10,
+    fontSize: 14,
+    textAlign: 'center', 
+    color: "white",
+  },
 });
