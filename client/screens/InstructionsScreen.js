@@ -56,7 +56,6 @@ export default class InstructionsScreen extends React.Component {
   
 
   _handleBack =  () => {
-
     this.props.navigation.navigate('Home')
   };
 

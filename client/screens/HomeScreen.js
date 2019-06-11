@@ -52,6 +52,10 @@ export default class HomeScreen extends React.Component {
             </View>
 
             <View style={styles.button}>
+              <Button title="Top 10 Puntuaciones" onPress={this._handlesScore} />
+            </View>
+
+            <View style={styles.button}>
               <Button title="Cerrar Sesion" onPress={this._handleLogout} />
             </View>
         </ScrollView>
@@ -65,7 +69,6 @@ export default class HomeScreen extends React.Component {
   };
 
   _handleStats = async () => {
-    await AsyncStorage.clear();
     this.props.navigation.navigate('Stats');
   };
 
@@ -73,15 +76,8 @@ export default class HomeScreen extends React.Component {
     this.props.navigation.navigate('Rules');
   };
 
-<<<<<<< HEAD
-=======
-  handleInstructions =  () => {
-    this.props.navigation.navigate('Rules');
-  };
->>>>>>> db495eb7d383df30306daa81bc2e573882a5cafb
-
   _handlePlay = async () => {
-    axios.post("http://192.168.0.31:4567/stats",{
+    axios.post("http://192.168.0.17:4567/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -97,6 +93,45 @@ export default class HomeScreen extends React.Component {
         return;
       }
       alert("Networking Error");
+    });
+  };
+
+  _handlesScore = async () => {
+    axios.post("http://192.168.0.17:4567/allscore",{
+      },{
+        headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
+    })
+      .then(response => JSON.parse(JSON.stringify(response)))
+      .then(response => {
+      var p1 = JSON.parse(JSON.stringify(response.data.Point1.point));
+      var a1 = JSON.parse(JSON.stringify(response.data.User1.username));
+      var p2 = JSON.parse(JSON.stringify(response.data.Point2.point));
+      var a2 = JSON.parse(JSON.stringify(response.data.User2.username));
+      var p3 = JSON.parse(JSON.stringify(response.data.Point3.point));
+      var a3 = JSON.parse(JSON.stringify(response.data.User3.username));
+      var p4 = JSON.parse(JSON.stringify(response.data.Point4.point));
+      var a4 = JSON.parse(JSON.stringify(response.data.User4.username));
+      var p5 = JSON.parse(JSON.stringify(response.data.Point5.point));
+      var a5 = JSON.parse(JSON.stringify(response.data.User5.username));
+      var p6 = JSON.parse(JSON.stringify(response.data.Point6.point));
+      var a6 = JSON.parse(JSON.stringify(response.data.User6.username));
+      var p7 = JSON.parse(JSON.stringify(response.data.Point7.point));
+      var a7 = JSON.parse(JSON.stringify(response.data.User7.username));
+      var p8 = JSON.parse(JSON.stringify(response.data.Point8.point));
+      var a8 = JSON.parse(JSON.stringify(response.data.User8.username));
+      var p9 = JSON.parse(JSON.stringify(response.data.Point9.point));
+      var a9 = JSON.parse(JSON.stringify(response.data.User9.username));
+      var p10 = JSON.parse(JSON.stringify(response.data.Point10.point));
+      var a10 = JSON.parse(JSON.stringify(response.data.User10.username));
+      console.log(p1);
+      this.props.navigation.navigate('Score',{'puntos1': p1,'puntos2': p2,'puntos3': p3,'puntos4': p4,'puntos5': p5,'puntos6': p6,'puntos7': p7,'puntos8': p8,'puntos9': p9,'puntos10': p10,'user1': a1,'user2': a2,'user3': a3,'user4': a4,'user5': a5,'user6': a6,'user7': a7,'user8': a8,'user9': a9,'user10': a10});
+    })
+    .catch((error) => {
+      if(error.toString().match(/401/)) {
+        alert("Username o Password incorrecto");
+        return;
+      }
+      alert(Error);
     });
   };
 

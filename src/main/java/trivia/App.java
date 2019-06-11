@@ -321,11 +321,13 @@ public class App
       post("/allscore", (req, res) -> {
         
         LazyList<User> users = User.findAll().limit(10).orderBy("point desc");
-        
-
-        String resp= "{\"Scores\": ";
+        int i = 2;
+        User user = users.get(0);
+        String resp= "{\"Point1\":"+ user.toJson(true,"point") + ", \"User1\" : "+ user.toJson(true,"username") ;
+        users.remove(0);
         for(User o : users){
-          resp = resp+o.toJson(true,"point")+", \"User\" : "+o.toJson(true,"username")+",";
+          resp = resp +", \"Point"+i+"\" : " + o.toJson(true,"point") + ", \"User"+i+"\" : "+o.toJson(true,"username");
+          i++;
         };
         resp=resp+"}";
 
