@@ -23,10 +23,26 @@ export default class StatsScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const question = navigation.getParam('resp','nada');
+    const p = navigation.getParam('puntos','nada');
+    const r = navigation.getParam('correctas','nada');
+    const w = navigation.getParam('incorrectas','nada');
+    const users = navigation.getParam('user','nada');
     return (
       <View style={styles.container}> 
-        <Text style={styles.welcome}> Su puntaje es {question} </Text>
+        <View style={styles.welcomeContainer}>
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/trviavetlogo.png')
+                  : require('../assets/images/robot-prod.png')
+              }
+              style={styles.welcomeImage}
+            />
+          </View>
+        <Text style={styles.welcome}> Hola {users}!! </Text>
+        <Text style={styles.welcome}> Su puntaje es: {p} </Text>
+        <Text style={styles.welcome}> Respuestas correctas: {r} </Text>
+        <Text style={styles.welcome}> Respuestas incorrectas: {w} </Text>
 
        <View style={styles.button}>
           <Button title="Volver atrás" onPress={this._handleBack} />
@@ -41,25 +57,7 @@ _handleBack = async () => {
     this.props.navigation.navigate('Home');
   };
 
-  /*_handlePlay = async () => {
-    axios.post("http://192.168.0.31:4567/stats",{
-      },{
-        headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
-    })
-      .then(response => JSON.parse(JSON.stringify(response)))
-      .then(response => {
-      var p = JSON.parse(JSON.stringify(response.data.Point.point));
-      console.log(p);
-      this.props.navigation.navigate('Play',{'puntos': p});
-    })
-    .catch((error) => {
-      if(error.toString().match(/401/)) {
-        alert("Username o Password incorrecto");
-        return;
-      }
-      alert("Networking Error");
-    });
-  };*/
+  
 }
 const styles = StyleSheet.create({
   container: {
@@ -67,33 +65,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'rgba(77,94,129, 1)',
   },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 80,
-  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     color: 'white',
     margin: 10,
   },
-  input: {
-    margin: 15,
-    marginTop: -10,
-    height: 30,
-    padding: 5,
-    fontSize: 16,
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#4228F8'
+  welcomeImage: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    marginTop: 10,
+    marginLeft: 0,
   },
-  getStartedText: {
-    marginTop: -150,
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
+  welcomeContainer: {
+    alignItems: 'center',
+    marginTop: 0,
+    marginBottom: 20,
   },
   button: {
     margin:10,
