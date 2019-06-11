@@ -318,6 +318,22 @@ public class App
 
       });
 
+      post("/allscore", (req, res) -> {
+        
+        LazyList<User> users = User.findAll().limit(10).orderBy("point desc");
+        
+
+        String resp= "{\"Scores\": ";
+        for(User o : users){
+          resp = resp+o.toJson(true,"point")+", \"User\" : "+o.toJson(true,"username")+",";
+        };
+        resp=resp+"}";
+
+        res.type("application/json");
+        return resp;
+
+      });
+
 
       post("/login", (req, res) -> {
         res.type("application/json");
