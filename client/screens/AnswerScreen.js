@@ -25,11 +25,11 @@ export default class AnswerScreen extends React.Component {
         <Text style={styles.welcome}> Su puntaje es {question} </Text>
 
         <View style={styles.button}>
-          <Button title="Volver a seleccionar una categoria" onPress={this._handlePlay} />
+          <Button title="Volver a seleccionar una categoria" onPress={this._handlePlay} color = '#66b3ff' />
         </View>
 
          <View style={styles.button}>
-          <Button title="Volver a la pantalla principal" onPress={this._handleBack} />
+          <Button title="Volver a la pantalla principal" onPress={this._handleBack} color = '#ff9966' />
         </View>
       </View>
     );

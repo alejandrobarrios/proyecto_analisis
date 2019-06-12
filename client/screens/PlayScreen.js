@@ -37,23 +37,23 @@ export default class PlayScreen extends React.Component {
         <Text style={styles.welcome}> Su puntaje actual es : {question} </Text>
         
         <View style={styles.button}> 
-          <Button title="Anatomia" onPress={this._handleCategory.bind(this, 'anatomia')} />
+          <Button title="Anatomia" onPress={this._handleCategory.bind(this, 'anatomia')} color = '#39ac73' />
         </View>
         
         <View style={styles.button}> 
-         <Button title="Animales Grandes" onPress={this._handleCategory.bind(this, 'animales grandes')} />
+         <Button title="Animales Grandes" onPress={this._handleCategory.bind(this, 'animales grandes')} color = '#00b3b3' />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this, 'animales pequeños')} />
+          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this, 'animales pequeños')}color = '#75a3a3' />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Quimica" onPress={this._handleCategory.bind(this, 'quimica')} />
+          <Button title="Quimica" onPress={this._handleCategory.bind(this, 'quimica')} color = '#ff4d4d' />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Clinica" onPress={this._handleCategory.bind(this, 'clinica')} />
+          <Button title="Clinica" onPress={this._handleCategory.bind(this, 'clinica')} color = '#ff9933' />
         </View>
 
       </View>
