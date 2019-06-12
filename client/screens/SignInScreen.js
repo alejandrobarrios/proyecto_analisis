@@ -37,34 +37,39 @@ export default class SignInScreen extends React.Component {
               }
               style={styles.welcomeImage}
             />
-        </View>
+          </View>
 
         <View style={styles.acomodar}>
           <Text style={styles.getStartedText}>
-            Iniciar Sesion
+            Inicia sesión
           </Text>
-      
-          <TextInput
-            placeholder="Usuario"
-            style={styles.input}
-            onChangeText={(value) => this.setState({ username: value })}
-            value={this.state.username}
-          />
 
-          <TextInput
-            placeholder="Contraseña"
-            style={styles.input}
-            secureTextEntry={true}
-            onChangeText={(value) => this.setState({ password: value })}
-            value={this.state.password}
-          />
+          <View style={styles.inputPlus}>
+            <TextInput
+              placeholder="Usuario"
+              style={styles.input}
+              onChangeText={(value) => this.setState({ username: value })}
+              value={this.state.username}
+              maxLength = {10}
+            />
 
-          <View style={styles.button}>
-            <Button title="Ingresar" onPress={this._signIn}  />
+            <TextInput
+              maxLength = {10}
+              placeholder="Contraseña"
+              style={styles.input}
+              secureTextEntry={true}
+              onChangeText={(value) => this.setState({ password: value })}
+              value={this.state.password}
+            />
           </View>
-          
-          <View style={styles.button}>  
-            <Button title="Crear una cuenta" onPress={this._handleCreateAccount} />
+          <View style={styles.centerButton}>
+            <View style={styles.button}>
+              <Button color="#4FACFE" title="Ingresar" onPress={this._signIn} />
+            </View>
+            
+            <View style={styles.button}>  
+              <Button color="#4FACFE" title="Crear una cuenta" onPress={this._handleCreateAccount} />
+            </View>
           </View>
         </View>
       
@@ -81,7 +86,7 @@ export default class SignInScreen extends React.Component {
   _signIn = () => {
     const { username, password } = this.state;
    
-    axios.post("http://192.168.0.17:4567/login", {
+    axios.post("http://192.168.0.31:4567/login", {
       username: username,
       password: password,
     }, {
@@ -112,11 +117,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(77,94,129, 1)',
+    backgroundColor: '#37435D',
   },
   welcomeImage: {
-    width: 150,
-    height: 150,
+    width: 250,
+    height: 250,
     resizeMode: 'contain',
     marginTop: -10,
     marginLeft: 0,
@@ -136,23 +141,45 @@ const styles = StyleSheet.create({
     marginTop: 8,
     height: 30,
     padding: 5,
+    paddingRight: 108,
+    paddingLeft: 15,
     fontSize: 16,
     marginBottom: 10,
     color: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#4228F8'
+    borderBottomColor: '#FFFFFF',
+    alignSelf: 'flex-start',    
+  },
+  inputPlus: {
+    paddingLeft: 89,
+    paddingTop: 20,
   },
   getStartedText: {
     marginTop: -10,
     fontSize: 17,
-    color: '#FFFFFF',
-    lineHeight: 24,
+    color: '#37435D',
+    lineHeight: 32,
     textAlign: 'center',
+    backgroundColor: '#FFFFFF',
+    height: 35,
+
   },
   button: {
     margin:10,
+    paddingTop: 4,
+    paddingBottom: 1,
+    paddingRight: 40,
+    paddingLeft: 40,
+    marginTop: 5,
+    width: 300,
+    color: '#F13E3E',
   },
   acomodar:{
     marginBottom: 50,
+  },
+  centerButton:{
+    alignItems:'center',
+    paddingTop: 25,
+
   }
 })
