@@ -76,7 +76,7 @@ export default class QuestionScreen extends React.Component {
 
   _handleAnswer = async () => {
     const { description } = this.state;
-    axios.post("http://192.168.0.17:4567/getanswer", {
+    axios.post("http://192.168.0.107:4567/getanswer", {
       description: description,
     }, {
       headers: {'Authorization' : await AsyncStorage.getItem('userToken')}

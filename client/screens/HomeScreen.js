@@ -76,7 +76,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _handlePlay = async () => {
-    axios.post("http://192.168.0.31:4567/stats",{
+    axios.post("http://192.168.0.107:4567/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -96,7 +96,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _handleStats = async () => {
-    axios.post("http://192.168.0.31:4567/allstats",{
+    axios.post("http://192.168.0.107:4567/allstats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -121,7 +121,7 @@ export default class HomeScreen extends React.Component {
 
 
   _handlesScore = async () => {
-    axios.post("http://192.168.0.31:4567/allscore",{
+    axios.post("http://192.168.0.107:4567/allscore",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })

@@ -37,16 +37,16 @@ export default class InstructionsScreen extends React.Component {
             {key: '2. Elegir categoría'},
             {key: '3. Para responder '},
             {key: '4. Al responder se mostrará su puntaje'},
-            {key: '5. Para volver a jugar debera presionar VOLVER A SELECCIONAR UNA CATEGORÍA'},
+            {key: '5. Para volver a jugar deberá presionar VOLVER A SELECCIONAR UNA CATEGORÍA'},
             {key: '6. Para salir, presionar VOLVER A LA PANTALLA PRINCIPAL'},
-            {key: '7. Ver estadisticas de su juego pulsando ESTADISTICAS'},
+            {key: '7. Ver estadísticas de su juego pulsando ESTADÍSTICAS'},
             {key: '8. Para desloguearse, pulsar CERRAR SESIÓN'},
           ]}
           renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
         />
 
         <View style={styles.button}>
-          <Button title="Volver atrás" onPress={this._handleBack} />
+          <Button color="#4FACFE" title="Volver atrás" onPress={this._handleBack} />
         </View>
          
       </View>
@@ -64,7 +64,7 @@ export default class InstructionsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(77,94,129, 1)',
+    backgroundColor: '#37435D',
   },
   
   button: {
