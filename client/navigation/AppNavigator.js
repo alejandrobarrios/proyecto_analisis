@@ -11,19 +11,15 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import InstructionsScreen from '../screens/InstructionsScreen';
 import CreateAccountScreen from '../screens/CreateAccountScreen';
 
-const PlayStack = createStackNavigator({ Home: HomeScreen, Play: PlayScreen, Question: QuestionScreen, Answer: AnswerScreen, Score: ScoresScreen});
+const PlayStack = createStackNavigator({ Home: HomeScreen, Play: PlayScreen, Question: QuestionScreen, Rules: InstructionsScreen, Stats: StatsScreen, Answer: AnswerScreen, Score: ScoresScreen});
 const AuthStack = createStackNavigator({ SignIn: SignInScreen});
-const RulesStack = createStackNavigator({ Rules: InstructionsScreen,});
-const StatsStack = createStackNavigator({ Stats: StatsScreen});
 const CreateAccountStack = createStackNavigator({ CreateAccount: CreateAccountScreen });
 
 export default createAppContainer(createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     Auth: AuthStack,
-    Rules: RulesStack,
     Play: PlayStack,
-    Stats: StatsStack,
     CreateAccount: CreateAccountStack,
   },
   {

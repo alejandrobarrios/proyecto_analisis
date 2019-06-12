@@ -33,9 +33,8 @@ export default class PlayScreen extends React.Component {
     return (
 
       <View style={styles.container}>
+
         <Text style={styles.welcome}> Su puntaje actual es : {question} </Text>
-        <Text style={styles.welcome}> Se le sumara un punto, si le acierta </Text>
-        <Text style={styles.welcome}> No se le sumara un punto, si no le acierta </Text>
         
         <View style={styles.button}> 
           <Button title="Anatomia" onPress={this._handleCategory.bind(this, 'anatomia')} />
@@ -55,10 +54,6 @@ export default class PlayScreen extends React.Component {
         
         <View style={styles.button}> 
           <Button title="Clinica" onPress={this._handleCategory.bind(this, 'clinica')} />
-        </View>
-        
-        <View style={styles.button}>
-          <Button title="Random" onPress={this._handleCategory.bind(this, 'random')} />
         </View>
 
       </View>
@@ -100,7 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(77,94,129, 1)',
   },
   welcome: {
-    fontSize: 15,
+    fontSize: 22,
     textAlign: 'center',
     color: 'white',
     marginTop: 10,

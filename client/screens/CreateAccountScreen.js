@@ -75,7 +75,7 @@ export default class CreateAccountScreen extends React.Component {
         <Text style={styles.getStartedText}> (*)Debe ingresar todos los datos para crear un Usuario </Text>
 
         <View style={styles.button}>
-          <Button title="Registrarse" onPress={this._signIn} />
+          <Button title="Registrarse" onPress={this._signUp} />
         </View>
 
         <View style={styles.button}>
@@ -90,10 +90,10 @@ export default class CreateAccountScreen extends React.Component {
     this.props.navigation.navigate('Auth');
   };
 
-  _signIn = () => {
+  _signUp = () => {
     const { username, password, name, lastname, dni } = this.state;
 
-    axios.post("http://192.168.0.126:4567/users", {
+    axios.post("http://192.168.0.17:4567/users", {
       username: username,
       password: password,
       name: name,
@@ -107,7 +107,7 @@ export default class CreateAccountScreen extends React.Component {
     })
       .then(response => JSON.stringify(response))
       .then(response => {
-        this.props.navigation.navigate('Auth');
+        this.props.navigation.navigate('SignIn');
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#4228F8'
   },

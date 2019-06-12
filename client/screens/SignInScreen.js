@@ -37,7 +37,7 @@ export default class SignInScreen extends React.Component {
               }
               style={styles.welcomeImage}
             />
-          </View>
+        </View>
 
         <View style={styles.acomodar}>
           <Text style={styles.getStartedText}>
@@ -60,7 +60,7 @@ export default class SignInScreen extends React.Component {
           />
 
           <View style={styles.button}>
-            <Button title="Ingresar" onPress={this._signIn} />
+            <Button title="Ingresar" onPress={this._signIn}  />
           </View>
           
           <View style={styles.button}>  
