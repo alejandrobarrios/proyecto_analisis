@@ -39,23 +39,13 @@ export default class StatsScreen extends React.Component {
               style={styles.welcomeImage}
             />
           </View>
-        <Text style={styles.welcome}> Hola {users}!! </Text>
         <Text style={styles.welcome}> Su puntaje es: {p} </Text>
         <Text style={styles.welcome}> Respuestas correctas: {r} </Text>
         <Text style={styles.welcome}> Respuestas incorrectas: {w} </Text>
-
-       <View style={styles.button}>
-          <Button title="Volver atrás" onPress={this._handleBack} />
-        </View>
          
       </View>
     );
   }
-
-
-_handleBack = async () => {
-    this.props.navigation.navigate('Home');
-  };
 
   
 }
