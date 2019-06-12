@@ -64,11 +64,11 @@ export default class SignInScreen extends React.Component {
           </View>
           <View style={styles.centerButton}>
             <View style={styles.button}>
-              <Button color="#4FACFE" title="Ingresar" onPress={this._signIn} />
+              <Button color="#4FACFE" title="Iniciar" onPress={this._signIn} />
             </View>
             
             <View style={styles.button}>  
-              <Button color="#4FACFE" title="Crear una cuenta" onPress={this._handleCreateAccount} />
+              <Button color="#4FACFE" title="Crear usuario" onPress={this._handleCreateAccount} />
             </View>
           </View>
         </View>
@@ -86,7 +86,7 @@ export default class SignInScreen extends React.Component {
   _signIn = () => {
     const { username, password } = this.state;
    
-    axios.post("http://192.168.0.17:4567/login", {
+    axios.post("http://192.168.0.31:4567/login", {
       username: username,
       password: password,
     }, {

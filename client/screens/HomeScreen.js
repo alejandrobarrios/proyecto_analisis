@@ -26,9 +26,6 @@ export default class HomeScreen extends React.Component {
     const user = navigation.getParam('user','nada');
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Hola!! {user} 
-          </Text>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
             <Image
@@ -40,25 +37,29 @@ export default class HomeScreen extends React.Component {
               style={styles.welcomeImage}
             />
           </View>
+            <Text style={styles.welcome}>
+              ¡{user}! ¿Qué quieres hacer?
+            </Text>
+            <View style={styles.move}>
+              <View style={styles.button}>
+                <Button color="#4FACFE" title="Jugar" onPress={this._handlePlay} />
+              </View>
 
-            <View style={styles.button}>
-              <Button title="Jugar" onPress={this._handlePlay} />
-            </View>
+              <View style={styles.button}>
+                <Button color="#4FACFE" title="Ver estadísticas" onPress={this._handleStats} />
+              </View>
 
-            <View style={styles.button}>
-              <Button title="Estadisticas" onPress={this._handleStats} />
-            </View>
+              <View style={styles.button}>
+                <Button color="#4FACFE" title="Ver instrucciones" onPress={this._handleInstructions} />
+              </View>
 
-            <View style={styles.button}>
-              <Button title="Instrucciones" onPress={this._handleInstructions} />
-            </View>
+              <View style={styles.button}>
+                <Button color="#4FACFE" title="Ver top 10 Puntuaciones" onPress={this._handlesScore} />
+              </View>
 
-            <View style={styles.button}>
-              <Button title="Top 10 Puntuaciones" onPress={this._handlesScore} />
-            </View>
-
-            <View style={styles.button}>
-              <Button title="Cerrar Sesion" onPress={this._handleLogout} />
+              <View style={styles.button}>
+                <Button color="#4FACFE" title="Cerrar Sesion" onPress={this._handleLogout} />
+              </View>
             </View>
         </ScrollView>
       </View>
@@ -75,7 +76,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _handlePlay = async () => {
-    axios.post("http://192.168.0.17:4567/stats",{
+    axios.post("http://192.168.0.31:4567/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -95,7 +96,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _handleStats = async () => {
-    axios.post("http://192.168.0.17:4567/allstats",{
+    axios.post("http://192.168.0.31:4567/allstats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -120,7 +121,7 @@ export default class HomeScreen extends React.Component {
 
 
   _handlesScore = async () => {
-    axios.post("http://192.168.0.17:4567/allscore",{
+    axios.post("http://192.168.0.31:4567/allscore",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -163,7 +164,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(77,94,129, 1)',
+    backgroundColor: '#37435D',
   },
   contentContainer: {
     paddingTop: 30,
@@ -174,18 +175,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   welcomeImage: {
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
+    marginTop: 50,
     resizeMode: 'contain',
-    marginTop: -15,
     marginLeft: 0,
   },
   welcome: {
-    fontSize: 23,
-    textAlign: 'left',
+    fontSize: 17,
+    textAlign: 'center',
     color: 'white',
-    marginTop:50,
-    marginLeft: 15,
+    marginTop:25,
   },
   getStartedContainer: {
     alignItems: 'center',
@@ -255,5 +255,11 @@ const styles = StyleSheet.create({
   button: {
     marginTop:22,
     color: 'rgba(0,0,0, 1)',
+    paddingRight: 40,
+    paddingLeft: 40,
+    
+  },
+  move: {
+    marginTop: 10,
   }
 });
