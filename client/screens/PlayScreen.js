@@ -45,7 +45,7 @@ export default class PlayScreen extends React.Component {
         </View>
         
         <View style={styles.button}> 
-          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this, 'animales pequeños')}color = '#75a3a3' />
+          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this, 'animales pequeños')} color = '#75a3a3' />
         </View>
         
         <View style={styles.button}> 
@@ -62,7 +62,7 @@ export default class PlayScreen extends React.Component {
 
   _handleCategory =  async (categoria) => {
 
-    axios.post("http://192.168.0.107:4567/getquestions", {
+    axios.post("http://192.168.0.17:4567/getquestions", {
       category: categoria,
     }, {
       headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(77,94,129, 1)',
+    backgroundColor: '#37435D',
   },
   welcome: {
     fontSize: 22,

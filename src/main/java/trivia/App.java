@@ -209,9 +209,9 @@ public class App
           user.set("amount_right", user_correct);
           user.save();
           statistics.save();
-          String resp = "{\"Point"+"\" : "+user.toJson(true,"point");
+          String resp = "{\"Point"+"\" : "+user.toJson(true,"point") + ", \"Correctas\" : "+option_correct.toJson(true,"description") ;
           resp=resp+"}";
-
+          res.type("application/json");
           return resp ;
         }
         incorrect = incorrect + 1;
@@ -220,9 +220,9 @@ public class App
         user.set("amount_wrong", user_incorrect);
         user.save();
         statistics.save();
-        String resp = "{\"Point"+"\" : "+user.toJson(true,"point");
+        String resp = "{\"Point"+"\" : "+ user.toJson(true,"point") + ", \"Correctas"+"\" : "+ option_correct.toJson(true,"description") ;
         resp=resp+"}";
-
+        res.type("application/json");
         return resp ;
           
       });

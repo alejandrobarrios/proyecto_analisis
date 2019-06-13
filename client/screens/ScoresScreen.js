@@ -65,8 +65,8 @@ const columns = [
 } 
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: 'rgba(77,94,129, 1)' },
-  head: { backgroundColor: 'rgba(77,94,129, 1)', textAlign: 'center', color:'white' ,fontSize: 28,margin: 10},
+  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#37435D' },
+  head: { backgroundColor: '#37435D', textAlign: 'center', color:'white' ,fontSize: 28,margin: 10},
   row: {  backgroundColor: 'rgba(77,94,129, 1)'  },
   text: { textAlign: 'center' }
 });

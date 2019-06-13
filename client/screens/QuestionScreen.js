@@ -24,7 +24,7 @@ export default class QuestionScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      description: ''
+      ret: ''
     }
   }
 
@@ -62,7 +62,7 @@ export default class QuestionScreen extends React.Component {
         <TextInput
           placeholder="Respuesta"
           style={styles.input}
-          onChangeText={(value) => this.setState({ description: value })}
+          onChangeText={(value) => this.setState({ ret: value })}
           value={this.state.description}
         />
 
@@ -75,17 +75,19 @@ export default class QuestionScreen extends React.Component {
   }
 
   _handleAnswer = async () => {
-    const { description } = this.state;
-    axios.post("http://192.168.0.107:4567/getanswer", {
-      description: description,
+    const { ret } = this.state;
+    axios.post("http://192.168.0.17:4567/getanswer", {
+      description: ret,
     }, {
       headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
       .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {
         var p = JSON.parse(JSON.stringify(response.data.Point.point));
+        var c = JSON.parse(JSON.stringify(response.data.Correctas.description));
         console.log(p);
-        this.props.navigation.navigate('Answer',{'resp': p});
+        console.log(c);
+        this.props.navigation.navigate('Answer',{'puntos': p,'correcta': c});
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {
@@ -93,7 +95,7 @@ export default class QuestionScreen extends React.Component {
         return;
       }
 
-      alert("Networking Error");
+      alert(Error);
     });
   };    
 }
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(77,94,129, 1)',
+    backgroundColor: '#37435D',
   },
   question: {
     fontSize: 20,

@@ -19,10 +19,14 @@ export default class AnswerScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const question = navigation.getParam('resp','nada');
+    const point = navigation.getParam('puntos','nada');
+    const correct = navigation.getParam('correcta','nada');
     return (
       <View style={styles.container}> 
-        <Text style={styles.welcome}> Su puntaje es {question} </Text>
+
+        <Text style={styles.welcome}> La opcion correcta es : {correct} </Text>
+        
+        <Text style={styles.welcome}> Su puntaje es {point} </Text>
 
         <View style={styles.button}>
           <Button title="Volver a seleccionar una categoria" onPress={this._handlePlay} color = '#66b3ff' />
@@ -41,7 +45,7 @@ _handleBack = async () => {
   };
 
   _handlePlay = async () => {
-    axios.post("http://192.168.0.107:4567/stats",{
+    axios.post("http://192.168.0.17:4567/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(77,94,129, 1)',
+    backgroundColor: '#37435D',
   },
   welcomeContainer: {
     alignItems: 'center',

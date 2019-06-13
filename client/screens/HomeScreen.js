@@ -56,10 +56,9 @@ export default class HomeScreen extends React.Component {
               <View style={styles.button}>
                 <Button color="#4FACFE" title="Ver top 10 Puntuaciones" onPress={this._handlesScore} />
               </View>
-
-              <View style={styles.button}>
-                <Button color="#4FACFE" title="Cerrar Sesion" onPress={this._handleLogout} />
-              </View>
+                <Text onPress={this._handleLogout} style={styles.logout}  >
+                  Cerrar Sesión
+                </Text>
             </View>
         </ScrollView>
       </View>
@@ -76,7 +75,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _handlePlay = async () => {
-    axios.post("http://192.168.0.107:4567/stats",{
+    axios.post("http://192.168.0.17:4567/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -96,7 +95,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _handleStats = async () => {
-    axios.post("http://192.168.0.107:4567/allstats",{
+    axios.post("http://192.168.0.17:4567/allstats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -121,7 +120,7 @@ export default class HomeScreen extends React.Component {
 
 
   _handlesScore = async () => {
-    axios.post("http://192.168.0.107:4567/allscore",{
+    axios.post("http://192.168.0.17:4567/allscore",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -185,7 +184,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: 'center',
     color: 'white',
-    marginTop:25,
+    marginTop:0,
   },
   getStartedContainer: {
     alignItems: 'center',
@@ -248,12 +247,13 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   logout: {
-    fontSize: 14,
-    color: '#2e78b7',
+    marginTop:15,
+    fontSize: 16,
+    color: '#ffffff',
     textAlign: 'center',
   },
   button: {
-    marginTop:22,
+    marginTop:15,
     color: 'rgba(0,0,0, 1)',
     paddingRight: 40,
     paddingLeft: 40,
