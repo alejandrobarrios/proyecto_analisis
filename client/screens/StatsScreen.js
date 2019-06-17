@@ -11,6 +11,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import axios from 'axios';
+import ProgressCircle from 'react-native-progress-circle'
 
 export default class StatsScreen extends React.Component {
    static navigationOptions = {
@@ -26,32 +27,49 @@ export default class StatsScreen extends React.Component {
     const p = navigation.getParam('puntos','nada');
     const r = navigation.getParam('correctas','nada');
     const w = navigation.getParam('incorrectas','nada');
-    const users = navigation.getParam('user','nada');
+    var a = new Number(r);
+    var b = new Number(w);
+
+    let cant = (b + a);
+    let cor = Math.round((a * 100)/cant);
+    let inc = Math.round((b * 100)/cant);
     return (
-      <View style={styles.container}> 
+      <View style={styles.container}>
         <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/trviavetlogo.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-        <Text style={styles.welcome}> Su puntaje es: {p} </Text>
-        <Text style={styles.welcomeGreen}> Respuestas correctas: {r} </Text>
-        <Text style={styles.welcomeRed}> Respuestas incorrectas: {w} </Text>
-        <View style={styles.button}>
-          <Button color="#4FACFE" title="Atrás" onPress={this._handleBack}/>
+
+          <Text style={styles.welcome}> Su puntaje es: {p} </Text>
+
+          <Text style={styles.welcomeGreen}> Porcentaje de respuestas correctas </Text>
+
+          <ProgressCircle
+            percent={cor}
+            radius={50}
+            borderWidth={8}
+            color="#21A950"
+            shadowColor="#999"
+            bgColor="#fff"
+          >
+            <Text style={{ fontSize: 18 }}>{cor}%</Text>
+          </ProgressCircle>
+
+           <Text style={styles.welcomeRed}> Porcentaje de respuestas incorrectas </Text>
+
+          <ProgressCircle
+            percent={inc}
+            radius={50}
+            borderWidth={8}
+            color="#DE3D3D"
+            shadowColor="#999"
+            bgColor="#fff"
+          >
+            <Text style={{ fontSize: 18 }}>{inc}%</Text>
+          </ProgressCircle>
+
         </View>
       </View>
     );
   }
 
-_handleBack =  () => {
-  this.props.navigation.navigate('Home')
-  };
 }
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: 'white',
-    margin: 10,
+    marginBottom: 18,
   },
    welcomeRed: {
     fontSize: 20,

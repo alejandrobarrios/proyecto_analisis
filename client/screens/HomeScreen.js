@@ -56,9 +56,10 @@ export default class HomeScreen extends React.Component {
               <View style={styles.button}>
                 <Button color="#4FACFE" title="Ver top 10 Puntuaciones" onPress={this._handlesScore} />
               </View>
-                <Text onPress={this._handleLogout} style={styles.logout}  >
-                  Cerrar Sesión
-                </Text>
+
+              <Text onPress={this._handleLogout} style={styles.logout}  >
+                Cerrar Sesión
+              </Text>
             </View>
         </ScrollView>
       </View>
@@ -73,6 +74,7 @@ export default class HomeScreen extends React.Component {
    _handleInstructions =  () => {
     this.props.navigation.navigate('Rules');
   };
+
 
   _handlePlay = async () => {
     axios.post("http://192.168.0.17:4567/stats",{
