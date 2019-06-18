@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
     paddingLeft: 110,
   },
   welcomeImage: {
-    width: 160,
-    height: 160,
+    width: 161,
+    height: 161,
     marginTop: -30,
     resizeMode: 'contain',
     marginLeft: 0,
