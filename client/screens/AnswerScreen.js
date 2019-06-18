@@ -24,16 +24,16 @@ export default class AnswerScreen extends React.Component {
     return (
       <View style={styles.container}> 
 
-        <Text style={styles.welcome}> La opcion correcta es : {correct} </Text>
+        <Text style={styles.welcome}> La opción correcta es : {correct} </Text>
         
         <Text style={styles.welcome}> Su puntaje es {point} </Text>
 
         <View style={styles.button}>
-          <Button title="Volver a seleccionar una categoria" onPress={this._handlePlay} color = '#66b3ff' />
+          <Button title="Volver a jugar" onPress={this._handlePlay} color = '#F2B558' />
         </View>
 
          <View style={styles.button}>
-          <Button title="Volver a la pantalla principal" onPress={this._handleBack} color = '#ff9966' />
+          <Button title="Volver a inicio" onPress={this._handleBack} color = '#37435D' />
         </View>
       </View>
     );
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#37435D',
+    backgroundColor: '#6b7a8f',
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -99,6 +99,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    margin:10,
-  }
+    marginTop:15,
+    color: 'rgba(0,0,0, 1)',
+    paddingRight: 40,
+    paddingLeft: 40,
+  },
 })

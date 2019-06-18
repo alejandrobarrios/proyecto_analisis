@@ -13,9 +13,9 @@ import axios from 'axios';
 
 export default class QuestionScreen extends React.Component {
   static navigationOptions ={ 
-    title: 'Responda',
+    title: 'La pregunta es...',
      headerStyle: {
-      backgroundColor: 'rgba(77,94,129, 1)',
+      backgroundColor: '#37435D',
      },
      headerTintColor: '#fff',
 
@@ -58,18 +58,18 @@ export default class QuestionScreen extends React.Component {
         <Text style={styles.welcome}>
          {option4} 
         </Text>
+        <View style={styles.welcome2}>
+          <TextInput
+            placeholder="Respuesta"
+            style={styles.input}
+            onChangeText={(value) => this.setState({ ret: value })}
+            value={this.state.description}
+          />
 
-        <TextInput
-          placeholder="Respuesta"
-          style={styles.input}
-          onChangeText={(value) => this.setState({ ret: value })}
-          value={this.state.description}
-        />
-
-         <View style={styles.button}>
-          <Button title="Enviar Respuesta" onPress={this._handleAnswer} />
+           <View style={styles.button}>
+            <Button color='#F2B558' title="Responder" onPress={this._handleAnswer} />
+          </View>
         </View>
-
       </View>
     );
   }
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#37435D',
+    backgroundColor: '#6b7a8f',
   },
   question: {
     fontSize: 20,
@@ -118,14 +118,21 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop:20,
   },
+  welcome2: {
+    marginTop: 50,
+  },
   input: {
-    margin: 10,
-    height: 40,
+    margin: 15,
+    marginTop: 8,
+    marginLeft: 110,
+    marginRight: 110,
+    height: 30,
     padding: 5,
     fontSize: 16,
+    marginBottom: 10,
     color: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#4228F8'
+    borderBottomColor: '#FFFFFF',  
   },
   getStartedText: {
     marginTop: -150,
@@ -135,6 +142,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    marginTop:15,
-  }
+    marginTop:10,
+    paddingRight: 110,
+    paddingLeft: 110,
+  },
 })

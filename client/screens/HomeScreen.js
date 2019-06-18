@@ -259,7 +259,6 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0, 1)',
     paddingRight: 40,
     paddingLeft: 40,
-    
   },
   move: {
     marginTop: 10,

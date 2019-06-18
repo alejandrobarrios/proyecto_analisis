@@ -13,9 +13,9 @@ import axios from 'axios';
 
 export default class PlayScreen extends React.Component {
   static navigationOptions ={ 
-    title: 'Seleccione una categoria',
+    title: 'Seleccione una categoría',
      headerStyle: {
-      backgroundColor: 'rgba(77,94,129, 1)',
+      backgroundColor: '#F2B558',
      },headerTintColor: '#fff',
 
   };
@@ -34,26 +34,26 @@ export default class PlayScreen extends React.Component {
 
       <View style={styles.container}>
 
-        <Text style={styles.welcome}> Su puntaje actual es : {question} </Text>
+        <Text style={styles.welcome}> Puntaje actual: {question} </Text>
         
         <View style={styles.button}> 
-          <Button title="Anatomia" onPress={this._handleCategory.bind(this, 'anatomia')} color = '#39ac73' />
+          <Button title="Anatomía" onPress={this._handleCategory.bind(this, 'anatomia')} color = '#37435D' />
         </View>
         
         <View style={styles.button}> 
-         <Button title="Animales Grandes" onPress={this._handleCategory.bind(this, 'animales grandes')} color = '#00b3b3' />
+         <Button title="Animales Grandes" onPress={this._handleCategory.bind(this, 'animales grandes')} color = '#37435D' />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this, 'animales pequeños')} color = '#75a3a3' />
+          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this, 'animales pequeños')} color = '#37435D' />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Quimica" onPress={this._handleCategory.bind(this, 'quimica')} color = '#ff4d4d' />
+          <Button title="Química" onPress={this._handleCategory.bind(this, 'quimica')} color = '#37435D' />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Clinica" onPress={this._handleCategory.bind(this, 'clinica')} color = '#ff9933' />
+          <Button title="Clínica" onPress={this._handleCategory.bind(this, 'clinica')} color = '#37435D' />
         </View>
 
       </View>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#37435D',
+    backgroundColor: '#6b7a8f',
   },
   welcome: {
     fontSize: 22,
@@ -109,6 +109,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#4228F8'
   },
   button: {
-    marginTop:20,
-  }
+    marginTop:15,
+    color: 'rgba(0,0,0, 1)',
+    paddingRight: 40,
+    paddingLeft: 40,
+  },
 })
