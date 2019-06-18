@@ -9,18 +9,21 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
+  Progress,
 } from 'react-native';
 import axios from 'axios';
-import ProgressCircle from 'react-native-progress-circle'
+import ProgressCircle from 'react-native-progress-circle';
+
 
 export default class StatsScreen extends React.Component {
    static navigationOptions = {
-     title: 'Estadísticas',
+     title: 'Tus estadísticas',
      headerTintColor: '#fff',
      headerStyle: {
-     backgroundColor: 'rgba(77,94,129,1)',  
+     backgroundColor: '#F2B558',  
     }
   };
+
 
   render() {
     const { navigation } = this.props;
@@ -35,11 +38,32 @@ export default class StatsScreen extends React.Component {
     let inc = Math.round((b * 100)/cant);
     return (
       <View style={styles.container}>
+        
         <View style={styles.welcomeContainer}>
+          <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/trviavetlogo.png')
+                  : require('../assets/images/robot-prod.png')
+              }
+              style={styles.welcomeImage}
+            />
+          <Text style={styles.welcome}> Puntaje </Text>
 
-          <Text style={styles.welcome}> Su puntaje es: {p} </Text>
+        
+          <ProgressCircle
+            percent={cor}
+            radius={50}
+            borderWidth={0}
+            color="rgba(0,0,0,0)"
+            shadowColor="#999"
+            bgColor="#fff"
+          >
+            <Text style={{ fontSize: 18 }}>{p} de {cant}</Text>  
+          </ProgressCircle>
 
-          <Text style={styles.welcomeGreen}> Porcentaje de respuestas correctas </Text>
+        
+          <Text style={styles.welcomeGreen}> Correctas </Text>
 
           <ProgressCircle
             percent={cor}
@@ -52,7 +76,7 @@ export default class StatsScreen extends React.Component {
             <Text style={{ fontSize: 18 }}>{cor}%</Text>
           </ProgressCircle>
 
-           <Text style={styles.welcomeRed}> Porcentaje de respuestas incorrectas </Text>
+          <Text style={styles.welcomeRed}> Incorrectas </Text>
 
           <ProgressCircle
             percent={inc}
@@ -64,7 +88,7 @@ export default class StatsScreen extends React.Component {
           >
             <Text style={{ fontSize: 18 }}>{inc}%</Text>
           </ProgressCircle>
-
+        
         </View>
       </View>
     );
@@ -75,7 +99,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#37435D',
+    backgroundColor: '#6b7a8f',
   },
   welcome: {
     fontSize: 20,
@@ -84,22 +108,18 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
    welcomeRed: {
+    alignItems: 'center',
     fontSize: 20,
-    textAlign: 'center',
-    color: '#DE3D3D',
+    textAlign: 'right',
+    color: '#fff',
     margin: 10,
   },
   welcomeGreen: {
+    alignItems: 'center',
     fontSize: 20,
     textAlign: 'center',
-    color: '#21A950',
+    color: '#fff',
     margin: 10,
-  },
-  welcomeImage: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-    marginLeft: 0,
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -107,9 +127,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    marginTop:50,
+    marginTop:10,
     paddingRight: 110,
     paddingLeft: 110,
-    
+  },
+  welcomeImage: {
+    width: 160,
+    height: 160,
+    marginTop: -30,
+    resizeMode: 'contain',
+    marginLeft: 0,
+    justifyContent: 'center',
   },
 })
