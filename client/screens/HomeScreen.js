@@ -42,19 +42,19 @@ export default class HomeScreen extends React.Component {
             </Text>
             <View style={styles.move}>
               <View style={styles.button}>
-                <Button color="#4FACFE" title="Jugar" onPress={this._handlePlay} />
+                <Button color="#F2B558" title="Jugar" onPress={this._handlePlay} />
               </View>
 
               <View style={styles.button}>
-                <Button color="#4FACFE" title="Ver estadísticas" onPress={this._handleStats} />
+                <Button color="#37435D" title="Ver estadísticas" onPress={this._handleStats} />
               </View>
 
               <View style={styles.button}>
-                <Button color="#4FACFE" title="Ver instrucciones" onPress={this._handleInstructions} />
+                <Button color="#37435D" title="Ver instrucciones" onPress={this._handleInstructions} />
               </View>
 
               <View style={styles.button}>
-                <Button color="#4FACFE" title="Ver top 10 Puntuaciones" onPress={this._handlesScore} />
+                <Button color="#37435D" title="Ver top 10 Puntuaciones" onPress={this._handlesScore} />
               </View>
 
               <Text onPress={this._handleLogout} style={styles.logout}  >
@@ -77,7 +77,7 @@ export default class HomeScreen extends React.Component {
 
 
   _handlePlay = async () => {
-    axios.post("http://192.168.0.17:4567/stats",{
+    axios.post("http://192.168.0.31:4567/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -97,7 +97,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _handleStats = async () => {
-    axios.post("http://192.168.0.17:4567/allstats",{
+    axios.post("http://192.168.0.31:4567/allstats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -122,7 +122,7 @@ export default class HomeScreen extends React.Component {
 
 
   _handlesScore = async () => {
-    axios.post("http://192.168.0.17:4567/allscore",{
+    axios.post("http://192.168.0.31:4567/allscore",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
@@ -165,7 +165,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#37435D',
+    backgroundColor: '#6b7a8f',
   },
   contentContainer: {
     paddingTop: 30,
@@ -176,9 +176,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   welcomeImage: {
-    width: 200,
-    height: 200,
-    marginTop: 50,
+    width: 250,
+    height: 250,
+    marginTop: 70,
     resizeMode: 'contain',
     marginLeft: 0,
   },
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: 'center',
     color: 'white',
-    marginTop:0,
+    marginTop:30,
   },
   getStartedContainer: {
     alignItems: 'center',
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   logout: {
-    marginTop:15,
+    marginTop:90,
     fontSize: 16,
     color: '#ffffff',
     textAlign: 'center',
