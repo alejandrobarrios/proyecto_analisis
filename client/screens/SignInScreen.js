@@ -47,7 +47,7 @@ export default class SignInScreen extends React.Component {
           <View style={styles.inputPlus}>
             <TextInput
               placeholder="Usuario"
-              style={styles.input}
+              style={styles.input1}
               onChangeText={(value) => this.setState({ username: value })}
               value={this.state.username}
               maxLength = {10}
@@ -56,7 +56,7 @@ export default class SignInScreen extends React.Component {
             <TextInput
               maxLength = {10}
               placeholder="Contraseña"
-              style={styles.input}
+              style={styles.input2}
               secureTextEntry={true}
               onChangeText={(value) => this.setState({ password: value })}
               value={this.state.password}
@@ -64,11 +64,11 @@ export default class SignInScreen extends React.Component {
           </View>
           <View style={styles.centerButton}>
             <View style={styles.button}>
-              <Button color="#4FACFE" title="Iniciar" onPress={this._signIn} />
+              <Button color="#F2B558" title="Iniciar" onPress={this._signIn} />
             </View>
             
             <View style={styles.button}>  
-              <Button color="#4FACFE" title="Crear usuario" onPress={this._handleCreateAccount} />
+              <Button color="#37435D" title="Crear usuario" onPress={this._handleCreateAccount} />
             </View>
           </View>
         </View>
@@ -86,7 +86,7 @@ export default class SignInScreen extends React.Component {
   _signIn = () => {
     const { username, password } = this.state;
    
-    axios.post("http://192.168.0.17:4567/login", {
+    axios.post("http://192.168.0.31:4567/login", {
       username: username,
       password: password,
     }, {
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#37435D',
+    backgroundColor: '#6b7a8f',
   },
   welcomeImage: {
     width: 250,
@@ -136,12 +136,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  input: {
+  input1: {
     margin: 15,
     marginTop: 8,
     height: 30,
     padding: 5,
-    paddingRight: 108,
+    paddingRight: 144,
+    paddingLeft: 15,
+    fontSize: 16,
+    marginBottom: 10,
+    color: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#FFFFFF',
+    alignSelf: 'flex-start',    
+  },
+  input2: {
+    margin: 15,
+    marginTop: 8,
+    height: 30,
+    padding: 5,
+    paddingRight: 104,
     paddingLeft: 15,
     fontSize: 16,
     marginBottom: 10,

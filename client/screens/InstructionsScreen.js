@@ -19,36 +19,35 @@ import { MonoText } from '../components/StyledText';
 
 export default class InstructionsScreen extends React.Component {
   static navigationOptions = {
-  title: 'Instrucciones',
-    textAlign : 'center',
-    headerTintColor: '#fff',
-    headerStyle: {
-      backgroundColor: 'rgba(77,94,129,1)',  
+     title: 'Tus estadísticas',
+     headerTintColor: '#fff',
+     headerStyle: {
+     backgroundColor: '#37435D',  
     }
   };
 
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.container2}>
+          <FlatList
+            data={[
+              {key: '1. Seleccionar JUGAR'},
+              {key: '2. Elegir categoría'},
+              {key: '3. Para responder '},
+              {key: '4. Al responder se mostrará su puntaje'},
+              {key: '5. Para volver a jugar deberá presionar VOLVER A SELECCIONAR UNA CATEGORÍA'},
+              {key: '6. Para salir, presionar VOLVER A LA PANTALLA PRINCIPAL'},
+              {key: '7. Ver estadísticas de su juego pulsando ESTADÍSTICAS'},
+              {key: '8. Para desloguearse, pulsar CERRAR SESIÓN'},
+            ]}
+            renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+          />
 
-        <FlatList
-          data={[
-            {key: '1. Seleccionar JUGAR'},
-            {key: '2. Elegir categoría'},
-            {key: '3. Para responder '},
-            {key: '4. Al responder se mostrará su puntaje'},
-            {key: '5. Para volver a jugar deberá presionar VOLVER A SELECCIONAR UNA CATEGORÍA'},
-            {key: '6. Para salir, presionar VOLVER A LA PANTALLA PRINCIPAL'},
-            {key: '7. Ver estadísticas de su juego pulsando ESTADÍSTICAS'},
-            {key: '8. Para desloguearse, pulsar CERRAR SESIÓN'},
-          ]}
-          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-        />
-
-        <View style={styles.button}>
-          <Button color="#4FACFE" title="Volver atrás" onPress={this._handleBack} />
-        </View>
-         
+          <View style={styles.button}>
+            <Button color="#F2B558" title="Volver atrás" onPress={this._handleBack} />
+          </View>
+        </View> 
       </View>
           
     )
@@ -64,11 +63,22 @@ export default class InstructionsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#37435D',
+    backgroundColor: '#6b7a8f',
   },
-  
+  container2: {
+    flex: 1,
+    marginTop: 30,
+    marginLeft: 30,
+    marginRight: 30,
+  },
   button: {
-    marginTop:20,
+    margin:10,
+    paddingTop: 4,
+    paddingBottom: 1,
+    paddingRight: 70,
+    paddingLeft: 70,
+    marginTop: -50,
+    color: '#F13E3E',
   },
 
   item: {

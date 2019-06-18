@@ -62,7 +62,7 @@ export default class PlayScreen extends React.Component {
 
   _handleCategory =  async (categoria) => {
 
-    axios.post("http://192.168.0.17:4567/getquestions", {
+    axios.post("http://192.168.0.31:4567/getquestions", {
       category: categoria,
     }, {
       headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
