@@ -94,16 +94,12 @@ export default class CreateAccountScreen extends React.Component {
   _signUp = () => {
     const { username, password, name, lastname, dni } = this.state;
 
-    axios.post("http://192.168.0.31:4567/users", {
+    axios.post("http://192.168.0.17:4567/users", {
       username: username,
       password: password,
       name: name,
       lastname: lastname,
       dni: dni,
-      admin: false,
-      point: 0,
-      amount_right: 0, 
-      amount_wrong: 0,
     }, {
       auth: {
         username: 'admin',

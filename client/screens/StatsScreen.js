@@ -20,7 +20,7 @@ export default class StatsScreen extends React.Component {
      title: 'Tus estadísticas',
      headerTintColor: '#fff',
      headerStyle: {
-     backgroundColor: '#F2B558',  
+     backgroundColor: '#37435D',  
     }
   };
 

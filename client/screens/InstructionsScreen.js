@@ -19,7 +19,7 @@ import { MonoText } from '../components/StyledText';
 
 export default class InstructionsScreen extends React.Component {
   static navigationOptions = {
-     title: 'Tus estadísticas',
+     title: 'Instrucciones',
      headerTintColor: '#fff',
      headerStyle: {
      backgroundColor: '#37435D',  

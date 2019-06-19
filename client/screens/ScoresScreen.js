@@ -26,7 +26,7 @@ const columns = [
  	static navigationOptions ={ 
     title: 'Volver',
      headerStyle: {
-      backgroundColor: 'rgba(77,94,129, 1)',
+      backgroundColor: '#37435D',
      },headerTintColor: '#fff',
 
   };
@@ -66,6 +66,6 @@ const columns = [
 } 
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#37435D' },
-  head: { backgroundColor: '#37435D', textAlign: 'center', color:'white' ,fontSize: 28,margin: 10},
+  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#6b7a8f' },
+  head: { backgroundColor: '#6b7a8f', textAlign: 'center', color:'white' ,fontSize: 28,margin: 10},
 });
