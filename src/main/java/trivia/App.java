@@ -145,7 +145,7 @@ public class App
 			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
 			Question choice = new Question();
 
-			for(int i = 0;i < question.size() || flag ){
+			for(int i = 0;i < question.size() || flag; i++){
 				Random aux = new Random();
 				System.out.println(question.size());
 				int a = aux.nextInt(question.size());
@@ -154,7 +154,7 @@ public class App
 				if(!(Boolean)choice.get("see")){
 					flag = true;
 				}
-			}
+			}// chequear el caso en que el i sea igual a question.size();return no hay mas
 			identificador = (int)choice.get("id");
 			choice.set("see", true);
 			choice.save();
