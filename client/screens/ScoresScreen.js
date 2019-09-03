@@ -13,12 +13,12 @@ const columns = [
   {
     title: 'Username',
     dataIndex: 'username',
-    width: 162
+    width: 200
   },
   {
     title: 'Puntaje',
     dataIndex: 'points',
-    width: 162
+    width: 200
   }
  ];
  

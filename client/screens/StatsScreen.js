@@ -1,5 +1,4 @@
 import React from 'react';
-import {API_HOST} from 'react-native-dotenv';
 import {
   AsyncStorage,
   View,

@@ -141,18 +141,18 @@ public class App
 		post("/getquestions", (req, res) -> {
 
 			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-			Boolean flag = true;
+			Boolean flag = false;
 			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
 			Question choice = new Question();
 
-			while(flag){
+			for(int i = 0;i < question.size() || flag ){
 				Random aux = new Random();
 				System.out.println(question.size());
 				int a = aux.nextInt(question.size());
 				choice = question.get(a);
 				
 				if(!(Boolean)choice.get("see")){
-					flag = false;
+					flag = true;
 				}
 			}
 			identificador = (int)choice.get("id");

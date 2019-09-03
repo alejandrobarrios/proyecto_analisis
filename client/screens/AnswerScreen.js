@@ -45,7 +45,7 @@ _handleBack = async () => {
   };
 
   _handlePlay = async () => {
-    axios.post("http://192.168.0.17:4567/stats",{
+    axios.post(API_HOST+"/stats",{
       },{
         headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
