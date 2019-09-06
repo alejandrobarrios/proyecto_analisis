@@ -17,16 +17,77 @@ export default class AnswerScreen extends React.Component {
    header:null,
   };
 
+
+  constructor(props){
+    super(props);
+    this.state = {puntos:"",
+      correcta: "",
+    };
+  }
+
+  async componentWillMount () {
+    const { navigation } = this.props;
+    const identificador = navigation.getParam('description', 'NO-Ident');
+    console.log(identificador);
+    axios.post(API_HOST+"/getanswer", {
+      description: identificador,
+    }, {
+      headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
+    })
+      .then(response => JSON.parse(JSON.stringify(response)))
+      .then(response => {
+        var p = JSON.parse(JSON.stringify(response.data.Point));
+        var c = JSON.parse(JSON.stringify(response.data.Correctas));
+        console.log(p);
+        console.log(c);
+        this.setState({puntos: q, correcta: op1});
+      })
+    .catch((error) => {
+      if(error.toString().match(/401/)) {
+        alert("Username o Password incorrecto");
+        return;
+      }
+
+      alert(Error);
+    });
+  }
+
+  async componentWillReceiveProps () {
+    const { navigation } = this.props;
+    const identificador = navigation.getParam('desc', 'NO-Ident');
+    axios.post(API_HOST+"/getanswer", {
+      description: identificador,
+    }, {
+      headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
+    })
+      .then(response => JSON.parse(JSON.stringify(response)))
+      .then(response => {
+        var p = JSON.parse(JSON.stringify(response.data.Point));
+        var c = JSON.parse(JSON.stringify(response.data.Correctas));
+        console.log(p);
+        console.log(c);
+        this.setState({puntos: q, correcta: op1});
+      })
+    .catch((error) => {
+      if(error.toString().match(/401/)) {
+        alert("Username o Password incorrecto");
+        return;
+      }
+
+      alert(Error);
+    });
+  }
+
   render() {
     const { navigation } = this.props;
-    const point = navigation.getParam('puntos','nada');
-    const correct = navigation.getParam('correcta','nada');
+    const po=this.state.puntos.point;
+    const cor=this.state.correcta.description;
     return (
       <View style={styles.container}> 
 
-        <Text style={styles.welcome}> La opción correcta es : {correct} </Text>
+        <Text style={styles.welcome}> La opción correcta es : {cor} </Text>
         
-        <Text style={styles.welcome}> Su puntaje es {point} </Text>
+        <Text style={styles.welcome}> Su puntaje es {po} </Text>
 
         <View style={styles.button}>
           <Button title="Volver a jugar" onPress={this._handlePlay} color = '#F2B558' />

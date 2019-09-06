@@ -21,73 +21,135 @@ export default class QuestionScreen extends React.Component {
 
   };
 
-  constructor(props) {
+  constructor(props){
     super(props);
-    this.state = {
-      ret: ''
-    }
+    this.state = {category:"",
+      question: "", option1:"",option2:"",option3:"",option4:"",
+    };
   }
 
-
-  render() {
+ async componentWillMount () {
     const { navigation } = this.props;
-    const question = navigation.getParam('description','nada');
-    const option1 = navigation.getParam('opcion1','nada');
-    const option2 = navigation.getParam('opcion2','nada');
-    const option3 = navigation.getParam('opcion3','nada');
-    const option4 = navigation.getParam('opcion4','nada');
-    console.log(navigation.getParam('description'));
-    return (
-      <View style={styles.container}>
-        <Text style={styles.question}>
-          {question} 
-        </Text>
-        
-        <Text style={styles.welcome}>
-          {option1} 
-        </Text>
+    const cat = navigation.getParam('category', 'NO-Category');
+    axios.post(API_HOST+"/getquestions", {
+      category: cat
+      }, {
+        headers: { 'Authorization' : await AsyncStorage.getItem('userToken')}
+    })
+    .then(response => JSON.parse(JSON.stringify(response)))
+    .then(response => {
+      var q = JSON.parse(JSON.stringify(response.data.Question));
+      var op1 = JSON.parse(JSON.stringify(response.data.Opcion1));
+      var op2 = JSON.parse(JSON.stringify(response.data.Opcion2));
+      var op3 = JSON.parse(JSON.stringify(response.data.Opcion3));
+      var op4 = JSON.parse(JSON.stringify(response.data.Opcion4));
+      this.setState({question: q, option1: op1, option2: op2, option3: op3, option4: op4});
+    })
+    .catch((error) => {
+      if(error.toString().match(/401/)) {
+        alert("Username o Password incorrecto");
+        return;
+      }
 
-        <Text style={styles.welcome}>
-          {option2} 
-        </Text>
-
-        <Text style={styles.welcome}>
-          {option3} 
-        </Text>
-
-        <Text style={styles.welcome}>
-         {option4} 
-        </Text>
-        <View style={styles.welcome2}>
-          <TextInput
-            placeholder="Respuesta"
-            style={styles.input}
-            onChangeText={(value) => this.setState({ ret: value })}
-            value={this.state.description}
-          />
-
-           <View style={styles.button}>
-            <Button color='#F2B558' title="Responder" onPress={this._handleAnswer} />
-          </View>
-        </View>
-      </View>
-    );
+      alert("Networking Error");
+    });
   }
 
-  _handleAnswer = async () => {
-    const { ret } = this.state;
-    axios.post(API_HOST+"/getanswer", {
-      description: ret,
+  async componentWillReceiveProps () {
+    const { navigation } = this.props;
+    const cat = navigation.getParam('category', 'NO-Category');
+    axios.post(API_HOST+"/getquestions", {
+      category: cat,
     }, {
       headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
       .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {
-        var p = JSON.parse(JSON.stringify(response.data.Point.point));
-        var c = JSON.parse(JSON.stringify(response.data.Correctas.description));
-        console.log(p);
-        console.log(c);
-        this.props.navigation.navigate('Answer',{'puntos': p,'correcta': c});
+        var q = JSON.parse(JSON.stringify(response.data.Question));
+        var op1 = JSON.parse(JSON.stringify(response.data.Opcion1));
+        var op2 = JSON.parse(JSON.stringify(response.data.Opcion2));
+        var op3 = JSON.parse(JSON.stringify(response.data.Opcion3));
+        var op4 = JSON.parse(JSON.stringify(response.data.Opcion4));
+        console.log(q);
+      this.setState({question: q, option1: op1, option2: op2, option3: op3, option4: op4});
+    })
+      .catch((error) => {
+      if(error.toString().match(/401/)) {
+        alert("Username o Password incorrecto");
+        return;
+      }
+
+      alert("Networking Error");
+    });
+  }
+
+
+  render() {
+
+    const q=this.state.question.description;
+    const opcion1=this.state.option1.description;
+    const opcion2=this.state.option2.description;
+    const opcion3=this.state.option3.description;
+    const opcion4=this.state.option4.description;
+    return (
+
+      <View style={styles.container}>
+
+      <Text style={styles.question}>
+        {q}
+      </Text>
+
+        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
+                     <Button color={'rgba(48, 136, 63,1)'} title= ' 1 ' onPress={this._handleAnswer.bind(this, opcion1)} 
+                     />
+                     <View style={styles.SeparatorLine} />
+                     <Text style={styles.opcionStyle}>
+                       {opcion1}
+                     </Text>
+                     </TouchableOpacity>
+
+        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
+                     <Button color={'rgba(48, 136, 63,1)'} title= ' 2 ' onPress={this._handleAnswer.bind(this, opcion2)} 
+                     />
+                     <View style={styles.SeparatorLine} />
+                     <Text style={styles.opcionStyle}>
+                       {opcion2}
+                     </Text>
+                     </TouchableOpacity>
+
+        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
+                     <Button color={'rgba(48, 136, 63,1)'} title= ' 3 ' onPress={this._handleAnswer.bind(this, opcion3)}  
+                     />
+                     <View style={styles.SeparatorLine} />
+                     <Text style={styles.opcionStyle}>
+                       {opcion3}
+                     </Text>
+                     </TouchableOpacity>
+
+        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
+                     <Button color={'rgba(48, 136, 63,1)'} title= ' 4 ' onPress={this._handleAnswer.bind(this, opcion4)}  
+                     />
+                     <View style={styles.SeparatorLine} />
+                     <Text style={styles.opcionStyle}>
+                       {opcion4}
+                     </Text>
+                     </TouchableOpacity>
+      </View>
+    );
+  }
+
+  _handleAnswer = async (respu) => {
+    console.log(respu);
+    axios.post(API_HOST+"/getresp", {
+      description: respu,
+    }, {
+      headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
+    })
+      .then(response => JSON.parse(JSON.stringify(response)))
+      .then(response => {
+        var q = JSON.parse(JSON.stringify(response.data.description.description));
+        console.log(q);
+        this.props.navigation.navigate('Answer',{'description': q});
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {
@@ -109,7 +171,7 @@ const styles = StyleSheet.create({
   question: {
     fontSize: 20,
     textAlign: 'center',
-    color: 'white',
+    color: 'rgba(255,255,255, 1)',
     marginTop: -200,
   },
   welcome: {
@@ -142,8 +204,33 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    marginTop:10,
-    paddingRight: 110,
-    paddingLeft: 110,
+    marginTop:15,
+    color: 'rgba(0,0,0, 1)',
+    paddingRight: 40,
+    paddingLeft: 40,
   },
+  opcionStyle: {
+      fontSize: 17,
+      color: 'rgba(255,255,255, 1)',
+      lineHeight: 24,
+      paddingRight: 40,
+    paddingLeft: 40,
+    },
+  ButtonStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: 'rgba(48, 136, 63,1)',
+      borderWidth: 0.5,
+      height: 40,
+      width: 300,
+      borderRadius: 5,
+      margin: 5,
+      },
+      SeparatorLine :{
+ 
+      backgroundColor : '#fff',
+      width: 0,
+      height: 40
+       
+      },  
 })

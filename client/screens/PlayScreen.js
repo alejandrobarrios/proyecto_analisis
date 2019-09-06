@@ -60,22 +60,18 @@ export default class PlayScreen extends React.Component {
     );
   } 
 
-  _handleCategory =  async (categoria) => {
+ _handleCategory =  async (categoria) => {
 
-    axios.post(API_HOST+"/getquestions", {
+    axios.post(API_HOST+"/getcat", {
       category: categoria,
     }, {
       headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
     })
       .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {
-        var q = JSON.parse(JSON.stringify(response.data.Question.description));
-        var op1 = JSON.parse(JSON.stringify(response.data.Opcion1.description));
-        var op2 = JSON.parse(JSON.stringify(response.data.Opcion2.description));
-        var op3 = JSON.parse(JSON.stringify(response.data.Opcion3.description));
-        var op4 = JSON.parse(JSON.stringify(response.data.Opcion4.description));
+        var q = JSON.parse(JSON.stringify(response.data.category.category));
         console.log(q);
-        this.props.navigation.navigate('Question',{'description': q, 'opcion1': op1, 'opcion2': op2, 'opcion3': op3,'opcion4': op4});
+        this.props.navigation.navigate('Question',{'category': q});
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {
@@ -85,7 +81,7 @@ export default class PlayScreen extends React.Component {
 
       alert("Networking Error");
     });
-  };    
+  };   
 }
 
 const styles = StyleSheet.create({

@@ -31,10 +31,23 @@ export default class StatsScreen extends React.Component {
     const w = navigation.getParam('incorrectas','nada');
     var a = new Number(r);
     var b = new Number(w);
+    var s ;
+    var j ;
 
     let cant = (b + a);
     let cor = Math.round((a * 100)/cant);
     let inc = Math.round((b * 100)/cant);
+    if(isNaN(cor)){
+    	s = 0;
+    }else{
+    	s = cor;
+    }
+
+    if(isNaN(inc)){
+    	j = 0;
+    }else{
+    	j = inc;
+    }
     return (
       <View style={styles.container}>
         
@@ -64,7 +77,7 @@ export default class StatsScreen extends React.Component {
         
           <Text style={styles.welcomeGreen}> Correctas </Text>
 
-          <ProgressCircle
+      <ProgressCircle
             percent={cor}
             radius={50}
             borderWidth={8}
@@ -72,20 +85,21 @@ export default class StatsScreen extends React.Component {
             shadowColor="#999"
             bgColor="#fff"
           >
-            <Text style={{ fontSize: 18 }}>{cor}%</Text>
+            <Text style={{ fontSize: 18 }}>{s}%</Text>
           </ProgressCircle>
+
 
           <Text style={styles.welcomeRed}> Incorrectas </Text>
 
-          <ProgressCircle
+      <ProgressCircle
             percent={inc}
             radius={50}
             borderWidth={8}
-            color="#DE3D3D"
+             color="#DE3D3D"
             shadowColor="#999"
             bgColor="#fff"
           >
-            <Text style={{ fontSize: 18 }}>{inc}%</Text>
+            <Text style={{ fontSize: 18 }}>{j}%</Text>
           </ProgressCircle>
         
         </View>

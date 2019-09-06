@@ -135,26 +135,61 @@ public class App
 				lista.add(pregunta);
 			}
 			return lista;
-		});   
+		});
 
+		post("/getcat", (req, res) -> {
+
+			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
+			Question choice = question.get(0);
+
+
+			String rep ="{\"category\":"+choice.toJson(true,"category");
+
+			rep=rep+"}";
+
+			return rep;
+		});
+
+		post("/getresp", (req, res) -> {
+
+			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+			LazyList<Question> quest = Question.where("id = ?", identificador);
+			Question choice = quest.get(0);
+
+			LazyList<Option> answer = Option.where("question_id = ? and description = ?", identificador, bodyParams.get("description"));
+
+			Option option = answer.get(0);
+
+
+			String rep ="{\"description\":"+option.toJson(true,"description");
+
+			rep=rep+"}";
+
+
+			System.out.println((String)bodyParams.get("description"));
+			return rep;
+		});
 		//return a question whith his options
 		post("/getquestions", (req, res) -> {
 
 			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-			Boolean flag = false;
+			Boolean flag = true;
 			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
+			System.out.println((String) bodyParams.get("category"));
 			Question choice = new Question();
 
-			for(int i = 0;i < question.size() || flag; i++){
+			while (flag){
 				Random aux = new Random();
 				System.out.println(question.size());
 				int a = aux.nextInt(question.size());
 				choice = question.get(a);
 				
-				if(!(Boolean)choice.get("see")){
-					flag = true;
+				if((Boolean)choice.get("see")){
+					flag = false;
 				}
-			}// chequear el caso en que el i sea igual a question.size();return no hay mas
+			}
+			// chequear el caso en que el i sea igual a question.size();return no hay mas
 			identificador = (int)choice.get("id");
 			choice.set("see", true);
 			choice.save();

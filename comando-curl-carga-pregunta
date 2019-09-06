@@ -1,0 +1,2 @@
+curl -u admin:admin -X POST http://localhost:4567/questions -H 'content-type: application/json' -d '{"description":"¿De donde es originario la raza de caballo albino?","category":"anatomia","see": false, "options": [{"description": "Hungria", "correct": false}, {"description": "Holanda", "correct": false},{"description": "España", "correct": true},{"description": "Italia", "correct": false}]}'
+
