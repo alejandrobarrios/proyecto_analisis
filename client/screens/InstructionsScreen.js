@@ -22,7 +22,7 @@ export default class InstructionsScreen extends React.Component {
      title: 'Instrucciones',
      headerTintColor: '#fff',
      headerStyle: {
-     backgroundColor: '#37435Ds',  
+     backgroundColor: '#37435D',  
     }
   };
 
@@ -34,7 +34,7 @@ export default class InstructionsScreen extends React.Component {
             data={[
               {key: '1. Seleccionar JUGAR'},
               {key: '2. Elegir categoría'},
-              {key: '3. Para responder debera escribir exactamente la respuesta que crea correcta'},
+              {key: '3. Para responder debera presionar sobre el numero de la izquierda de la pantalla con la opcion que desee elegir'},
               {key: '4. Al responder se mostrará su puntaje'},
               {key: '5. Para volver a jugar deberá presionar VOLVER A SELECCIONAR UNA CATEGORÍA'},
               {key: '6. Para salir, presionar VOLVER A LA PANTALLA PRINCIPAL'},
