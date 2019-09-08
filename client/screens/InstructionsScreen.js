@@ -22,7 +22,7 @@ export default class InstructionsScreen extends React.Component {
      title: 'Instrucciones',
      headerTintColor: '#fff',
      headerStyle: {
-     backgroundColor: '#37435D',  
+     backgroundColor: '#37435Ds',  
     }
   };
 

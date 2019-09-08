@@ -23,8 +23,8 @@ export default class QuestionScreen extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {category:"",
-      question: "", option1:"",option2:"",option3:"",option4:"",
+    this.state = {question: "",
+    option1:"",option2:"",option3:"",option4:"",
     };
   }
 
@@ -86,6 +86,7 @@ export default class QuestionScreen extends React.Component {
 
   render() {
 
+    const {navigate} = this.props.navigation;
     const q=this.state.question.description;
     const opcion1=this.state.option1.description;
     const opcion2=this.state.option2.description;
@@ -95,12 +96,12 @@ export default class QuestionScreen extends React.Component {
 
       <View style={styles.container}>
 
-      <Text style={styles.question}>
-        {q}
-      </Text>
+        <Text style={styles.question}>
+          {q}
+        </Text>
 
-        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
-                     <Button color={'rgba(48, 136, 63,1)'} title= ' 1 ' onPress={this._handleAnswer.bind(this, opcion1)} 
+        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}> 
+                     <Button color = '#37435D' title= ' 1 ' onPress = {() => navigate('Answer', {'desc': opcion1})} 
                      />
                      <View style={styles.SeparatorLine} />
                      <Text style={styles.opcionStyle}>
@@ -109,7 +110,7 @@ export default class QuestionScreen extends React.Component {
                      </TouchableOpacity>
 
         <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
-                     <Button color={'rgba(48, 136, 63,1)'} title= ' 2 ' onPress={this._handleAnswer.bind(this, opcion2)} 
+                     <Button color = '#37435D' title= ' 2 ' onPress = {() => this.props.navigation.navigate('Answer', {'desc': opcion2})} 
                      />
                      <View style={styles.SeparatorLine} />
                      <Text style={styles.opcionStyle}>
@@ -118,7 +119,7 @@ export default class QuestionScreen extends React.Component {
                      </TouchableOpacity>
 
         <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
-                     <Button color={'rgba(48, 136, 63,1)'} title= ' 3 ' onPress={this._handleAnswer.bind(this, opcion3)}  
+                     <Button color = '#37435D' title= ' 3 ' onPress = {() => this.props.navigation.navigate('Answer', {'desc': opcion3})} 
                      />
                      <View style={styles.SeparatorLine} />
                      <Text style={styles.opcionStyle}>
@@ -127,13 +128,13 @@ export default class QuestionScreen extends React.Component {
                      </TouchableOpacity>
 
         <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
-                     <Button color={'rgba(48, 136, 63,1)'} title= ' 4 ' onPress={this._handleAnswer.bind(this, opcion4)}  
-                     />
-                     <View style={styles.SeparatorLine} />
-                     <Text style={styles.opcionStyle}>
-                       {opcion4}
-                     </Text>
-                     </TouchableOpacity>
+          <Button color = '#37435D' title= ' 4 ' onPress = {() => this.props.navigation.navigate('Answer', {'desc': opcion4})}  
+          />
+        <View style={styles.SeparatorLine} />
+            <Text style={styles.opcionStyle}>
+              {opcion4}
+            </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
   ButtonStyle: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: 'rgba(48, 136, 63,1)',
+      backgroundColor: '#F2B558',
       borderWidth: 0.5,
       height: 40,
       width: 300,
