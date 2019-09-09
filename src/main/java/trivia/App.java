@@ -141,22 +141,47 @@ public class App
 			return lista;
 		});   
 
+		post("/getcat", (req, res) -> {
+
+			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
+			Question choice = question.get(0);
+
+			String resp= "{\"category\":"+ choice.toJson(true,"category");
+			resp=resp+"}";
+			return resp;
+		});
+
+		post("/getresp", (req, res) -> {
+
+			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+			LazyList<Option> answer = Option.where("question_id = ? and description = ?", identificador, bodyParams.get("category"));
+			Option choice = answer.get(0);
+
+			String resp= "{\"description\":"+ choice.toJson(true,"description");
+			resp=resp+"}";
+			return resp;
+		});
+
+
+
 		//return a question whith his options
 		post("/getquestions", (req, res) -> {
 
 			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-			Boolean flag = false;
+			Boolean flag = true;
 			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
 			Question choice = new Question();
-			int i = 0;
-			while(i < question.size() || flag){
+			while(flag){
 				Random aux = new Random();
 				System.out.println(question.size());
 				int a = aux.nextInt(question.size());
 				choice = question.get(a);
 				
 				if((Boolean)choice.get("see")){
-					flag = true;
+					flag = false;
 				}
 			}// chequear el caso en que el i sea igual a question.size();return no hay mas
 			identificador = (int)choice.get("id");

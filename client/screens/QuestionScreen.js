@@ -92,6 +92,12 @@ export default class QuestionScreen extends React.Component {
     const opcion2=this.state.option2.description;
     const opcion3=this.state.option3.description;
     const opcion4=this.state.option4.description;
+
+    var a = String(opcion1);
+    var b = String(opcion2);
+    var c = String(opcion3);
+    var d = String(opcion4);
+
     return (
 
       <View style={styles.container}>
@@ -100,41 +106,26 @@ export default class QuestionScreen extends React.Component {
           {q}
         </Text>
 
-        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}> 
-                     <Button color = '#37435D' title= ' 1 ' onPress = {() => navigate('Answer', {'desc': opcion1})} 
-                     />
-                     <View style={styles.SeparatorLine} />
-                     <Text style={styles.opcionStyle}>
-                       {opcion1}
-                     </Text>
-                     </TouchableOpacity>
-
-        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
-                     <Button color = '#37435D' title= ' 2 ' onPress = {() => this.props.navigation.navigate('Answer', {'desc': opcion2})} 
-                     />
-                     <View style={styles.SeparatorLine} />
-                     <Text style={styles.opcionStyle}>
-                       {opcion2}
-                     </Text>
-                     </TouchableOpacity>
-
-        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
-                     <Button color = '#37435D' title= ' 3 ' onPress = {() => this.props.navigation.navigate('Answer', {'desc': opcion3})} 
-                     />
-                     <View style={styles.SeparatorLine} />
-                     <Text style={styles.opcionStyle}>
-                       {opcion3}
-                     </Text>
-                     </TouchableOpacity>
-
-        <TouchableOpacity style={styles.ButtonStyle} activeOpacity={0.5}>
-          <Button color = '#37435D' title= ' 4 ' onPress = {() => this.props.navigation.navigate('Answer', {'desc': opcion4})}  
+        <View style={styles.button}>
+         <Button color = '#F2B558' title= {a} onPress = {() => navigate('Answer', {'desc': opcion1})} 
           />
-        <View style={styles.SeparatorLine} />
-            <Text style={styles.opcionStyle}>
-              {opcion4}
-            </Text>
-        </TouchableOpacity>
+        </View>
+
+        <View style={styles.button}>
+          <Button color = '#F2B558' title= {b} onPress = {() => navigate('Answer', {'desc': opcion2})} 
+          />
+        </View>
+
+        <View style={styles.button}>
+          <Button color = '#F2B558' title= {c} onPress = {() => navigate('Answer', {'desc': opcion3})} 
+          />
+        </View>
+
+        <View style={styles.button}>
+          <Button color = '#F2B558' title= {d} onPress = {() => navigate('Answer', {'desc': opcion4})}  
+          />
+        </View>
+
       </View>
     );
   }
