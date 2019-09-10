@@ -42,12 +42,27 @@ export default class AnswerScreen extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props;
     const po=this.state.puntos.point;
     const cor=this.state.correcta.description;
+    const identificador = navigation.getParam('desc', 'NO-Ident');
+
+    var a = String(identificador);
+    var b = String(cor);
+    var s ;
+    var j ;
+
+    if(a==b){
+      s = 'Correcta';
+    }else{
+      s = 'Incorrecta'
+    }
+
+
     return (
       <View style={styles.container}> 
 
-        <Text style={styles.welcome}> La opción correcta es : {cor} </Text>
+        <Text style={styles.welcome}> Su respuesta ha sido : {s} </Text>
         
         <Text style={styles.welcome}> Su puntaje es : {po} </Text>
 

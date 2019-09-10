@@ -34,12 +34,13 @@ export default class InstructionsScreen extends React.Component {
             data={[
               {key: '1. Seleccionar JUGAR'},
               {key: '2. Elegir categoría'},
-              {key: '3. Para responder debera presionar sobre el numero de la izquierda de la pantalla con la opcion que desee elegir'},
-              {key: '4. Al responder se mostrará su puntaje'},
-              {key: '5. Para volver a jugar deberá presionar VOLVER A SELECCIONAR UNA CATEGORÍA'},
-              {key: '6. Para salir, presionar VOLVER A LA PANTALLA PRINCIPAL'},
+              {key: '3. Para responder debera presionar sobre la opcion que desee elegir'},
+              {key: '4. Al responder se le indicara de que manera ha respondido'},
+              {key: '5. Para volver a jugar deberá presionar VOLVER A JUGAR'},
+              {key: '6. Para salir, presionar VOLVER A INICIO'},
               {key: '7. Ver estadísticas de su juego pulsando ESTADÍSTICAS'},
-              {key: '8. Para desloguearse, pulsar CERRAR SESIÓN'},
+              {key: '8. Ver la tabla de las 10 mejores puntuaciones pulsando VER TOP 10 PUNTUACIONES'},
+              {key: '9. Para desloguearse, pulsar CERRAR SESIÓN'},
             ]}
             renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
           />
