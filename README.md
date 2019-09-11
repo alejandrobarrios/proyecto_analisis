@@ -1,4 +1,4 @@
-# proyecto_analisis
+# Proyecto_TriviaVet
 Integrantes del grupo para Analisis y Diseño e Ingenieria de Software Año 2019:
 Barrios, Alejandro
 Gaspero, Maximiliano
