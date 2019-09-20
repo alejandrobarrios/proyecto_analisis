@@ -6,6 +6,7 @@ import {
   Text,
   Col,
   Row,
+  Button,
 } from 'react-native'
 import Table from 'react-native-simple-table'
 
@@ -59,13 +60,30 @@ const columns = [
        	<Text style={styles.head}>Top 10 Puntuaciones</Text>
       	<Text style={styles.head}></Text>
       	<Table height={320} columnWidth={60} columns={columns} dataSource= {a}/>
+        <View style={styles.button}>
+          <Button color="#F2B558" title="Volver atrás" onPress={this._handleBack} />
+        </View>
       </View>
     )
   	
   }
+
+  _handleBack =  () => {
+    this.props.navigation.navigate('Home')
+  };
 } 
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#6b7a8f' },
-  head: { backgroundColor: '#6b7a8f', textAlign: 'center', color:'white' ,fontSize: 28,margin: 10},
+  container: { 
+    flex: 1,
+    padding: 16,
+    paddingTop: 30,
+    backgroundColor:'#6b7a8f'},
+
+  head: { 
+    backgroundColor: '#6b7a8f', 
+    textAlign: 'center',
+    color:'white',
+    fontSize: 28,
+    margin: 10},
 });

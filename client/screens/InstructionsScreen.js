@@ -34,8 +34,8 @@ export default class InstructionsScreen extends React.Component {
             data={[
               {key: '1. Seleccionar JUGAR'},
               {key: '2. Elegir categoría'},
-              {key: '3. Para responder debera presionar sobre la opcion que desee elegir'},
-              {key: '4. Al responder se le indicara de que manera ha respondido'},
+              {key: '3. Para responder deberá presionar sobre la opción que crea correcta'},
+              {key: '4. Al responder se le indicará de qué manera ha respondido'},
               {key: '5. Para volver a jugar deberá presionar VOLVER A JUGAR'},
               {key: '6. Para salir, presionar VOLVER A INICIO'},
               {key: '7. Ver estadísticas de su juego pulsando ESTADÍSTICAS'},
