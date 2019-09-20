@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS statistics(
 	updated_at DATETIME
 );	
 
-DROP TABLE IF EXISTS answered;
-create table if not exists answered(
+DROP TABLE IF EXISTS answereds;
+create table if not exists answereds(
 id integer primary key auto_increment,
 question_id integer,
 user_id integer,

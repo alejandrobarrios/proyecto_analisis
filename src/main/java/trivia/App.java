@@ -183,9 +183,9 @@ public class App
 
 			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
 			LazyList<Answered> ans = Answered.where("user_id = ? ", id_user);
-			Question choice = new Question();
 
-			if((!(ans.isEmpty())) && (itera <= ans.size())) {
+			System.out.println(ans.size());
+			if( ans.size() > 0  ) {
 
 				while(flag && (itera <= ans.size())){
 					
@@ -198,18 +198,21 @@ public class App
 
 					if(id_q == identificador){
 						itera = itera + 1;
+
 					}else{
 						flag = false;
+
 					}
+				}//caso que salga del while por flag = true a choice = question.get(identificador) else corroborar que aun haya preguntas en question
+				if(flag){
+					choice = question.get(identificador);
 				}
 			}else{
 				choice = question.get(0);
+				identificador = (int)choice.get("id");
 			}
 			// chequear el caso en que el i sea igual a question.size();return no hay mas
-
-
-			choice.set("see", true);
-			choice.save();
+			System.out.println(choice);
 			String resp= "{\"Question\":"+ choice.toJson(true,"description");
 			LazyList<Option> option = Option.where("question_id = ?", identificador);
 			List<String> lista = new ArrayList<String>();
@@ -219,6 +222,7 @@ public class App
 				i++;
 			}
 			resp=resp+"}";
+			System.out.println(resp);
 			res.type("application/json");
 			return resp;
 		});
@@ -229,6 +233,7 @@ public class App
 			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 			Statistics statistics = new Statistics();
 			User user = currentUser;
+			Answered answered = new Answered();
 			LazyList<Question> quest = Question.where("id = ?", identificador);
 			Question choice = quest.get(0);
 
@@ -251,6 +256,11 @@ public class App
 				user.set("amount_right", user_correct);
 				user.save();
 				statistics.save();
+				choice.set("see", true);
+				choice.save();
+				answered.set("question_id",identificador);
+				answered.set("user_id",user.get("id"));
+				answered.save();
 				String resp = "{\"Point"+"\" : "+user.toJson(true,"point") + ", \"Correctas\" : "+option_correct.toJson(true,"description");
 				resp=resp+"}";
 				res.type("application/json");
@@ -285,6 +295,7 @@ public class App
 			}
 			return "Username incorrecto";
 		});
+
 		//delete an user
 		delete("/users", (req, res) -> {
 
