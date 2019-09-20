@@ -30,13 +30,22 @@ export default class StatsScreen extends React.Component {
     const r = navigation.getParam('correctas','nada');
     const w = navigation.getParam('incorrectas','nada');
     var a = new Number(r);
+    var c = new Number(p);
     var b = new Number(w);
     var s ;
     var j ;
+    var l ;
 
     let cant = (b + a);
     let cor = Math.round((a * 100)/cant);
     let inc = Math.round((b * 100)/cant);
+
+    if(isNaN(c)){
+    	l = 0;
+    }else{
+    	l = c;
+    }
+
     if(isNaN(cor)){
     	s = 0;
     }else{
