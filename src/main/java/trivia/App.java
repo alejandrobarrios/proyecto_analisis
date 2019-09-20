@@ -15,6 +15,7 @@ import trivia.User;
 import trivia.Question;
 import trivia.Option;
 import trivia.Statistics;
+import trivia.Answered;
 
 import com.google.gson.Gson;
 
@@ -171,20 +172,42 @@ public class App
 		post("/getquestions", (req, res) -> {
 
 			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-			Boolean flag = true;
-			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
+			Answered answered = new Answered();
 			Question choice = new Question();
-			while(flag){
-				Random aux = new Random();
-				System.out.println(question.size());
-				int a = aux.nextInt(question.size());
-				choice = question.get(a);
-				
-				if((Boolean)choice.get("see")){
-					flag = false;
+			Random aux = new Random();
+			int id_q;
+			Boolean flag = true;
+			User user = currentUser;
+			int id_user = (int)user.get("id");
+			int itera = 0;
+
+			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
+			LazyList<Answered> ans = Answered.where("user_id = ? ", id_user);
+			Question choice = new Question();
+
+			if((!(ans.isEmpty())) && (itera <= ans.size())) {
+
+				while(flag && (itera <= ans.size())){
+					
+					int a = aux.nextInt(question.size());
+					choice = question.get(a);
+					identificador = (int)choice.get("id");
+					
+					answered = ans.get(itera);
+					id_q = (int)answered.get("question_id");
+
+					if(id_q == identificador){
+						itera = itera + 1;
+					}else{
+						flag = false;
+					}
 				}
-			}// chequear el caso en que el i sea igual a question.size();return no hay mas
-			identificador = (int)choice.get("id");
+			}else{
+				choice = question.get(0);
+			}
+			// chequear el caso en que el i sea igual a question.size();return no hay mas
+
+
 			choice.set("see", true);
 			choice.save();
 			String resp= "{\"Question\":"+ choice.toJson(true,"description");

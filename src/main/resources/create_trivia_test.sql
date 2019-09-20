@@ -50,3 +50,13 @@ CREATE TABLE IF NOT EXISTS statistics(
     created_at DATETIME,
 	updated_at DATETIME
 );	
+
+DROP TABLE IF EXISTS answered;
+create table if not exists answered(
+id integer primary key auto_increment,
+question_id integer,
+user_id integer,
+foreign key(question_id) references questions(id) ON DELETE CASCADE,
+foreign key(user_id) references users(id) ON DELETE CASCADE,
+unique (user_id,question_id)
+);
