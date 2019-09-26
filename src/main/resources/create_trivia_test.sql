@@ -56,6 +56,7 @@ create table if not exists answereds(
 id integer primary key auto_increment,
 question_id integer,
 user_id integer,
+category varchar(30) not null,
 foreign key(question_id) references questions(id) ON DELETE CASCADE,
 foreign key(user_id) references users(id) ON DELETE CASCADE,
 unique (user_id,question_id)

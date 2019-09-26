@@ -167,7 +167,6 @@ public class App
 		});
 
 
-
 		//return a question whith his options
 		post("/getquestions", (req, res) -> {
 
@@ -175,41 +174,51 @@ public class App
 			Answered answered = new Answered();
 			Question choice = new Question();
 			Random aux = new Random();
+			Set c = new HashSet();
 			int id_q;
 			Boolean flag = true;
 			User user = currentUser;
 			int id_user = (int)user.get("id");
 			int itera = 0;
+			int cant = 0;
+			int a = 0;
+
 
 			LazyList<Question> question = Question.where("category = ?", bodyParams.get("category"));
-			LazyList<Answered> ans = Answered.where("user_id = ? ", id_user);
+			LazyList<Answered> ans = Answered.where("user_id = ? and category = ? ", id_user, bodyParams.get("category"));
+			List<Question> listita;
 
-			System.out.println(ans.size());
-			if( ans.size() > 0  ) {
+			for(Answered an : ans){
+				c.add(an.get("question_id"));
+			}
+
+			if(( question.size() > ans.size() ) ) {
 
 				while(flag && (itera <= ans.size())){
 					
-					int a = aux.nextInt(question.size());
-					choice = question.get(a);
+					choice = question.get(cant);
 					identificador = (int)choice.get("id");
 					
-					answered = ans.get(itera);
-					id_q = (int)answered.get("question_id");
 
-					if(id_q == identificador){
+					if(c.contains(identificador)){
 						itera = itera + 1;
+						cant = cant + 1 ;
 
 					}else{
 						flag = false;
 
 					}
 				}//caso que salga del while por flag = true a choice = question.get(identificador) else corroborar que aun haya preguntas en question
-				if(flag){
-					choice = question.get(identificador);
+
+				listita = question.subList((cant),(question.size()));
+
+				if(flag == false){
+					a = aux.nextInt(listita.size());
+					choice = question.get(a);
+
 				}
 			}else{
-				choice = question.get(0);
-				identificador = (int)choice.get("id");
+				return "Todo respondido";
 			}
 			// chequear el caso en que el i sea igual a question.size();return no hay mas
 			System.out.println(choice);
@@ -260,6 +269,7 @@ public class App
 				choice.save();
 				answered.set("question_id",identificador);
 				answered.set("user_id",user.get("id"));
+				answered.set("category",choice.get("category"));
 				answered.save();
 				String resp = "{\"Point"+"\" : "+user.toJson(true,"point") + ", \"Correctas\" : "+option_correct.toJson(true,"description");
 				resp=resp+"}";
