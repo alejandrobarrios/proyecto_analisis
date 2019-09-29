@@ -3,6 +3,7 @@ import {API_HOST} from 'react-native-dotenv';
 import {
   AsyncStorage,
   View,
+  Alert,
   Text,
   TextInput,
   Button,
@@ -27,8 +28,33 @@ export default class QuestionScreen extends React.Component {
     option1:"",option2:"",option3:"",option4:"",
     };
   }
+ 
 
- async componentWillMount () {
+ _handleBack = async () => {
+    this.props.navigation.navigate('Home');
+  };
+
+  _handlePlay = async () => {
+    axios.post(API_HOST+"/stats",{
+      },{
+        headers: {'Authorization' : await AsyncStorage.getItem('userToken')}
+    })
+      .then(response => JSON.parse(JSON.stringify(response)))
+      .then(response => {
+      var p = JSON.parse(JSON.stringify(response.data.Point.point));
+      console.log(p);
+      this.props.navigation.navigate('Play',{'puntos': p});
+    })
+    .catch((error) => {
+      if(error.toString().match(/401/)) {
+        alert("Username o Password incorrecto");
+        return;
+      }
+      alert("Networking Error");
+    });
+  };
+
+  componentWillMount = async () =>  {
     const { navigation } = this.props;
     const cat = navigation.getParam('category', 'NO-Category');
     axios.post(API_HOST+"/getquestions", {
@@ -50,8 +76,18 @@ export default class QuestionScreen extends React.Component {
         alert("Username o Password incorrecto");
         return;
       }
-
-      alert("Networking Error");
+      Alert.alert(   
+    'Ha contestado todas las preg. de la categoria',
+    'Seleccione una opcion: ',   
+    [  
+      {  
+        text: 'Volver al menu',  
+        onPress: async () => this._handleBack() ,  
+        style: 'cancel',  
+      },  
+      {text: 'Elegir Cat.', onPress: async () => this._handlePlay() },  
+    ]  
+  );
     });
   }
 

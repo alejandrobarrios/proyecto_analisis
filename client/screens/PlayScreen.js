@@ -75,7 +75,7 @@ export default class PlayScreen extends React.Component {
       })
     .catch((error) => {
       if(error.toString().match(/401/)) {
-        alert("Username o Password incorrecto");
+        alert("Usuario o password incorrecto");
         return;
       }
 
