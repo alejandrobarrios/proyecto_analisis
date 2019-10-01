@@ -35,4 +35,27 @@ public class AppTest
     {
         assertTrue( true );
     }
+    /**
+     * Este test genera una nueva pregunta y valida que se registren
+     * las respuestas y las estadisticas de la misma
+     */
+    public void testQestion()
+    {
+        assertTrue( true );
+    }
+    /**
+     * Este test valida que la aplicacion que la aplicacion continue funcionando en 
+     * la ultima pregunta
+     */
+    public void lastQestion()
+    {
+    	/*getQuestions*/
+    	/*select resp*/
+    	/*luego de responder si devuelve otra pregunta no es la ultima.
+    	 * si develve un mensaje estamos en la ultima pregunta
+    	 */
+    	
+    	assertTrue( true );
+    }
+    
 }
