@@ -42,6 +42,7 @@ public class AppTest
     public void testQestion()
     {
         assertTrue( true );
+        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     }
     /**
      * Este test valida que la aplicacion que la aplicacion continue funcionando en 
@@ -54,7 +55,10 @@ public class AppTest
     	/*luego de responder si devuelve otra pregunta no es la ultima.
     	 * si develve un mensaje estamos en la ultima pregunta
     	 */
-    	
+    	Map<String, Object> parameters = new HashMap<>();
+        UrlResponse response = doRequest("POST", "/users", parameters);
+        Map<String, Object> jsonResponse = new Gson().fromJson(response.body, Map.class);
+
     	assertTrue( true );
     }
     
