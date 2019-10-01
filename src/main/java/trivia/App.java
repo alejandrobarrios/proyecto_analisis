@@ -192,7 +192,7 @@ public class App
 				c.add(an.get("question_id"));
 			}
 
-			if(( question.size() > ans.size() ) ) {
+			if(( question.size() > ans.size() ) || question.size() == 0 ) {
 
 				while(flag && (itera <= ans.size())){
 					

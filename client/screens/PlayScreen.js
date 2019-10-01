@@ -79,7 +79,7 @@ export default class PlayScreen extends React.Component {
         return;
       }
 
-      alert("Networking Error");
+      alert("Esta categoria no posee preguntas para responder. Seleccione otra. ");
     });
   };   
 }
