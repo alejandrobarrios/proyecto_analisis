@@ -166,6 +166,23 @@ public class App
 			return resp;
 		});
 
+		/*//calcula el nivel en el que el usuario se encuentra segun su categoria
+		post("/getlevel", (req, res) -> {
+
+			//Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+			Answered answeredd = new Answered();
+			//LazyList<Answered> ans = Answered.where("category = ?", bodyParams.get("category"));
+			int cant_answered = 0;
+
+			while(cant_answered <= ans.size()){
+				cant_answered++;
+			}
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + cant_answered);
+			String resp= "{\"cant_answered\":"+ choice.toJson(true,"cant_answered");
+			resp=resp+"}";
+			return resp;
+		});
+		*/
 
 		//return a question whith his options
 		post("/getquestions", (req, res) -> {
@@ -192,7 +209,7 @@ public class App
 				c.add(an.get("question_id"));
 			}
 
-			if(( question.size() > ans.size() ) || question.size() == 0 ) {
+			if(( question.size() > ans.size() ) ) {
 
 				while(flag && (itera <= ans.size())){
 					
