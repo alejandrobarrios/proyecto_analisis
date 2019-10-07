@@ -120,6 +120,34 @@ public class App
 			return question.toJson(true);
 		});
 
+		//this method search a user in DB by passing a username
+		post("/search", (req,res) -> {
+			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+			User u = User.searchUserByUsername((String)bodyParams.get("username"));
+			res.type("application/json");
+
+			if(u==null){
+				return "Usuario no encontrado";
+			}else {
+				return u.toJson(true);
+			}
+
+		});
+
+		//this method is for give a user the admin privileges.
+		post("/upadmin", (req,res) -> {
+			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+			User u = User.searchUserByUsername((String)bodyParams.get("username"));
+			res.type("application/json");
+
+			u.set("admin", true);
+			u.saveIt();
+			return u.toJson(true);
+
+		});
+
 		//get all users load
 		get("/allusers", (req, res) -> {
 			LazyList<User> user = User.findAll();
@@ -166,12 +194,12 @@ public class App
 			return resp;
 		});
 
-		/*//calcula el nivel en el que el usuario se encuentra segun su categoria
-		post("/getlevel", (req, res) -> {
+		//calcula el nivel en el que el usuario se encuentra segun su categoria
+		/*post("/getlevel", (req, res) -> {
 
-			//Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+			Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 			Answered answeredd = new Answered();
-			//LazyList<Answered> ans = Answered.where("category = ?", bodyParams.get("category"));
+			LazyList<Answered> ans = Answered.where("user_id = ? and category = ?", currentUser.get("id"), bodyParams.get("category"));
 			int cant_answered = 0;
 
 			while(cant_answered <= ans.size()){
@@ -181,8 +209,8 @@ public class App
 			String resp= "{\"cant_answered\":"+ choice.toJson(true,"cant_answered");
 			resp=resp+"}";
 			return resp;
-		});
-		*/
+		});*/
+		
 
 		//return a question whith his options
 		post("/getquestions", (req, res) -> {
