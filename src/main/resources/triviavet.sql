@@ -66,9 +66,12 @@ DROP TABLE IF EXISTS levels;
 create table if not exists levels(
 id integer primary key auto_increment,
 user_id integer,
-category varchar(30) not null,
-level integer,
-foreign key(user_id) references users(id) ON DELETE CASCADE,
-unique (category)
+level_examen_clinica integer not null,
+level_farmacologia integer not null,
+level_enfermedades integer not null,
+level_clinica_medica integer not null,
+level_epidemiologia integer not null,
+level_quirurgica integer not null,
+foreign key(user_id) references users(id) ON DELETE CASCADE
 );
 
