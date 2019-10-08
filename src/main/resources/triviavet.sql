@@ -61,3 +61,14 @@ foreign key(question_id) references questions(id) ON DELETE CASCADE,
 foreign key(user_id) references users(id) ON DELETE CASCADE,
 unique (user_id,question_id)
 );
+
+DROP TABLE IF EXISTS levels;
+create table if not exists levels(
+id integer primary key auto_increment,
+user_id integer,
+category varchar(30) not null,
+level integer,
+foreign key(user_id) references users(id) ON DELETE CASCADE,
+unique (category)
+);
+
