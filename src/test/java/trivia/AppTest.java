@@ -42,7 +42,7 @@ public class AppTest
      * Este test genera una nueva pregunta y valida que se registren
      * las respuestas y las estadisticas de la misma
      */
-    public void testQestion()
+    public void testQuestion()
     {
 		String description = "Test";
 		String category = "prueba";
@@ -79,7 +79,7 @@ public class AppTest
      * Este test valida que la aplicacion que la aplicacion continue funcionando en 
      * la ultima pregunta
      */
-    public void lastQestion()
+    public void lastQuestion()
     {
     	/*getQuestions*/
     	/*select resp*/
