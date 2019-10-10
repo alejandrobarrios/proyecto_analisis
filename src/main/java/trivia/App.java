@@ -352,7 +352,7 @@ public class App
                         break;
                 }
 
-                LazyList<Answered> answered_list = Answered.where("user_id = ? and category = ? ", id_user, choice.get("category"));
+                LazyList<Answered> answered_list = Answered.where("user_id = ? and category = ? ", user.getInteger("id"), choice.get("category"));
                 Answered answered_level = new Answered();
                 while(answered_list != null){
                     answered_category = answered_category+1;
@@ -360,11 +360,14 @@ public class App
 
                 if ((answered_category / AUX_DIV) > l){
                     l = (answered_category /AUX_DIV);
+                    level.set(q, l); //tengo que guardar el valor l en el nivel de la categoria que corresponda
                 }
+                level.save();
 
-                level.setInteger(q) = l; //tengo que guardar el valor l en el nivel de la categoria que corresponda
+                
 
-                String resp = "{\"Point"+"\" : "+user.toJson(true,"point") + ", \"Correctas\" : "+option_correct.toJson(true,"description");
+                String resp = "{\"Point"+"\" : "+user.toJson(true,"point") + ", \"Correctas\" : "+option_correct.toJson(true,"description") +
+                ", \"level"+"\" : "+ level.toJson(true,"description");
                 resp=resp+"}";
                 res.type("application/json");
                 return resp ;
@@ -375,7 +378,8 @@ public class App
             user.set("amount_wrong", user_incorrect);
             user.save();
             Statistic.save();
-            String resp = "{\"Point"+"\" : "+ user.toJson(true,"point") + ", \"Correctas"+"\" : "+ option_correct.toJson(true,"description") + ", \"Correctas"+"\" : "+ levels.toJson(true,"description"); 
+            String resp = "{\"Point"+"\" : "+ user.toJson(true,"point") + ", \"Correctas"+"\" : "+ option_correct.toJson(true,"description") +
+                ", \"level"+"\" : "+ level.toJson(true,"description"); 
             resp=resp+"}";
             res.type("application/json");
             return resp ;
