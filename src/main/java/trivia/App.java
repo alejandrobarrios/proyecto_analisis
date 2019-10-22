@@ -204,22 +204,6 @@ public class App
             resp=resp+"}";
             return resp;
         });
-
-        //calcula el nivel en el que el usuario se encuentra segun su categoria
-        post("/getlevel", (req, res) -> {
-
-            Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class); 
-            Level levels = Level.findFirst("user_id = ?", currentUser.get("id"));
-        
-            String resp= "{\"level_examen_clinica\" : "+ levels.toJson(true,"level_examen_clinica") +
-             ", \"level_farmacologia\" : "+ levels.toJson(true,"level_farmacologia") + 
-             ", \"level_enfermedades\" : "+levels.toJson(true,"level_enfermedades") + 
-             ", \"level_clinica_medica\" : "+levels.toJson(true,"level_clinica_medica") + 
-             ", \"level_epidemiologia\" : "+levels.toJson(true,"level_epidemiologia") + 
-             ", \"level_quirurgica\" : "+levels.toJson(true,"level_quirurgica");
-            resp=resp+"}";
-            return resp;
-        });
         
 
         //return a question whith his options
@@ -301,6 +285,7 @@ public class App
             LazyList<Question> quest = Question.where("id = ?", identificador);
             Question choice = quest.get(0);
             String q = choice.getString("category");
+            String name_level = new String();
 
             LazyList<Option> answer = Option.where("question_id = ? and correct = ?", identificador, true);
             Option option_correct = answer.get(0);
@@ -313,8 +298,7 @@ public class App
             int l = 0; //save level status
             int answered_category = 0; //amount answered for categorie
             final int AUX_DIV = 11; //amount for div acording the problem
-
-
+         
             Statistic = Statistic.findFirst("question_id = ?", choice.get("id"));
             int correct = (int) Statistic.get("amount_user_right");
             int incorrect = (int) Statistic.get("amount_user_wrong");
@@ -335,41 +319,57 @@ public class App
                 answered.save();
 
                 switch (q) {
+                    case "examen_clinica":
+                        l = level.getInteger("level_examen_clinica");
+                        name_level = "level_examen_clinica";
+                        break;
                     case "farmacologia":
                         l = level.getInteger("level_farmacologia");
+                        name_level = "level_farmacologia";
                         break;
                     case "enfermedades":
                         l = level.getInteger("level_enfermedades");
+                        name_level = "level_enfermedades";
                         break;
                     case "clinica_medica":
                         l = level.getInteger("level_medica");
+                        name_level = "level_medica";
                         break;
                     case "epidemiologia":
                         l = level.getInteger("level_epidemiologia");
+                        name_level = "level_epidemiologia";
                         break;
                     case "quirurgica":
                         l = level.getInteger("level_quirurgica");
+                        name_level = "level_quirurgica";
                         break;
+
                 }
+
+                //System.out.println("*********************************");
 
                 LazyList<Answered> answered_list = Answered.where("user_id = ? and category = ? ", user.getInteger("id"), choice.get("category"));
                 Answered answered_level = new Answered();
-                while(answered_list != null){
-                    answered_category = answered_category+1;
-                }
+                //System.out.println("4444444444444444444444444444444444444444444444");
+                boolean flag = true;
+                
+                answered_category = answered_list.size();
+
+
+
+                System.out.println((answered_category / AUX_DIV) );
 
                 if ((answered_category / AUX_DIV) > l){
                     l = (answered_category /AUX_DIV);
-                    level.set(q, l); //tengo que guardar el valor l en el nivel de la categoria que corresponda
+                    level.set(name_level, l); //tengo que guardar el valor l en el nivel de la categoria que corresponda
                 }
                 level.save();
 
                 
 
-                String resp = "{\"Point"+"\" : "+user.toJson(true,"point") + ", \"Correctas\" : "+option_correct.toJson(true,"description") +
-                ", \"level"+"\" : "+ level.toJson(true,"description");
+                String resp = "{\"Point"+"\" : "+ user.toJson(true,"point") + ", \"Correctas"+"\" : "+ option_correct.toJson(true,"description");
                 resp=resp+"}";
-                res.type("application/json");
+                System.out.println(resp);
                 return resp ;
             }
             incorrect = incorrect + 1;
@@ -378,8 +378,7 @@ public class App
             user.set("amount_wrong", user_incorrect);
             user.save();
             Statistic.save();
-            String resp = "{\"Point"+"\" : "+ user.toJson(true,"point") + ", \"Correctas"+"\" : "+ option_correct.toJson(true,"description") +
-                ", \"level"+"\" : "+ level.toJson(true,"description"); 
+            String resp = "{\"Point"+"\" : "+ user.toJson(true,"point") + ", \"Correctas"+"\" : "+ option_correct.toJson(true,"description");
             resp=resp+"}";
             res.type("application/json");
             return resp ;
@@ -450,10 +449,19 @@ public class App
         post("/stats", (req, res) -> {
             User user = currentUser;
             res.type("application/json");
+            Level levels = Level.findFirst("user_id = ?", currentUser.get("id"));
 
-            String stat= "{\"Point"+"\" : "+user.toJson(true,"point");
-            stat=stat+"}";
-            return stat;
+            String stat= "{\"Point"+"\" : "+user.toJson(true,"point") + 
+            ", \"Level_examen_clinica\" : "+ levels.toJson(true,"level_examen_clinica") +
+            ", \"Level_farmacologia\" : "+ levels.toJson(true,"level_farmacologia") + 
+            ", \"Level_enfermedades\" : "+levels.toJson(true,"level_enfermedades") + 
+            ", \"Level_clinica_medica\" : "+levels.toJson(true,"level_clinica_medica") + 
+            ", \"Level_epidemiologia\" : "+levels.toJson(true,"level_epidemiologia") + 
+            ", \"Level_quirurgica\" : "+levels.toJson(true,"level_quirurgica");
+
+             stat=stat+"}";
+             return stat;
+
         });
 
         //envia las estadisticas de un usuario
