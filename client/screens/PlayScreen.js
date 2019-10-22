@@ -30,6 +30,13 @@ export default class PlayScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const question = navigation.getParam('puntos','nada');
+    const level1 = navigation.getParam('c1', 'nada');
+    const level2 = navigation.getParam('c2', 'nada');
+    const level3 = navigation.getParam('c3', 'nada');
+    const level4 = navigation.getParam('c4', 'nada');
+    const level5 = navigation.getParam('c5', 'nada');
+    const level6 = navigation.getParam('c6', 'nada');
+
     return (
 
       <View style={styles.container}>
@@ -37,23 +44,29 @@ export default class PlayScreen extends React.Component {
         <Text style={styles.welcome}> Puntaje actual: {question} </Text>
         
         <View style={styles.button}> 
-          <Button title="Anatomía" onPress={this._handleCategory.bind(this, 'anatomia')} color = '#37435D' />
+          <Button title="Ex-Clinica" onPress={this._handleCategory.bind(this, 'examen_clinica')} color = '#37435D' />
+        </View>
+
+        <Text style={styles.welcome}> {level1} {level2} {level3} {level4} {level5} {level6} </Text>
+        
+        <View style={styles.button}> 
+         <Button title="Farmacología" onPress={this._handleCategory.bind(this, 'farmacologia')} color = '#37435D' />
         </View>
         
         <View style={styles.button}> 
-         <Button title="Animales Grandes" onPress={this._handleCategory.bind(this, 'animales grandes')} color = '#37435D' />
+          <Button title="Enfermedades" onPress={this._handleCategory.bind(this, 'enfermedades')} color = '#37435D' />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Animales Pequeños" onPress={this._handleCategory.bind(this, 'animales pequeños')} color = '#37435D' />
+          <Button title="Clinica médica" onPress={this._handleCategory.bind(this, 'clinica_medica')} color = '#37435D' />
         </View>
         
         <View style={styles.button}> 
-          <Button title="Química" onPress={this._handleCategory.bind(this, 'quimica')} color = '#37435D' />
+          <Button title="Epidemiología" onPress={this._handleCategory.bind(this, 'epidemiologia')} color = '#37435D' />
         </View>
-        
+
         <View style={styles.button}> 
-          <Button title="Clínica" onPress={this._handleCategory.bind(this, 'clinica')} color = '#37435D' />
+          <Button title="Quirúrgica" onPress={this._handleCategory.bind(this, 'quirurgica')} color = '#37435D' />
         </View>
 
       </View>

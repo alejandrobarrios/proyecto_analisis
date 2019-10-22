@@ -84,8 +84,20 @@ export default class HomeScreen extends React.Component {
       .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {
       var p = JSON.parse(JSON.stringify(response.data.Point.point));
+      var cat1 = JSON.parse(JSON.stringify(response.data.Level_examen_clinica.level_examen_clinica));
+      var cat2 = JSON.parse(JSON.stringify(response.data.Level_farmacologia.level_farmacologia));
+      var cat3 = JSON.parse(JSON.stringify(response.data.Level_enfermedades.level_enfermedades));
+      var cat4 = JSON.parse(JSON.stringify(response.data.Level_clinica_medica.level_clinica_medica));
+      var cat5 = JSON.parse(JSON.stringify(response.data.Level_epidemiologia.level_epidemiologia));
+      var cat6 = JSON.parse(JSON.stringify(response.data.Level_quirurgica.level_quirurgica));
       console.log(p);
-      this.props.navigation.navigate('Play',{'puntos': p});
+      console.log(cat1);
+      console.log(cat2);
+      console.log(cat3);
+      console.log(cat4);
+      console.log(cat5);
+      console.log(cat6);
+      this.props.navigation.navigate('Play',{'puntos': p, 'c1': cat1, 'c2': cat2, 'c3': cat3, 'c4': cat4, 'c5': cat5, 'c6': cat6});
     })
     .catch((error) => {
       if(error.toString().match(/401/)) {
@@ -106,10 +118,12 @@ export default class HomeScreen extends React.Component {
       var p = JSON.parse(JSON.stringify(response.data.Point.point));
       var r = JSON.parse(JSON.stringify(response.data.Correctas.amount_right));
       var w = JSON.parse(JSON.stringify(response.data.Incorrectas.amount_wrong));
+      
       console.log(p);
       console.log(r);
       console.log(w);
-      this.props.navigation.navigate('Stats',{'puntos': p, 'correctas': r, 'incorrectas': w});
+      
+      this.props.navigation.navigate('Stats',{'puntos': p, 'correctas': r, 'incorrectas': w });
     })  
     .catch((error) => {
       if(error.toString().match(/401/)) {

@@ -37,7 +37,8 @@ export default class AnswerScreen extends React.Component {
         .then(response => {
           var r = response.data.Point;
           var c = response.data.Correctas;
-          this.setState({puntos : r, correcta:c });
+          var l = response.data.level;
+          this.setState({puntos : r, correcta:c, });
         })
   }
 
@@ -90,8 +91,13 @@ _handleBack = async () => {
       .then(response => JSON.parse(JSON.stringify(response)))
       .then(response => {
       var p = JSON.parse(JSON.stringify(response.data.Point.point));
-      console.log(p);
-      this.props.navigation.navigate('Play',{'puntos': p});
+      var cat1 = JSON.parse(JSON.stringify(response.data.Level_examen_clinica.level_examen_clinica));
+      var cat2 = JSON.parse(JSON.stringify(response.data.Level_farmacologia.level_farmacologia));
+      var cat3 = JSON.parse(JSON.stringify(response.data.Level_enfermedades.level_enfermedades));
+      var cat4 = JSON.parse(JSON.stringify(response.data.Level_clinica_medica.level_clinica_medica));
+      var cat5 = JSON.parse(JSON.stringify(response.data.Level_epidemiologia.level_epidemiologia));
+      var cat6 = JSON.parse(JSON.stringify(response.data.Level_quirurgica.level_quirurgica));
+      this.props.navigation.navigate('Play',{'puntos': p, 'c1': cat1, 'c2': cat2, 'c3': cat3, 'c4': cat4, 'c5': cat5, 'c6': cat6});
     })
     .catch((error) => {
       if(error.toString().match(/401/)) {
