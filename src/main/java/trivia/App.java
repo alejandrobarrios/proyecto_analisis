@@ -6,6 +6,7 @@ import static spark.Spark.*;
 
 import java.util.Map;
 import java.util.*;
+import org.json.JSONObject;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DB;
@@ -37,15 +38,28 @@ public class App
 {
     static User currentUser;
     static int identificador;
-    public static void main( String[] args ){ 
+    static final String RUTA = "/admin";
+
+    public static JSONObject userToJSON(User user){
+          JSONObject res = new JSONObject();
+          res.put("username",user.get("username"));
+          res.put("password",user.get("password"));
+          return res;
+  }
+
+    public static void main( String[] args ){
         before((request, response) -> {
             if (Base.hasConnection()) {
                 Base.close();
             }
             if (!Base.hasConnection())
                 Base.open();
-            String headerToken = (String) request.headers("Authorization");
+            String url = request.pathInfo().substring(0, 6);
+            if(!(url.equals(RUTA))){
 
+            System.out.println("//////////////////////////0"+url);
+
+            String headerToken = (String) request.headers("Authorization");
             if (
                 headerToken == null ||
                 headerToken.isEmpty() ||
@@ -54,6 +68,8 @@ public class App
                 halt(401);
                 }
             currentUser = BasicAuth.getUser(headerToken);
+          }
+
         });
         after((request, response) -> {
             Base.close();
@@ -71,6 +87,44 @@ public class App
         return "hello" + req.params(":name");
       });
 
+      get("/allusers3", (req, res) -> {//get all users load
+        res.type("application/json");
+
+       LazyList<User> user = User.findAll();
+       List<JSONObject> lista = new ArrayList<JSONObject>();
+       for(User u: user ){
+         JSONObject usr= userToJSON(u);
+         lista.add(usr);
+       }
+
+       //String json = new Gson().toJson(lista);
+       //return json;
+       return lista;
+     });
+
+
+     post("/newUserAriel", (req, res) -> {
+
+        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+        User user = new User();
+        user.set("username", bodyParams.get("nombre"));
+        user.set("password", bodyParams.get("apellido"));
+        user.set("name", bodyParams.get("nombre"));
+        user.set("lastname", bodyParams.get("apellido"));
+        user.set("dni", bodyParams.get("dni"));
+        user.set("admin", false);
+        user.set("point", 0);
+        user.set("amount_right", 0);
+        user.set("amount_wrong", 0);
+
+        user.saveIt();
+
+        res.type("application/json");
+
+        return user.toJson(true);
+
+      });
         //guarda en la base de datos los distintos parametros de usuario que se le pasaron
         post("/users", (req, res) -> {
 
@@ -147,7 +201,7 @@ public class App
         });
 
         //this method is for give a user the admin privileges.
-        post("/upadmin", (req,res) -> {
+        post("/admin/convertTo", (req,res) -> {
             Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
 
             User u = User.searchUserByUsername((String)bodyParams.get("username"));
@@ -179,7 +233,7 @@ public class App
                 lista.add(pregunta);
             }
             return lista;
-        });   
+        });
 
         post("/getcat", (req, res) -> {
 
@@ -204,7 +258,7 @@ public class App
             resp=resp+"}";
             return resp;
         });
-        
+
 
         //return a question whith his options
         post("/getquestions", (req, res) -> {
@@ -234,10 +288,10 @@ public class App
             if(( question.size() > ans.size() ) ) {
 
                 while(flag && (itera <= ans.size())){
-                    
+
                     choice = question.get(cant);
                     identificador = (int)choice.get("id");
-                    
+
 
                     if(c.contains(identificador)){
                         itera = itera + 1;
@@ -298,7 +352,7 @@ public class App
             int l = 0; //save level status
             int answered_category = 0; //amount answered for categorie
             final int AUX_DIV = 11; //amount for div acording the problem
-         
+
             Statistic = Statistic.findFirst("question_id = ?", choice.get("id"));
             int correct = (int) Statistic.get("amount_user_right");
             int incorrect = (int) Statistic.get("amount_user_wrong");
@@ -346,26 +400,18 @@ public class App
 
                 }
 
-                //System.out.println("*********************************");
 
                 LazyList<Answered> answered_list = Answered.where("user_id = ? and category = ? ", user.getInteger("id"), choice.get("category"));
                 Answered answered_level = new Answered();
-                //System.out.println("4444444444444444444444444444444444444444444444");
                 boolean flag = true;
-                
+
                 answered_category = answered_list.size();
-
-
-
-                System.out.println((answered_category / AUX_DIV) );
 
                 if ((answered_category / AUX_DIV) > l){
                     l = (answered_category /AUX_DIV);
                     level.set(name_level, l); //tengo que guardar el valor l en el nivel de la categoria que corresponda
                 }
                 level.save();
-
-                
 
                 String resp = "{\"Point"+"\" : "+ user.toJson(true,"point") + ", \"Correctas"+"\" : "+ option_correct.toJson(true,"description");
                 resp=resp+"}";
@@ -451,12 +497,12 @@ public class App
             res.type("application/json");
             Level levels = Level.findFirst("user_id = ?", currentUser.get("id"));
 
-            String stat= "{\"Point"+"\" : "+user.toJson(true,"point") + 
+            String stat= "{\"Point"+"\" : "+user.toJson(true,"point") +
             ", \"Level_examen_clinica\" : "+ levels.toJson(true,"level_examen_clinica") +
-            ", \"Level_farmacologia\" : "+ levels.toJson(true,"level_farmacologia") + 
-            ", \"Level_enfermedades\" : "+levels.toJson(true,"level_enfermedades") + 
-            ", \"Level_clinica_medica\" : "+levels.toJson(true,"level_clinica_medica") + 
-            ", \"Level_epidemiologia\" : "+levels.toJson(true,"level_epidemiologia") + 
+            ", \"Level_farmacologia\" : "+ levels.toJson(true,"level_farmacologia") +
+            ", \"Level_enfermedades\" : "+levels.toJson(true,"level_enfermedades") +
+            ", \"Level_clinica_medica\" : "+levels.toJson(true,"level_clinica_medica") +
+            ", \"Level_epidemiologia\" : "+levels.toJson(true,"level_epidemiologia") +
             ", \"Level_quirurgica\" : "+levels.toJson(true,"level_quirurgica");
 
              stat=stat+"}";
