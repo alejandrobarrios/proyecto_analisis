@@ -102,29 +102,24 @@ public class App
        return lista;
      });
 
+     post("/admin/users", (req, res) -> {
 
-     post("/newUserAriel", (req, res) -> {
+         Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+         User user = new User();
+         user.set("username", bodyParams.get("username"));
+         user.set("password", bodyParams.get("password"));
+         user.set("name", bodyParams.get("name"));
+         user.set("lastname", bodyParams.get("lastname"));
+         user.set("dni", bodyParams.get("dni"));
+         user.set("admin", false);
 
-        Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+         user.saveIt();
 
-        User user = new User();
-        user.set("username", bodyParams.get("nombre"));
-        user.set("password", bodyParams.get("apellido"));
-        user.set("name", bodyParams.get("nombre"));
-        user.set("lastname", bodyParams.get("apellido"));
-        user.set("dni", bodyParams.get("dni"));
-        user.set("admin", false);
-        user.set("point", 0);
-        user.set("amount_right", 0);
-        user.set("amount_wrong", 0);
+         res.type("application/json");
 
-        user.saveIt();
+         return user.toJson(true);
+       });
 
-        res.type("application/json");
-
-        return user.toJson(true);
-
-      });
         //guarda en la base de datos los distintos parametros de usuario que se le pasaron
         post("/users", (req, res) -> {
 
@@ -210,6 +205,29 @@ public class App
             u.set("admin", true);
             u.saveIt();
             return u.toJson(true);
+
+        });
+
+        post("/admin/statCat", (req,res) -> {
+            Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+            Integer res_cor = 0;
+            Integer res_incor = 0;
+            int key = 0;
+            Statistic ask = new Statistic();
+
+            LazyList<Question> ques = Question.where("category = ?", bodyParams.get("category"));
+            for(Question q : ques){
+              key = (int)q.get("id");
+              ask = Statistic.findFirst("question_id = ?", key);
+              res_cor = res_cor + ask.getInteger("amount_user_right");
+              res_incor = res_incor + ask.getInteger("amount_user_wrong");
+            }
+
+           System.out.println(String.valueOf(res_cor));//probarlo para eso hay que jugar con la app
+          //volver a correr los script de creacion de base de datos por que el maxi agrego los levels
+
+            //u.saveIt();
+            return "completado";
 
         });
 

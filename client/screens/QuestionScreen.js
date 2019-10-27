@@ -13,7 +13,7 @@ import {
 import axios from 'axios';
 
 export default class QuestionScreen extends React.Component {
-  static navigationOptions ={ 
+  static navigationOptions ={
     title: 'La pregunta es...',
      headerStyle: {
       backgroundColor: '#37435D',
@@ -28,7 +28,7 @@ export default class QuestionScreen extends React.Component {
     option1:"",option2:"",option3:"",option4:"",
     };
   }
- 
+
 
  _handleBack = async () => {
     this.props.navigation.navigate('Home');
@@ -76,17 +76,17 @@ export default class QuestionScreen extends React.Component {
         alert("Username o Password incorrecto");
         return;
       }
-      Alert.alert(   
+      Alert.alert(
     'Ha contestado todas las preg. de la categoria',
-    'Seleccione una opcion: ',   
-    [  
-      {  
-        text: 'Volver al menu',  
-        onPress: async () => this._handleBack() ,  
-        style: 'cancel',  
-      },  
-      {text: 'Elegir Cat.', onPress: async () => this._handlePlay() },  
-    ]  
+    'Seleccione una opcion: ',
+    [
+      {
+        text: 'Volver al menu',
+        onPress: async () => this._handleBack() ,
+        style: 'cancel',
+      },
+      {text: 'Elegir Cat.', onPress: async () => this._handlePlay() },
+    ]
   );
     });
   }
@@ -143,22 +143,22 @@ export default class QuestionScreen extends React.Component {
         </Text>
 
         <View style={styles.button}>
-         <Button color = '#F2B558' title= {a} onPress = {() => navigate('Answer', {'desc': opcion1})} 
+         <Button color = '#F2B558' title= {a} onPress = {() => navigate('Answer', {'desc': opcion1})}
           />
         </View>
 
         <View style={styles.button}>
-          <Button color = '#F2B558' title= {b} onPress = {() => navigate('Answer', {'desc': opcion2})} 
+          <Button color = '#F2B558' title= {b} onPress = {() => navigate('Answer', {'desc': opcion2})}
           />
         </View>
 
         <View style={styles.button}>
-          <Button color = '#F2B558' title= {c} onPress = {() => navigate('Answer', {'desc': opcion3})} 
+          <Button color = '#F2B558' title= {c} onPress = {() => navigate('Answer', {'desc': opcion3})}
           />
         </View>
 
         <View style={styles.button}>
-          <Button color = '#F2B558' title= {d} onPress = {() => navigate('Answer', {'desc': opcion4})}  
+          <Button color = '#F2B558' title= {d} onPress = {() => navigate('Answer', {'desc': opcion4})}
           />
         </View>
 
@@ -187,7 +187,7 @@ export default class QuestionScreen extends React.Component {
 
       alert(Error);
     });
-  };    
+  };
 }
 
 const styles = StyleSheet.create({
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#FFFFFF',  
+    borderBottomColor: '#FFFFFF',
   },
   getStartedText: {
     marginTop: -150,
@@ -255,10 +255,10 @@ const styles = StyleSheet.create({
       margin: 5,
       },
       SeparatorLine :{
- 
+
       backgroundColor : '#fff',
       width: 0,
       height: 40
-       
-      },  
+
+      },
 })
