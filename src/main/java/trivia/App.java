@@ -45,8 +45,14 @@ public class App
           res.put("username",user.get("username"));
           res.put("password",user.get("password"));
           return res;
-  }
+        }
 
+  public static JSONObject userToJSON(Statistic cat){
+        JSONObject res = new JSONObject();
+        res.put("amount_user_right",cat.get("amount_user_right"));
+        res.put("amount_user_wrong",cat.get("amount_user_wrong"));
+        return res;
+      }
     public static void main( String[] args ){
         before((request, response) -> {
             if (Base.hasConnection()) {
@@ -163,12 +169,19 @@ public class App
             question.set("description", bodyParams.description);
             question.set("category", bodyParams.category);
             question.set("see", bodyParams.see);
+            question.set("amount_user_right", 0);
+            question.set("amount_user_wrong", 0);
             question.save();
 
-            Statistic estadisticas = new Statistic();
-            estadisticas.set("amount_user_right", 0);
-            estadisticas.set("amount_user_wrong", 0);
-            question.add(estadisticas);
+            Statistic est = Statistic.findFirst("category = ?", bodyParams.category);
+
+            if(est == null){
+              Statistic estadisticas = new Statistic();
+              estadisticas.set("amount_user_right", 0);
+              estadisticas.set("amount_user_wrong", 0);
+              estadisticas.set("category", bodyParams.category);
+              estadisticas.save();
+            }
 
             for(OptionParam item: bodyParams.options) {
                 Option option = new Option();
@@ -210,24 +223,13 @@ public class App
 
         post("/admin/statCat", (req,res) -> {
             Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-            Integer res_cor = 0;
-            Integer res_incor = 0;
-            int key = 0;
-            Statistic ask = new Statistic();
 
-            LazyList<Question> ques = Question.where("category = ?", bodyParams.get("category"));
-            for(Question q : ques){
-              key = (int)q.get("id");
-              ask = Statistic.findFirst("question_id = ?", key);
-              res_cor = res_cor + ask.getInteger("amount_user_right");
-              res_incor = res_incor + ask.getInteger("amount_user_wrong");
-            }
 
-           System.out.println(String.valueOf(res_cor));//probarlo para eso hay que jugar con la app
-          //volver a correr los script de creacion de base de datos por que el maxi agrego los levels
+            Statistic category_stat = Statistic.findFirst("category = ?", bodyParams.get("category"));
+            JSONObject st= userToJSON(category_stat);
 
-            //u.saveIt();
-            return "completado";
+            res.type("application/json");
+            return st ;
 
         });
 
@@ -351,7 +353,7 @@ public class App
         post("/getanswer", (req, res) -> {
 
             Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
-            Statistic Statistic = new Statistic();
+            Statistic stat = new Statistic();
             User user = currentUser;
             Answered answered = new Answered();
             LazyList<Question> quest = Question.where("id = ?", identificador);
@@ -371,18 +373,25 @@ public class App
             int answered_category = 0; //amount answered for categorie
             final int AUX_DIV = 11; //amount for div acording the problem
 
-            Statistic = Statistic.findFirst("question_id = ?", choice.get("id"));
-            int correct = (int) Statistic.get("amount_user_right");
-            int incorrect = (int) Statistic.get("amount_user_wrong");
+            stat = Statistic.findFirst("category = ?", choice.get("category"));
+            int correct_stat = (int) stat.get("amount_user_right");
+            int incorrect_stat = (int) stat.get("amount_user_wrong");
+
+            int correct_question = (int) choice.get("amount_user_right");
+            int incorrect_question = (int) choice.get("amount_user_wrong");
+
             if(option_correct.get("description").equals(bodyParams.get("description"))){
                 point = point + 1;
-                correct = correct + 1;
+                correct_question = correct_question + 1;
+                correct_stat = correct_stat + 1;
                 user_correct = user_correct + 1;
-                Statistic.set("amount_user_right", correct);
+
+                stat.set("amount_user_right", correct_stat);
+                choice.set("amount_user_right", correct_question);
                 user.set("point", point);
                 user.set("amount_right", user_correct);
                 user.save();
-                Statistic.save();
+                stat.save();
                 choice.set("see", true);
                 choice.save();
                 answered.set("question_id",identificador);
@@ -436,12 +445,16 @@ public class App
                 System.out.println(resp);
                 return resp ;
             }
-            incorrect = incorrect + 1;
+            incorrect_question = incorrect_question + 1;
+            incorrect_stat = incorrect_stat + 1;
             user_incorrect = user_incorrect + 1;
-            Statistic.set("amount_user_wrong", incorrect);
+
+            stat.set("amount_user_wrong", incorrect_stat);
+            choice.set("amount_user_wrong", incorrect_question);
             user.set("amount_wrong", user_incorrect);
             user.save();
-            Statistic.save();
+            stat.save();
+            choice.save();
             String resp = "{\"Point"+"\" : "+ user.toJson(true,"point") + ", \"Correctas"+"\" : "+ option_correct.toJson(true,"description");
             resp=resp+"}";
             res.type("application/json");
