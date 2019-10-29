@@ -1,35 +1,78 @@
-import React, { Component } from "react";
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Bootstrap from "react-bootstrap";
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Home from "./Home.js";
-import Login from "./Login.js";
-import Other from "./Other.js";
+import React, {Component} from 'react';
 
 
-export default class App extends Component {
+import Contacts from './contacts';
+import MyForm from './miFormulario';
+import Users from './users';
 
-  render() {
-    return (
-      <BrowserRouter>
-        <div>
-        <Redirect
-            from="/"
-            to="/home" />
-          <Switch>
-          <Route
-            path="/home"
-            component={Home} />
-          <Route
-            path="/login"
-            component={Login} />
-          <Route
-            path="/other"
-            component={Other} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    );
-  }
-}
+
+    class App extends Component {
+
+      state = {
+        contacts: [],
+        users: []
+      }
+
+
+      addUser = (username, password, firstName, lastName, dni) => {
+         //console.log("adding a new user...");
+         const newUser = {
+            username : username,
+            password : password,
+            firstName : firstName,
+            lastName : lastName,
+            dni : dni
+         }
+         this.setState ({
+            users  : [...this.state.users, newUser]
+         })
+         console.log(this.state.users);
+      }
+
+
+      componentDidMount() {
+
+
+       //fetch('http://jsonplaceholder.typicode.com/users')
+       fetch('http://localhost:4567/admin/statCat',{
+        method: 'POST',
+        body: '{"category":"examen_clinica"}'
+      })
+        .then(response => response.json())
+        .then((data) => {
+          this.setState({ contacts : data })
+          console.log(this.state.contacts)
+        })
+        .catch(console.log)
+
+
+
+       //fetch('http://jsonplaceholder.typicode.com/users')
+       fetch('http://localhost:4567/allusers3')
+        .then(response => response.json())
+        .then((data) => {
+          this.setState({ users : data })
+          console.log(this.state.users)
+        })
+        .catch(console.log)
+
+
+
+
+      }
+
+
+
+      render () {
+        return (
+
+          <div>
+            <MyForm addUser={this.addUser} />
+          </div>
+
+
+        );
+      }
+    }
+
+export default App;
