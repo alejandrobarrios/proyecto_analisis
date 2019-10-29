@@ -76,16 +76,11 @@ public class AppTest
         
     }
     /**
-     * Este test valida que la aplicacion que la aplicacion continue funcionando en 
-     * la ultima pregunta
+     * Este test valida que que la aplicacion continue funcionando en 
+     * la ultima pregunta de la categoria test
      */
     public void lastQuestion()
     {
-    	/*getQuestions*/
-    	/*select resp*/
-    	/*luego de responder si devuelve otra pregunta no es la ultima.
-    	 * si develve un mensaje estamos en la ultima pregunta
-    	 */
     	Map<String, Object> parameters = new HashMap<>();
     	
 		LazyList<Question> question = Question.where("category = ? and see = ?", "test", false);
@@ -98,7 +93,6 @@ public class AppTest
 			}else {
 				assertTrue( false );
 			}
-					
 		}
     }
     
