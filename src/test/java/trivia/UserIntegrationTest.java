@@ -42,12 +42,12 @@ public class UserIntegrationTest {
 
     @AfterClass
     public static void tearDown() {
+    	Base.close();
         Spark.stop();
     }
 
     @After
     public void clear() {
-      Base.close();
     }
 
 
@@ -73,7 +73,6 @@ public class UserIntegrationTest {
         u.set("amount_right", 0);
         u.set("amount_wrong", 0);
         u.saveIt();
-        Base.close();
     }
     @Test
     public void canCreateUser() {
@@ -82,21 +81,43 @@ public class UserIntegrationTest {
       String name = "Turing";
       String lastname = "Turing";
       int dni = 39327496;
-      Boolean admin = true;
-      int points = 0;
-      int amount_right = 0;            
-      int amount_wrong = 0;
       Map<String, Object> parameters = new HashMap<>();
       parameters.put("username", username);
       parameters.put("password", password);
       parameters.put("name", name);
       parameters.put("lastname", lastname);
       parameters.put("dni", dni);
-      parameters.put("admin",admin);
-      parameters.put("point", points);
-      parameters.put("amount_right", amount_right);
-      parameters.put("amount_wrong", amount_wrong);
       UrlResponse response = doRequest("POST", "/users", parameters);
+      Map<String, Object> jsonResponse = new Gson().fromJson(response.body, Map.class);
+
+      assertNotNull(response);
+      assertNotNull(response.body);
+      assertEquals(200, response.status);
+      assertEquals(jsonResponse.get("username"), username);
+    }
+
+    @Test
+    public void canLoginAdmin() {
+      String username = "admin";
+      String password = "admin";
+      Map<String, Object> parameters = new HashMap<>();
+      parameters.put("username", username);
+      parameters.put("password", password);
+      UrlResponse response = doRequest("POST", "/admin/login", parameters);
+      Map<String, Object> jsonResponse = new Gson().fromJson(response.body, Map.class);
+
+      assertNotNull(response);
+      assertNotNull(response.body);
+      assertEquals(200, response.status);
+      assertEquals(jsonResponse.get("username"), username);
+    }
+
+    @Test
+    public void canEnableAdmin() {
+      String username = "admin";
+      Map<String, Object> parameters = new HashMap<>();
+      parameters.put("username", username);
+      UrlResponse response = doRequest("POST", "/admin/convertTo", parameters);
       Map<String, Object> jsonResponse = new Gson().fromJson(response.body, Map.class);
 
       assertNotNull(response);
