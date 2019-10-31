@@ -85,7 +85,10 @@ export default class SignInScreen extends React.Component {
 
   _signIn = () => {
     const { username, password } = this.state;
-   
+    console.log(username);
+    console.log(password); 
+    console.log(API_HOST);  
+
     axios.post(API_HOST+"/login", {
       username: username,
       password: password,
@@ -107,8 +110,8 @@ export default class SignInScreen extends React.Component {
         alert("Username o Password incorrecto");
         return;
       }
-
-      alert("Networking Error");
+      console.log(Error);	
+      alert(Error);
     });
   };
 }
