@@ -13,7 +13,7 @@ import axios from 'axios';
 
 export default class PlayScreen extends React.Component {
   static navigationOptions ={ 
-    title: 'Seleccione una categoría',
+    title: 'Jugar',
      headerStyle: {
       backgroundColor: '#F2B558',
      },headerTintColor: '#fff',
@@ -37,36 +37,44 @@ export default class PlayScreen extends React.Component {
     const level5 = navigation.getParam('c5', 'nada');
     const level6 = navigation.getParam('c6', 'nada');
 
+    var cat1 = "Ex-Clínica: Nivel " + level1;
+    var cat2 = "Farmacología: Nivel " + level2;
+    var cat3 = "Enfermedades: Nivel " + level3;
+    var cat4 = "Clínica Médica: Nivel " + level4;
+    var cat5 = "Epidemiología: Nivel " + level5;
+    var cat6 = "Quirúrgica: Nivel " + level6;
+
+
     return (
 
       <View style={styles.container}>
 
-        <Text style={styles.welcome}> Puntaje actual: {question} </Text>
-        
-        <View style={styles.button}> 
-          <Button title="Ex-Clinica" onPress={this._handleCategory.bind(this, 'examen_clinica')} color = '#37435D' />
-        </View>
+        <Text style={styles.welcome2}> SELECCIONA UNA CATEGORÍA</Text>
 
-        <Text style={styles.welcome}> {level1} {level2} {level3} {level4} {level5} {level6} </Text>
+        <Text style={styles.welcome}> PUNTAJE ACTUAL: {question} </Text>
         
         <View style={styles.button}> 
-         <Button title="Farmacología" onPress={this._handleCategory.bind(this, 'farmacologia')} color = '#37435D' />
-        </View>
-        
-        <View style={styles.button}> 
-          <Button title="Enfermedades" onPress={this._handleCategory.bind(this, 'enfermedades')} color = '#37435D' />
-        </View>
-        
-        <View style={styles.button}> 
-          <Button title="Clinica médica" onPress={this._handleCategory.bind(this, 'clinica_medica')} color = '#37435D' />
-        </View>
-        
-        <View style={styles.button}> 
-          <Button title="Epidemiología" onPress={this._handleCategory.bind(this, 'epidemiologia')} color = '#37435D' />
+          <Button title={cat1} onPress={this._handleCategory.bind(this, 'examen_clinica')} color = '#37435D' />
         </View>
 
         <View style={styles.button}> 
-          <Button title="Quirúrgica" onPress={this._handleCategory.bind(this, 'quirurgica')} color = '#37435D' />
+         <Button title={cat2} onPress={this._handleCategory.bind(this, 'farmacologia')} color = '#37435D' />
+        </View>
+        
+        <View style={styles.button}> 
+          <Button title={cat3} onPress={this._handleCategory.bind(this, 'enfermedades')} color = '#37435D' />
+        </View>
+        
+        <View style={styles.button}> 
+          <Button title={cat4} onPress={this._handleCategory.bind(this, 'clinica_medica')} color = '#37435D' />
+        </View>
+        
+        <View style={styles.button}> 
+          <Button title={cat5} onPress={this._handleCategory.bind(this, 'epidemiologia')} color = '#37435D' />
+        </View>
+
+        <View style={styles.button}> 
+          <Button title={cat6} onPress={this._handleCategory.bind(this, 'quirurgica')} color = '#37435D' />
         </View>
 
       </View>
@@ -104,7 +112,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#6b7a8f',
   },
   welcome: {
-    fontSize: 22,
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 10,
+  },
+  welcome2: {
+    fontSize: 15,
     textAlign: 'center',
     color: 'white',
     marginTop: 10,
@@ -120,7 +134,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop:15,
     color: 'rgba(0,0,0, 1)',
-    paddingRight: 40,
-    paddingLeft: 40,
+    paddingRight: 70,
+    paddingLeft: 70,
   },
 })
