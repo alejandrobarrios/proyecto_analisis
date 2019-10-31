@@ -89,10 +89,6 @@ public class App
             return "OK";
         });
 
-        get("/hello/:name", (req, res) -> {
-        return "hello" + req.params(":name");
-      });
-
       get("/allusers3", (req, res) -> {//get all users load
         res.type("application/json");
 
@@ -574,6 +570,23 @@ public class App
             // if there is currentUser is because headers are correct, so we only
             // return the current user here
             return currentUser.toJson(true);
+        });
+
+        post("/admin/login", (req, res) -> {
+            Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+            res.type("application/json");
+            User u = User.searchUserByUsername((String)bodyParams.get("username"));
+            User adminCurrentUser = new User();
+            if(u != null){
+
+                adminCurrentUser.set("username", bodyParams.get("username"));
+                adminCurrentUser.set("password", bodyParams.get("password"));
+
+                return adminCurrentUser.toJson(true);
+            }
+
+
+            return "No se encuentra el usuario";
         });
     }
 }
