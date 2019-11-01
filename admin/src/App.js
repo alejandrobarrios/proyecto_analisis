@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-
-
-import Contacts from './contacts';
+import { Button } from 'react-bootstrap';
+import "./App.css";
+import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+//npm install --save react-router-dom
 import MyForm from './miFormulario';
-import Users from './users';
+import Home from './home';
+import Statitics from './estadisticas';
+
 
 
     class App extends Component {
@@ -12,7 +15,6 @@ import Users from './users';
         contacts: [],
         users: []
       }
-
 
       addUser = (username, password, firstName, lastName, dni) => {
          //console.log("adding a new user...");
@@ -61,15 +63,29 @@ import Users from './users';
 
       }
 
-
-
       render () {
+        require('dotenv').config();
         return (
 
-          <div>
-            <MyForm addUser={this.addUser} />
-          </div>
-
+          <BrowserRouter>
+              <div>
+              <nav>
+              <ul>
+                <li>
+                  <Link to="/home">Home</Link>
+                </li>
+              </ul>
+              </nav>
+                <Switch>
+                  <Route
+                    path="/home"
+                    component={Home} />
+                  <Route 
+                    path="/estadisticas"
+                    component={Statitics} />
+                </Switch>
+              </div>
+          </BrowserRouter>
 
         );
       }
