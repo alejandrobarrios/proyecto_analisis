@@ -65,7 +65,7 @@ export default class CreateAccount extends Component {
     event.preventDefault();
     //doSomethingWithEvent(event);
 
-    fetch('http://localhost:4567/admin/login', {
+    fetch('http://localhost:4567/admin/users', {
 
       method: 'POST',
       body: JSON.stringify({

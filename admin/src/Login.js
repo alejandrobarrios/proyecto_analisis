@@ -1,5 +1,7 @@
 import React, {Component } from 'react';
 
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+
 
 export default class login extends Component {
   constructor(props) {
@@ -29,7 +31,6 @@ export default class login extends Component {
   handleLogIn (event) {
     //console.log(this.state);
     //this.props.addUser(this.state.firstName, this.state.lastName);//ejecuto addUser que pase desde App
-    alert('Agregamos un Nuevo Usuario: ' + this.state.username );
     event.preventDefault();
     //doSomethingWithEvent(event);
 
@@ -46,7 +47,7 @@ export default class login extends Component {
     })
     .then(response => response.json())
     .then(json => console.log(json))
-
+      alert('Agregamos un Nuevo Usuario: ' + this.state.username );
     }
 
   onSubmit =(event) =>{
@@ -61,7 +62,7 @@ export default class login extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Login">
       <h2>Log in</h2>
       <form onSubmit={this.handleLogIn}>
 

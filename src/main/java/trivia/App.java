@@ -578,11 +578,14 @@ public class App
             User u = User.searchUserByUsername((String)bodyParams.get("username"));
             User adminCurrentUser = new User();
             if(u != null){
+              if((Boolean)u.get("admin")){
 
                 adminCurrentUser.set("username", bodyParams.get("username"));
                 adminCurrentUser.set("password", bodyParams.get("password"));
 
                 return adminCurrentUser.toJson(true);
+              }
+              return "usted no tiene permiso";
             }
 
 
