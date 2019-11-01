@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS questions(
 	category varchar(30) not null,
     description varchar(100) not null,
     see BOOLEAN default 0,
-    amount_user_right integer,
-    amount_user_wrong integer,
+    amount_user_right integer default 0,
+    amount_user_wrong integer default 0,
     created_at DATETIME,
 	updated_at DATETIME
 );
