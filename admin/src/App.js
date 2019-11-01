@@ -3,9 +3,10 @@ import { Button } from 'react-bootstrap';
 import "./App.css";
 import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 //npm install --save react-router-dom
-import MyForm from './miFormulario';
+import Begin from './begin';
 import Home from './home';
 import Statitics from './estadisticas';
+import Privileges from './privilegesAdmin';
 
 
 
@@ -32,40 +33,12 @@ import Statitics from './estadisticas';
       }
 
 
-      componentDidMount() {
 
-
-       //fetch('http://jsonplaceholder.typicode.com/users')
-       fetch('http://localhost:4567/admin/statCat',{
-        method: 'POST',
-        body: '{"category":"examen_clinica"}'
-      })
-        .then(response => response.json())
-        .then((data) => {
-          this.setState({ contacts : data })
-          console.log(this.state.contacts)
-        })
-        .catch(console.log)
-
-
-
-       //fetch('http://jsonplaceholder.typicode.com/users')
-       fetch('http://localhost:4567/allusers3')
-        .then(response => response.json())
-        .then((data) => {
-          this.setState({ users : data })
-          console.log(this.state.users)
-        })
-        .catch(console.log)
-
-
-
-
-      }
 
       render () {
-        require('dotenv').config();
         return (
+          <div>
+          <Begin />
 
           <BrowserRouter>
               <div>
@@ -73,6 +46,12 @@ import Statitics from './estadisticas';
               <ul>
                 <li>
                   <Link to="/home">Home</Link>
+                </li>
+                <li>
+                  <Link to="/estadisticas">Statitics</Link>
+                </li>
+                <li>
+                  <Link to="/privilegesAdmin">Privileges</Link>
                 </li>
               </ul>
               </nav>
@@ -83,9 +62,13 @@ import Statitics from './estadisticas';
                   <Route 
                     path="/estadisticas"
                     component={Statitics} />
+                  <Route 
+                    path="/privilegesAdmin"
+                    component={Privileges} />
                 </Switch>
               </div>
           </BrowserRouter>
+          </div>
 
         );
       }

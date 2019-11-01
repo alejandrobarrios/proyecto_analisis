@@ -210,10 +210,13 @@ public class App
 
             User u = User.searchUserByUsername((String)bodyParams.get("username"));
             res.type("application/json");
-
-            u.set("admin", true);
-            u.saveIt();
-            return u.toJson(true);
+            if(u!=null){
+                u.set("admin", true);
+                u.saveIt();
+                return u.toJson(true);
+            }
+            System.out.println("llegue aca");
+            return "no existe";
 
         });
 
