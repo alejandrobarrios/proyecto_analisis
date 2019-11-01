@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
-import MyForm from './miFormulario';
+import MyForm from './createAccount';
 import Login from './Login';
 import "./App.css";
 
