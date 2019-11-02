@@ -7,7 +7,6 @@ export default class privilegesAdmin extends Component {
     super(props);
     this.state = {
       username:'',
-      password:'',
     };
 
     this.handleChange = this.handleChange.bind(this);

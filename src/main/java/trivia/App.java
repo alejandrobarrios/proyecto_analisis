@@ -158,7 +158,7 @@ public class App
         //guarda en la base de datos los distintos parametros de preguntas que se le pasaron
         //asocia una lista de respuestas a una pregunta
         //crea las estadisticas de dicha pregunta, para saber porcentaje de alumos que la respondiron correctamente o no.
-        post("/questions", (req, res) -> {
+        post("/admin/questions", (req, res) -> {
             QuestionParam bodyParams = new Gson().fromJson(req.body(), QuestionParam.class);
 
             Question question = new Question();
@@ -333,15 +333,69 @@ public class App
                 return "Todo respondido";
             }
             // chequear el caso en que el i sea igual a question.size();return no hay mas
-            System.out.println(choice);
+
+
             String resp= "{\"Question\":"+ choice.toJson(true,"description");
             LazyList<Option> option = Option.where("question_id = ?", identificador);
             List<String> lista = new ArrayList<String>();
             int i=1;
-            for(Option o : option){
-                resp= resp+", \"Opcion"+i+"\" : "+o.toJson(true,"description");
-                i++;
+            boolean a1 = false;
+            boolean b = false;
+            boolean c1 = false;
+            boolean d = false;
+            boolean ciclo = true;
+            Integer pos = new Integer(0);
+
+            while(ciclo){
+                pos = aux.nextInt(4);
+
+                switch(pos){
+
+                    case 0 : if(a1){
+
+                            }else{
+                                Option op1 = option.get(0);
+                                resp = resp +", \"Opcion"+i+"\" : "+op1.toJson(true,"description");
+                                i = i+1;
+                                a1 = true;
+                            }
+                            break;
+                    case 1 : if(b){
+
+                            }else{
+                                Option op2 = option.get(1);
+                                resp = resp +", \"Opcion"+i+"\" : "+op2.toJson(true,"description");
+                                i = i+1;
+                                b = true;
+                            }
+                            break;
+                    case 2 : if(c1){
+
+                            }else{
+                                Option op3 = option.get(2);
+                                resp = resp +", \"Opcion"+i+"\" : "+op3.toJson(true,"description");
+                                i = i+1;
+                                c1 = true;
+                            }
+                            break;
+                    case 3 : if(d){
+
+                            }else{
+                                Option op4 = option.get(3);
+                                resp = resp +", \"Opcion"+i+"\" : "+op4.toJson(true,"description");
+                                i = i+1;
+                                d = true;
+                            }
+                            break;
+                }
+
+
+                if(a1 && b && c1 && d){
+                    ciclo = false;
+                }
+
             }
+
             resp=resp+"}";
             System.out.println(resp);
             res.type("application/json");
