@@ -5,7 +5,6 @@ import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 //npm install --save react-router-dom
 import Begin from './begin';
 import Home from './home';
-import Statitics from './estadisticas';
 import Privileges from './privilegesAdmin';
 
 import StatExClin from './statExClin';

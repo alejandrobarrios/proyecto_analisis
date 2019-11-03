@@ -3,7 +3,6 @@ import { Button, DropdownButton, Dropdown, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./App.css";
 import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
-import Statitics from './estadisticas';
 import Privileges from './privilegesAdmin';
 import StatExClin from './statExClin';
 import StatFarma from './statFarma';
