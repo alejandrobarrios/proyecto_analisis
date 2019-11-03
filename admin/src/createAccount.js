@@ -129,7 +129,7 @@ export default class CreateAccount extends Component {
           <input type="text" name="dni" value={this.state.dni} onChange={this.handleChange} />
         </label>
       <br/>
-      <input type="submit" value="Enviar" />
+      <input type="submit" value="Crear Cuenta" />
       </form>
 
       </div>

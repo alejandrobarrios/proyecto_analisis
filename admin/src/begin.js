@@ -29,18 +29,6 @@ import "./App.css";
          console.log(this.state.users);
       }
 
-      logIn = (username, password) => {
-         //console.log("adding a new user...");
-         const newUser = {
-            username : username,
-            password : password,
-         }
-         this.setState ({
-            users  : [...this.state.users, newUser]
-         })
-         console.log(this.state.users);
-      }
-
       render () {
         return (
 
