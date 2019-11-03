@@ -1,10 +1,18 @@
 import React, {Component } from 'react';
-import { Button, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Button, DropdownButton, Dropdown, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./App.css";
+import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+import Statitics from './estadisticas';
+import Privileges from './privilegesAdmin';
+import StatExClin from './statExClin';
+import StatFarma from './statFarma';
+import StatEpidem from './statEpidem';
+import StatEnferm from './statEnferm';
+import StatQuiru from './statQuiru';
+import StatMedic from './statMedic';
 //import { createSwitchNavigator } from "@react-navigation/core";
 //import { createBrowserApp } from "@react-navigation/web";
-import { Link } from 'react-router-dom';
 
 
 export default class home extends Component {
@@ -14,37 +22,7 @@ export default class home extends Component {
       category:'',
 
     };
-
-    //this.handleChange = this.handleChange.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
-
-    //this.showMenu = this.showMenu.bind(this);
-    // this.closeMenu = this.closeMenu.bind(this);
   }
-
-
-
-  handleStatitics (event) {
-    //console.log(this.state);
-    //this.props.addUser(this.state.firstName, this.state.lastName);//ejecuto addUser que pase desde App
-    //alert('Agregamos un Nuevo Usuario: ' + this.state.username );
-    //doSomethingWithEvent(event);
-
-    fetch('http://localhost:4567/admin/statCat', {
-
-      method: 'POST',
-      body: JSON.stringify({
-        category: this.state.category,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-    .then(response => response.json())
-    .then(json => console.log(json))
-
-  }
-
 
 
   onSubmit =(event) =>{
@@ -66,13 +44,11 @@ export default class home extends Component {
       <center><h1>Welcome to TriviaVet</h1></center>
       <h3>¿Qué desea hacer?</h3>
       <div className="menu">
-        <Button href="/estadisticas" variant="outline-secondary" type="submit">Agregar Pregunta</Button>
-        <Button variant="outline-secondary" type="submit">Modificar Pregunta</Button>
-        <Button variant="outline-secondary" type="submit">Eliminar Pregunta</Button>
-        <Button variant="outline-secondary" >Estadísticas</Button>
-        <Button variant="outline-secondary" type="submit">Cerrar Sesión</Button>
-
-        <DropdownButton id="dropdown-basic-button" title="Dropdown button">
+      <ButtonGroup>
+        <Button href="/loadQues" variant="outline-secondary" type="submit">Agregar Pregunta</Button>
+        <Button href="/modifyQues" variant="outline-secondary" type="submit">Modificar Pregunta</Button>
+        <Button href="/deleteQues" variant="outline-secondary" type="submit">Eliminar Pregunta</Button>
+        <DropdownButton id="dropdown-basic-button " variant="outline-secondary" title="Estadisticas">
           <Dropdown.Item href="/exClin">Examen Clinica</Dropdown.Item>
           <Dropdown.Item href="/farma">Farmacologia</Dropdown.Item>
           <Dropdown.Item href="/edpide">Epidemiologia</Dropdown.Item>
@@ -80,7 +56,39 @@ export default class home extends Component {
           <Dropdown.Item href="/quiru">Quirurgica</Dropdown.Item>
           <Dropdown.Item href="/clinMed">Clinica Medica</Dropdown.Item>
         </DropdownButton>
+        <Button href="/privilegesAdmin" variant="outline-secondary" type="submit">Dar Privilegios</Button>
 
+        <Button variant="outline-secondary" type="submit">Cerrar Sesión</Button>
+        </ButtonGroup>
+    </div>
+    <div>
+    <BrowserRouter>
+        <div>
+          <Switch>
+            <Route
+              path="/exClin"
+              component={StatExClin} />
+            <Route
+              path="/farma"
+              component={StatFarma} />
+              <Route
+                path="/edpide"
+                component={StatEpidem} />
+                <Route
+                  path="/enferm"
+                  component={StatEnferm} />
+                  <Route
+                    path="/quiru"
+                    component={StatQuiru} />
+                    <Route
+                      path="/clinMed"
+                      component={StatMedic} />
+                      <Route
+                      path="/privilegesAdmin"
+                      component={Privileges} />
+          </Switch>
+        </div>
+    </BrowserRouter>
     </div>
     </div>
     );

@@ -21,7 +21,7 @@ export default class statEnferm extends Component {
        //fetch('http://jsonplaceholder.typicode.com/users')
        fetch('http://localhost:4567/admin/statCat',{
         method: 'POST',
-        body: '{"category":"examen_clinica"}'
+        body: '{"category":"enfermedades"}'
       })
         .then(response => response.json())
         .then((data) => {

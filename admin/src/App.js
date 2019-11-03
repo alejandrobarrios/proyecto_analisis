@@ -8,6 +8,13 @@ import Home from './home';
 import Statitics from './estadisticas';
 import Privileges from './privilegesAdmin';
 
+import StatExClin from './statExClin';
+import StatFarma from './statFarma';
+import StatEpidem from './statEpidem';
+import StatEnferm from './statEnferm';
+import StatQuiru from './statQuiru';
+import StatMedic from './statMedic';
+
 
 
     class App extends Component {
@@ -38,33 +45,36 @@ import Privileges from './privilegesAdmin';
       render () {
         return (
           <div>
-          <Begin />
-
           <BrowserRouter>
               <div>
-              <nav>
-              <ul>
-                <li>
-                  <Link to="/home">Home</Link>
-                </li>
-                <li>
-                  <Link to="/estadisticas">Statitics</Link>
-                </li>
-                <li>
-                  <Link to="/privilegesAdmin">Privileges</Link>
-                </li>
-              </ul>
-              </nav>
                 <Switch>
+                <Route
+                  path="/begin"
+                  component={Begin} />
                   <Route
                     path="/home"
                     component={Home} />
-                  <Route 
-                    path="/estadisticas"
-                    component={Statitics} />
-                  <Route 
-                    path="/privilegesAdmin"
-                    component={Privileges} />
+                  <Route
+                    path="/exClin"
+                    component={StatExClin} />
+                  <Route
+                    path="/farma"
+                    component={StatFarma} />
+                    <Route
+                      path="/edpide"
+                      component={StatEpidem} />
+                      <Route
+                        path="/enferm"
+                        component={StatEnferm} />
+                        <Route
+                          path="/quiru"
+                          component={StatQuiru} />
+                          <Route
+                            path="/clinMed"
+                            component={StatMedic} />
+                            <Route
+                            path="/privilegesAdmin"
+                            component={Privileges} />
                 </Switch>
               </div>
           </BrowserRouter>

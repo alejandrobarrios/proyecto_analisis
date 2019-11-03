@@ -9,15 +9,18 @@ export default class login extends Component {
     this.state = {
       username:'',
       password:'',
+      redirect:false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
   }
 
-
-
-
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
 
   handleChange (event) {
     //this.setState({value: event.target.value});
@@ -28,9 +31,12 @@ export default class login extends Component {
 
   }
 
+
+
   handleLogIn (event) {
     //console.log(this.state);
     //this.props.addUser(this.state.firstName, this.state.lastName);//ejecuto addUser que pase desde App
+    this.state.redirect = true;
     event.preventDefault();
     //doSomethingWithEvent(event);
 
@@ -45,9 +51,24 @@ export default class login extends Component {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-    .then(response => response.json())
-    .then(json => console.log(json))
-      alert('Agregamos un Nuevo Usuario: ' + this.state.username );
+    .then(response =>
+      console.log("hi"),
+      console.log(this.state.redirect)
+    )
+    .catch((error) => {
+      alert('No se pudo encontrar ' + this.state.username + '. O su contraseña no es la cargada' );
+
+      });
+
+      console.log(this.state.redirect);
+
+
+    }
+
+    renderRedirect = () => {
+      if (this.state.redirect) {
+        return <Redirect to='/home' />
+      }
     }
 
   onSubmit =(event) =>{
@@ -63,6 +84,7 @@ export default class login extends Component {
   render() {
     return (
       <div className="Login">
+      {this.renderRedirect()}
       <h2>Log in</h2>
       <form onSubmit={this.handleLogIn}>
 
@@ -78,8 +100,9 @@ export default class login extends Component {
           <input type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>
       <br/>
-      <input type="submit" value="Enviar" />
+      <input type="submit" value={this.renderRedirect()}  />
       </form>
+      {this.renderRedirect()}
       </div>
     );
   }
