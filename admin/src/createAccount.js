@@ -95,51 +95,82 @@ export default class CreateAccount extends Component {
   render() {
     const styles = {
           color: '#653294',
-          fontSize:'40px',
-          top:'563px',
-          left:'665px',
-          right: '560px'
+          fontSize:'28px',
+          top: 120,
+          left:200,
+          right: 0,
+          width: 100,
+          height: 100,
+     }
+     const styleBox = {
+       box1: {
+         color: '#F2B558',
+         fontSize:'20px',
+          position: 'absolute',
+          top: 75,
+         left: 250,
+         right:0,
+         width: 100,
+         height: 100,
+          },
+          box2: {
+            color: '#F2B558',
+            fontSize:'20px',
+             position: 'absolute',
+             top: 45,
+            left: 250,
+            right:0,
+            width: 20,
+            height: 20,
+             },
      }
 
         const styles2 = {
             fontSize:'15px',
         }
+        const styles3 = {
+            fontSize:'12px',
+          }
+        const styles4 = {
+            fontSize:'15px',
+            top: 1000,
+          }
     return (
-      <div>
-      <h3 style ={styles}>Create Account</h3>
-      <form onSubmit={this.handleSubmit}>
+      <div >
+      <h3 style ={styleBox.box2}>Create Account</h3>
+      <form style={styleBox.box1} onSubmit={this.handleSubmit}>
 
       <br/>
         <label style ={styles2}>
           User Name:
-          <input type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
         <label style ={styles2}>
           Password:
-          <input type="password" name="password"  value={this.state.password} onChange={this.handleChange} />
+          <input style={styles3} type="password" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
         <label style ={styles2}>
           Firts Name:
-          <input type="text" name="firstName"  value={this.state.name} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="firstName"  value={this.state.name} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
         <label style ={styles2}>
           Last Name:
-          <input type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
         <label style ={styles2}>
           DNI:
-          <input type="text" name="dni" value={this.state.dni} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="dni" value={this.state.dni} onChange={this.handleChange} />
         </label>
       <br/>
-      <input type="submit" value="Crear Cuenta" />
+      <input style={styles4} type="submit" value="Crear Cuenta" />
       </form>
 
       </div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import logo from './trviavetlogo.png';
 
 import MyForm from './createAccount';
 import Login from './Login';
@@ -7,7 +7,6 @@ import "./App.css";
 
 
   export default class Begin extends Component {
-
       state = {
         contacts: [],
         users: []
@@ -31,11 +30,15 @@ import "./App.css";
 
       render () {
         return (
-
           <div>
+            <div className="title">
             <center><h1>Welcome to TriviaVet</h1></center>
+            <div className="App-header">
             <MyForm addUser={this.addUser} />
+            <img className="begin-logo" src={logo} alt="logo"/>
             <Login/>
+            </div>
+            </div>
           </div>
 
     );

@@ -77,11 +77,11 @@ export default class login extends Component {
 
     const styles = {
             box1: {
-              color: '#653294',
-              fontSize:'40px',
+              color: '#F2B558',
+              fontSize:'20px',
                position: 'absolute',
                top: 120,
-              left: 500,
+              left: 900,
               right:0,
               width: 100,
               height: 100,
@@ -92,9 +92,15 @@ export default class login extends Component {
             top: 180,
             left: 500,
             right:0,
-            width: 100,
-            height: 100,
+
         }
+        const styles3 = {
+            fontSize:'12px',
+          }
+
+          const styles4 = {
+              fontSize:'15px',
+            }
        if (this.state.redirect === true) {
           return <Redirect to='/home' />
         }
@@ -103,22 +109,22 @@ export default class login extends Component {
     return (
       <div>
       <h2 style={styles.box1}>Login</h2>
-      <form style={styles.box1} sonSubmit={this.handleLogIn}>
+      <form style={styles.box1} onSubmit={this.handleLogIn}>
 
 
       <br/>
         <label style={styles2}>
           User Name:
-          <input type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
         <label style={styles2}>
           Password:
-          <input type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>
       <br/>
-      <input type="submit" value="Enviar" />
+      <input style={styles4}  type="submit" value="Enviar" />
       </form>
       </div>
     );
