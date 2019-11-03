@@ -79,6 +79,7 @@ import "./App.css";
         return (
 
           <div>
+            <center><h1>Welcome to TriviaVet</h1></center>
             <MyForm addUser={this.addUser} />
             <Login addUser={this.logIn} />
           </div>
@@ -88,4 +89,4 @@ import "./App.css";
       }
     }
 
-export default App;
+/*export default App;*/
