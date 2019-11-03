@@ -14,6 +14,7 @@ import StatEpidem from './statEpidem';
 import StatEnferm from './statEnferm';
 import StatQuiru from './statQuiru';
 import StatMedic from './statMedic';
+import LoadQues from './loadQuestion';
 
 
 
@@ -49,7 +50,7 @@ import StatMedic from './statMedic';
               <div>
                 <Switch>
                 <Route
-                  path="/begin"
+                  exact path="/"
                   component={Begin} />
                   <Route
                     path="/home"
@@ -75,6 +76,9 @@ import StatMedic from './statMedic';
                             <Route
                             path="/privilegesAdmin"
                             component={Privileges} />
+                            <Route
+                              path="/loadQuestion"
+                              component={LoadQues} />
                 </Switch>
               </div>
           </BrowserRouter>

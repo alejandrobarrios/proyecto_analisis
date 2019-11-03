@@ -61,7 +61,7 @@ export default class home extends Component {
             </DropdownButton>
             <Button href="/privilegesAdmin" variant="outline-secondary" type="submit">Dar Privilegios</Button>
 
-            <Button href="/begin" variant="outline-secondary" type="submit">Cerrar Sesión</Button>
+            <Button href="/" variant="outline-secondary" type="submit">Cerrar Sesión</Button>
           </ButtonGroup>
         </div>
     </div>

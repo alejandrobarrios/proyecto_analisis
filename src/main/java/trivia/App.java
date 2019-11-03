@@ -633,19 +633,26 @@ public class App
             Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
             res.type("application/json");
             User u = User.searchUserByUsername((String)bodyParams.get("username"));
-            User adminCurrentUser = new User();
+            res.type("application/json");
             if(u != null){
+
               if((Boolean)u.get("admin")){
+
+                User adminCurrentUser = new User();
 
                 adminCurrentUser.set("username", bodyParams.get("username"));
                 adminCurrentUser.set("password", bodyParams.get("password"));
 
+                System.out.println(adminCurrentUser);
+
                 return adminCurrentUser.toJson(true);
+
+              }else {
+                System.out.println("aca");
+                  return "usted no tiene permiso";
               }
-              return "usted no tiene permiso";
             }
-
-
+            System.out.println("aca abajo");
             return "No se encuentra el usuario";
         });
     }
