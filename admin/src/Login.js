@@ -1,4 +1,5 @@
 import React, {Component } from 'react';
+import { useHistory } from "react-router-dom";
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -9,18 +10,13 @@ export default class login extends Component {
     this.state = {
       username:'',
       password:'',
-      redirect:false,
+      redirect: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
   }
 
-  setRedirect = () => {
-    this.setState({
-      redirect: true
-    })
-  }
 
   handleChange (event) {
     //this.setState({value: event.target.value});
@@ -36,7 +32,6 @@ export default class login extends Component {
   handleLogIn (event) {
     //console.log(this.state);
     //this.props.addUser(this.state.firstName, this.state.lastName);//ejecuto addUser que pase desde App
-    this.state.redirect = true;
     event.preventDefault();
     //doSomethingWithEvent(event);
 
@@ -51,12 +46,18 @@ export default class login extends Component {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-    .then(response =>
-      console.log("hi"),
-      console.log(this.state.redirect)
-    )
+    .then(response => response.json())
+    .then(() => this.setState(() => ({
+        redirect: true
+      })))
+    .then(response => {
+
+      console.log(response);
+      console.log(this.state.redirect);
+    })
     .catch((error) => {
-      alert('No se pudo encontrar ' + this.state.username + '. O su contraseña no es la cargada' );
+      console.log(error);
+      alert('No se pudo encontrar ' + this.state.username + '. O su contraseña no es la cargada' )
 
       });
 
@@ -65,26 +66,20 @@ export default class login extends Component {
 
     }
 
-    renderRedirect = () => {
-      if (this.state.redirect) {
-        return <Redirect to='/home' />
-      }
-    }
 
   onSubmit =(event) =>{
-
-    //para no refrescar el formulario cada vez que presiono el boton
-    console.log(this.state);
-    event.preventDefault();
 
 
   }
 
 
   render() {
+    if (this.state.redirect === true) {
+     return <Redirect to='/home' />
+   }
+
     return (
       <div className="Login">
-      {this.renderRedirect()}
       <h2>Log in</h2>
       <form onSubmit={this.handleLogIn}>
 
@@ -100,9 +95,8 @@ export default class login extends Component {
           <input type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>
       <br/>
-      <input type="submit" value={this.renderRedirect()}  />
+      <input type="submit" value="enviar" />
       </form>
-      {this.renderRedirect()}
       </div>
     );
   }

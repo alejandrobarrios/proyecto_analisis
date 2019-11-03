@@ -8,26 +8,15 @@ export default class loadQuestion extends Component {
     this.state = {
       category:'',
       description:'',
-      options:[],
+      option1:'',
+      option2:'',
+      option3:'',
+      option4:''
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handlePrivilege = this.handlePrivilege.bind(this);
+    this.handleLogQuestion = this.handleLogQuestion.bind(this);
   }
-
-
-  addOption = (firstName, lastName, ) => {
-        
-         const newOption = {
-            description : firstName,
-            correct : lastName,
-            question_id :  ,
-         }
-         this.setState ({
-            users  : [...this.state.options, newUser]
-         })
-         console.log(this.state.users);
-  } 
 
 
   handleChange (event) {
@@ -39,18 +28,24 @@ export default class loadQuestion extends Component {
 
   }
 
-  handlePrivilege (event) {
+  handleLogQuestion (event) {
     //console.log(this.state);
     //this.props.addUser(this.state.firstName, this.state.lastName);//ejecuto addUser que pase desde App
-    
+
     event.preventDefault();
     //doSomethingWithEvent(event);
 
-    fetch('http://localhost:4567/admin/convertTo', {
+    fetch('http://localhost:4567/admin/questions', {
 
       method: 'POST',
       body: JSON.stringify({
-        username: this.state.username,
+        category: this.state.category,
+        description: this.state.description,
+        options:[{description: this.state.option1, correct: true},
+                {description: this.state.option2, correct: false},
+                {description: this.state.option3, correct: false},
+                {description: this.state.option4, correct: false},
+        ]
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
@@ -63,7 +58,7 @@ export default class loadQuestion extends Component {
 
       });
 
-   
+
     }
 
   onSubmit =(event) =>{
@@ -80,15 +75,41 @@ export default class loadQuestion extends Component {
     return (
       <div>
       <h2>Dar Permiso</h2>
-      <form onSubmit={this.handlePrivilege}>
+      <form onSubmit={this.handleLogQuestion}>
 
       <br/>
         <label>
-          Username:
-          <input type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
+          Categoria a la cual pertenece la pregunta:
+          <input type="text" name="category"  value={this.state.category} onChange={this.handleChange} />
         </label>
       <br/>
-      <input type="submit" value="Dar Privilegios" />
+        <label>
+          Descripcion de la pregunta:
+          <input type="text" name="description"  value={this.state.description} onChange={this.handleChange} />
+        </label>
+      <br/>
+        <label>
+          Opcion la cual sera la correcta:
+          <input type="text" name="option1"  value={this.state.option1} onChange={this.handleChange} />
+        </label>
+      <br/>
+        <label>
+          Otra opcion:
+          <input type="text" name="option2"  value={this.state.option2} onChange={this.handleChange} />
+        </label>
+      <br/>
+        <label>
+          Otra opcion:
+          <input type="text" name="option3"  value={this.state.option3} onChange={this.handleChange} />
+        </label>
+      <br/>
+        <label>
+          Otra opcion:
+          <input type="text" name="option4"  value={this.state.option4} onChange={this.handleChange} />
+        </label>
+      <br/>
+
+      <input type="submit" value="cargar" />
       </form>
       </div>
     );

@@ -11,6 +11,7 @@ import StatEpidem from './statEpidem';
 import StatEnferm from './statEnferm';
 import StatQuiru from './statQuiru';
 import StatMedic from './statMedic';
+import LoadQues from './loadQuestion';
 //import { createSwitchNavigator } from "@react-navigation/core";
 //import { createBrowserApp } from "@react-navigation/web";
 
@@ -41,55 +42,28 @@ export default class home extends Component {
     return (
       <div className= "home">
 
-      <center><h1>Welcome to TriviaVet</h1></center>
-      <h3>¿Qué desea hacer?</h3>
-      <div className="menu">
-      <ButtonGroup>
-        <Button href="/loadQues" variant="outline-secondary" type="submit">Agregar Pregunta</Button>
-        <Button href="/modifyQues" variant="outline-secondary" type="submit">Modificar Pregunta</Button>
-        <Button href="/deleteQues" variant="outline-secondary" type="submit">Eliminar Pregunta</Button>
-        <DropdownButton id="dropdown-basic-button " variant="outline-secondary" title="Estadisticas">
-          <Dropdown.Item href="/exClin">Examen Clinica</Dropdown.Item>
-          <Dropdown.Item href="/farma">Farmacologia</Dropdown.Item>
-          <Dropdown.Item href="/edpide">Epidemiologia</Dropdown.Item>
-          <Dropdown.Item href="/enferm">Enfermedades</Dropdown.Item>
-          <Dropdown.Item href="/quiru">Quirurgica</Dropdown.Item>
-          <Dropdown.Item href="/clinMed">Clinica Medica</Dropdown.Item>
-        </DropdownButton>
-        <Button href="/privilegesAdmin" variant="outline-secondary" type="submit">Dar Privilegios</Button>
+        <center><h1>Welcome to TriviaVet</h1></center>
+        <h3>¿Qué desea hacer?</h3>
+        <div className="menu">
+          <ButtonGroup>
+            <DropdownButton id="dropdown-basic-button " variant="outline-secondary" title="Preguntas">
+              <Dropdown.Item href="/loadQuestion">Cargar una pregunta</Dropdown.Item>
+              <Dropdown.Item href="/modifyQues">Modificar una pregunta</Dropdown.Item>
+              <Dropdown.Item href="/deleteQues">Borrar una pregunta</Dropdown.Item>
+            </DropdownButton>
+            <DropdownButton id="dropdown-basic-button " variant="outline-secondary" title="Estadisticas">
+              <Dropdown.Item href="/exClin">Examen Clinica</Dropdown.Item>
+              <Dropdown.Item href="/farma">Farmacologia</Dropdown.Item>
+              <Dropdown.Item href="/edpide">Epidemiologia</Dropdown.Item>
+              <Dropdown.Item href="/enferm">Enfermedades</Dropdown.Item>
+              <Dropdown.Item href="/quiru">Quirurgica</Dropdown.Item>
+              <Dropdown.Item href="/clinMed">Clinica Medica</Dropdown.Item>
+            </DropdownButton>
+            <Button href="/privilegesAdmin" variant="outline-secondary" type="submit">Dar Privilegios</Button>
 
-        <Button variant="outline-secondary" type="submit">Cerrar Sesión</Button>
-        </ButtonGroup>
-    </div>
-    <div>
-    <BrowserRouter>
-        <div>
-          <Switch>
-            <Route
-              path="/exClin"
-              component={StatExClin} />
-            <Route
-              path="/farma"
-              component={StatFarma} />
-              <Route
-                path="/edpide"
-                component={StatEpidem} />
-                <Route
-                  path="/enferm"
-                  component={StatEnferm} />
-                  <Route
-                    path="/quiru"
-                    component={StatQuiru} />
-                    <Route
-                      path="/clinMed"
-                      component={StatMedic} />
-                      <Route
-                      path="/privilegesAdmin"
-                      component={Privileges} />
-          </Switch>
+            <Button href="/begin" variant="outline-secondary" type="submit">Cerrar Sesión</Button>
+          </ButtonGroup>
         </div>
-    </BrowserRouter>
-    </div>
     </div>
     );
   }

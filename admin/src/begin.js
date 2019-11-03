@@ -46,7 +46,7 @@ import "./App.css";
 
           <div>
             <MyForm addUser={this.addUser} />
-            <Login addUser={this.logIn} />
+            <Login/>
           </div>
     );
   }
