@@ -29,64 +29,15 @@ import "./App.css";
          console.log(this.state.users);
       }
 
-      logIn = (username, password) => {
-         //console.log("adding a new user...");
-         const newUser = {
-            username : username,
-            password : password,
-         }
-         this.setState ({
-            users  : [...this.state.users, newUser]
-         })
-         console.log(this.state.users);
-      }
-
-
-      componentDidMount() {
-
-
-       //fetch('http://jsonplaceholder.typicode.com/users')
-       fetch('http://localhost:4567/admin/statCat',{
-        method: 'POST',
-        body: '{"category":"examen_clinica"}'
-      })
-        .then(response => response.json())
-        .then((data) => {
-          this.setState({ contacts : data })
-          console.log(this.state.contacts)
-        })
-        .catch(console.log)
-
-
-
-       //fetch('http://jsonplaceholder.typicode.com/users')
-       fetch('http://localhost:4567/allusers3')
-        .then(response => response.json())
-        .then((data) => {
-          this.setState({ users : data })
-          console.log(this.state.users)
-        })
-        .catch(console.log)
-
-
-
-
-      }
-
-
-
       render () {
         return (
 
           <div>
             <center><h1>Welcome to TriviaVet</h1></center>
             <MyForm addUser={this.addUser} />
-            <Login addUser={this.logIn} />
+            <Login/>
           </div>
 
-
-        );
-      }
-    }
-
-/*export default App;*/
+    );
+  }
+}

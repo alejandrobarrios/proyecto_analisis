@@ -47,8 +47,9 @@ public class App
           return res;
         }
 
-  public static JSONObject userToJSON(Statistic cat){
+  public static JSONObject catToJSON(Statistic cat){
         JSONObject res = new JSONObject();
+        res.put("category",cat.get("category"));
         res.put("amount_user_right",cat.get("amount_user_right"));
         res.put("amount_user_wrong",cat.get("amount_user_wrong"));
         return res;
@@ -158,7 +159,7 @@ public class App
         //guarda en la base de datos los distintos parametros de preguntas que se le pasaron
         //asocia una lista de respuestas a una pregunta
         //crea las estadisticas de dicha pregunta, para saber porcentaje de alumos que la respondiron correctamente o no.
-        post("/questions", (req, res) -> {
+        post("/admin/questions", (req, res) -> {
             QuestionParam bodyParams = new Gson().fromJson(req.body(), QuestionParam.class);
 
             Question question = new Question();
@@ -210,10 +211,13 @@ public class App
 
             User u = User.searchUserByUsername((String)bodyParams.get("username"));
             res.type("application/json");
-
-            u.set("admin", true);
-            u.saveIt();
-            return u.toJson(true);
+            if(u!=null){
+                u.set("admin", true);
+                u.saveIt();
+                return u.toJson(true);
+            }
+            System.out.println("llegue aca");
+            return "no existe";
 
         });
 
@@ -222,10 +226,12 @@ public class App
 
 
             Statistic category_stat = Statistic.findFirst("category = ?", bodyParams.get("category"));
-            JSONObject st= userToJSON(category_stat);
+            JSONObject st= catToJSON(category_stat);
+            List<JSONObject> lista = new ArrayList<JSONObject>();
+            lista.add(st);
 
             res.type("application/json");
-            return st ;
+            return lista ;
 
         });
 
@@ -330,15 +336,69 @@ public class App
                 return "Todo respondido";
             }
             // chequear el caso en que el i sea igual a question.size();return no hay mas
-            System.out.println(choice);
+
+
             String resp= "{\"Question\":"+ choice.toJson(true,"description");
             LazyList<Option> option = Option.where("question_id = ?", identificador);
             List<String> lista = new ArrayList<String>();
             int i=1;
-            for(Option o : option){
-                resp= resp+", \"Opcion"+i+"\" : "+o.toJson(true,"description");
-                i++;
+            boolean a1 = false;
+            boolean b = false;
+            boolean c1 = false;
+            boolean d = false;
+            boolean ciclo = true;
+            Integer pos = new Integer(0);
+
+            while(ciclo){
+                pos = aux.nextInt(4);
+
+                switch(pos){
+
+                    case 0 : if(a1){
+
+                            }else{
+                                Option op1 = option.get(0);
+                                resp = resp +", \"Opcion"+i+"\" : "+op1.toJson(true,"description");
+                                i = i+1;
+                                a1 = true;
+                            }
+                            break;
+                    case 1 : if(b){
+
+                            }else{
+                                Option op2 = option.get(1);
+                                resp = resp +", \"Opcion"+i+"\" : "+op2.toJson(true,"description");
+                                i = i+1;
+                                b = true;
+                            }
+                            break;
+                    case 2 : if(c1){
+
+                            }else{
+                                Option op3 = option.get(2);
+                                resp = resp +", \"Opcion"+i+"\" : "+op3.toJson(true,"description");
+                                i = i+1;
+                                c1 = true;
+                            }
+                            break;
+                    case 3 : if(d){
+
+                            }else{
+                                Option op4 = option.get(3);
+                                resp = resp +", \"Opcion"+i+"\" : "+op4.toJson(true,"description");
+                                i = i+1;
+                                d = true;
+                            }
+                            break;
+                }
+
+
+                if(a1 && b && c1 && d){
+                    ciclo = false;
+                }
+
             }
+
             resp=resp+"}";
             System.out.println(resp);
             res.type("application/json");
@@ -576,16 +636,26 @@ public class App
             Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
             res.type("application/json");
             User u = User.searchUserByUsername((String)bodyParams.get("username"));
-            User adminCurrentUser = new User();
+            res.type("application/json");
             if(u != null){
+
+              if((Boolean)u.get("admin")){
+
+                User adminCurrentUser = new User();
 
                 adminCurrentUser.set("username", bodyParams.get("username"));
                 adminCurrentUser.set("password", bodyParams.get("password"));
 
+                System.out.println(adminCurrentUser);
+
                 return adminCurrentUser.toJson(true);
+
+              }else {
+                System.out.println("aca");
+                  return "usted no tiene permiso";
+              }
             }
-
-
+            System.out.println("aca abajo");
             return "No se encuentra el usuario";
         });
     }

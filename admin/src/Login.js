@@ -1,4 +1,7 @@
 import React, {Component } from 'react';
+import { useHistory } from "react-router-dom";
+
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 
 export default class login extends Component {
@@ -7,14 +10,12 @@ export default class login extends Component {
     this.state = {
       username:'',
       password:'',
+      redirect: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleLogIn = this.handleLogIn.bind(this);
   }
-
-
-
 
 
   handleChange (event) {
@@ -26,10 +27,11 @@ export default class login extends Component {
 
   }
 
+
+
   handleLogIn (event) {
     //console.log(this.state);
     //this.props.addUser(this.state.firstName, this.state.lastName);//ejecuto addUser que pase desde App
-    alert('Agregamos un Nuevo Usuario: ' + this.state.username );
     event.preventDefault();
     //doSomethingWithEvent(event);
 
@@ -45,21 +47,34 @@ export default class login extends Component {
       }
     })
     .then(response => response.json())
-    .then(json => console.log(json))
+    .then(() => this.setState(() => ({
+        redirect: true
+      })))
+    .then(response => {
+
+      console.log(response);
+      console.log(this.state.redirect);
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('No se pudo encontrar ' + this.state.username + '. O su contraseña no es la cargada' )
+
+      });
+
+      console.log(this.state.redirect);
+
 
     }
 
-  onSubmit =(event) =>{
 
-    //para no refrescar el formulario cada vez que presiono el boton
-    console.log(this.state);
-    event.preventDefault();
+  onSubmit =(event) =>{
 
 
   }
 
 
   render() {
+
     const styles = {
             box1: {
               color: '#653294',
@@ -80,11 +95,16 @@ export default class login extends Component {
             width: 100,
             height: 100,
         }
+       if (this.state.redirect === true) {
+          return <Redirect to='/home' />
+        }
+
 
     return (
       <div>
       <h2 style={styles.box1}>Login</h2>
       <form style={styles.box1} sonSubmit={this.handleLogIn}>
+
 
       <br/>
         <label style={styles2}>
