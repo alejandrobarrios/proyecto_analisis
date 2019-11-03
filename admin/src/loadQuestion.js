@@ -1,5 +1,7 @@
 import React, {Component } from 'react';
+import {Button} from 'react-bootstrap';
 import "./App.css";
+import {Redirect} from 'react-router-dom';
 
 
 export default class loadQuestion extends Component {
@@ -11,11 +13,24 @@ export default class loadQuestion extends Component {
       option1:'',
       option2:'',
       option3:'',
-      option4:''
+      option4:'',
+      redirect: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleLogQuestion = this.handleLogQuestion.bind(this);
+  }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to= "/home" />
+    }
   }
 
 
@@ -52,9 +67,9 @@ export default class loadQuestion extends Component {
       }
     })
     .then(response =>
-      alert(' se pudo encontrar' + this.state.username ))
+      alert(' Se ha cargado correctamente la pregunta en: ' + this.state.category ))
     .catch((error) => {
-      alert('No se pudo encontrar' + this.state.username );
+      alert('No se pudo cargar la pregunta en: ' + this.state.category );
 
       });
 
@@ -72,45 +87,66 @@ export default class loadQuestion extends Component {
 
 
   render() {
+    const styles2 = {
+        fontSize:'20px',
+        top: 180,
+        left: 500,
+        right:0,
+
+    }
+    const styles3 = {
+        fontSize:'12px',
+      }
+
     return (
-      <div>
-      <h2>Dar Permiso</h2>
+      <div className="App-header">
+      {this.renderRedirect()}
+      <h2>Carga de pregunta</h2>
       <form onSubmit={this.handleLogQuestion}>
 
       <br/>
-        <label>
+        <label style={styles2}>
           Categoria a la cual pertenece la pregunta:
-          <input type="text" name="category"  value={this.state.category} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="category"  value={this.state.category} onChange={this.handleChange} />
         </label>
       <br/>
-        <label>
+        <label style={styles2}>
           Descripcion de la pregunta:
-          <input type="text" name="description"  value={this.state.description} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="description"  value={this.state.description} onChange={this.handleChange} />
         </label>
       <br/>
-        <label>
+        <label style={styles2}>
           Opcion la cual sera la correcta:
-          <input type="text" name="option1"  value={this.state.option1} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="option1"  value={this.state.option1} onChange={this.handleChange} />
         </label>
       <br/>
-        <label>
+        <label style={styles2}>
           Otra opcion:
-          <input type="text" name="option2"  value={this.state.option2} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="option2"  value={this.state.option2} onChange={this.handleChange} />
         </label>
       <br/>
-        <label>
+        <label style={styles2}>
           Otra opcion:
-          <input type="text" name="option3"  value={this.state.option3} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="option3"  value={this.state.option3} onChange={this.handleChange} />
         </label>
       <br/>
-        <label>
+        <label style={styles2}>
           Otra opcion:
-          <input type="text" name="option4"  value={this.state.option4} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="option4"  value={this.state.option4} onChange={this.handleChange} />
         </label>
       <br/>
 
-      <input type="submit" value="cargar" />
+     <center> <Button variant="success" type="submit">Cargar</Button></center>
+     <br/>
       </form>
+      <center><Button
+          block
+          bsSize="large"
+          onClick={this.setRedirect}
+        >
+          Volver a Home
+      </Button>
+      </center>
       </div>
     );
   }

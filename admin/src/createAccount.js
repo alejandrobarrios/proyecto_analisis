@@ -93,15 +93,6 @@ export default class CreateAccount extends Component {
 
 
   render() {
-    const styles = {
-          color: '#653294',
-          fontSize:'28px',
-          top: 120,
-          left:200,
-          right: 0,
-          width: 100,
-          height: 100,
-     }
      const styleBox = {
        box1: {
          color: '#F2B558',
@@ -149,7 +140,7 @@ export default class CreateAccount extends Component {
       <br/>
         <label style ={styles2}>
           Password:
-          <input style={styles3} type="password" name="password"  value={this.state.password} onChange={this.handleChange} />
+          <input style={styles3} type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>

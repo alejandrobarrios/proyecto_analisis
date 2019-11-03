@@ -1,7 +1,6 @@
 import React, {Component } from 'react';
-import { useHistory } from "react-router-dom";
 
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import {Redirect } from 'react-router-dom';
 
 
 export default class login extends Component {
@@ -121,7 +120,7 @@ export default class login extends Component {
       <br/>
         <label style={styles2}>
           Password:
-          <input style={styles3} type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
+          <input style={styles3} type="password" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>
       <br/>
       <input style={styles4}  type="submit" value="Enviar" />

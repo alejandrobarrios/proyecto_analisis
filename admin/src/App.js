@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import { Button } from 'react-bootstrap';
 import "./App.css";
-import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route} from 'react-router-dom';
 //npm install --save react-router-dom
 import Begin from './begin';
 import Home from './home';
