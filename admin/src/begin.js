@@ -33,9 +33,11 @@ import "./App.css";
         return (
 
           <div>
+            <center><h1>Welcome to TriviaVet</h1></center>
             <MyForm addUser={this.addUser} />
             <Login/>
           </div>
+
     );
   }
 }

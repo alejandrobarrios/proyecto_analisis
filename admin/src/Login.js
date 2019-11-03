@@ -74,23 +74,46 @@ export default class login extends Component {
 
 
   render() {
-    if (this.state.redirect === true) {
-     return <Redirect to='/home' />
-   }
+
+    const styles = {
+            box1: {
+              color: '#653294',
+              fontSize:'40px',
+               position: 'absolute',
+               top: 120,
+              left: 500,
+              right:0,
+              width: 100,
+              height: 100,
+               },
+          }
+        const styles2 = {
+            fontSize:'20px',
+            top: 180,
+            left: 500,
+            right:0,
+            width: 100,
+            height: 100,
+        }
+       if (this.state.redirect === true) {
+          return <Redirect to='/home' />
+        }
+
 
     return (
-      <div className="Login">
-      <h2>Log in</h2>
-      <form onSubmit={this.handleLogIn}>
+      <div>
+      <h2 style={styles.box1}>Login</h2>
+      <form style={styles.box1} sonSubmit={this.handleLogIn}>
+
 
       <br/>
-        <label>
+        <label style={styles2}>
           User Name:
           <input type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
-        <label>
+        <label style={styles2}>
           Password:
           <input type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>

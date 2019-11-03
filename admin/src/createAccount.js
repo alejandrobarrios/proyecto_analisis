@@ -93,38 +93,48 @@ export default class CreateAccount extends Component {
 
 
   render() {
+    const styles = {
+          color: '#653294',
+          fontSize:'40px',
+          top:'563px',
+          left:'665px',
+          right: '560px'
+     }
+
+        const styles2 = {
+            fontSize:'15px',
+        }
     return (
       <div>
-      <center><h1>Welcome to TriviaVet</h1></center>
-      <h3>Create Account</h3>
+      <h3 style ={styles}>Create Account</h3>
       <form onSubmit={this.handleSubmit}>
 
       <br/>
-        <label>
+        <label style ={styles2}>
           User Name:
           <input type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
-        <label>
+        <label style ={styles2}>
           Password:
           <input type="password" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
-        <label>
+        <label style ={styles2}>
           Firts Name:
           <input type="text" name="firstName"  value={this.state.name} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
-        <label>
+        <label style ={styles2}>
           Last Name:
           <input type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange} />
         </label>
       <br/>
       <br/>
-        <label>
+        <label style ={styles2}>
           DNI:
           <input type="text" name="dni" value={this.state.dni} onChange={this.handleChange} />
         </label>
