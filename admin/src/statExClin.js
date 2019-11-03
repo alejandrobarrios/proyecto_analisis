@@ -3,6 +3,7 @@ import { Button, DropdownButton, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./App.css";
 import Stat from './stat.js';
+import {Redirect} from 'react-router-dom';
 
 
 export default class statExclin extends Component {
@@ -10,7 +11,20 @@ export default class statExclin extends Component {
     super(props);
     this.state = {
       stat: [],
+      redirect: false,
     };
+  }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to= "/home" />
+    }
   }
 
 
@@ -45,7 +59,17 @@ export default class statExclin extends Component {
   render() {
     return (
       <div>
+      {this.renderRedirect()}
         <Stat stat={this.state.stat} />
+
+        <center><button
+            block
+            bsSize="large"
+            onClick={this.setRedirect}
+          >
+            Volver a Home
+        </button>
+        </center>
       </div>
     );
   }
