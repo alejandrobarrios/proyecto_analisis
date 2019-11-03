@@ -20,7 +20,6 @@ import LoadQues from './loadQuestion';
     class App extends Component {
 
       state = {
-        contacts: [],
         users: []
       }
 

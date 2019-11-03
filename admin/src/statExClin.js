@@ -2,14 +2,14 @@ import React, {Component } from 'react';
 import { Button, DropdownButton, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./App.css";
+import Stat from './stat.js';
 
 
 export default class statExclin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category:'',
-
+      stat: [],
     };
   }
 
@@ -25,8 +25,7 @@ export default class statExclin extends Component {
       })
         .then(response => response.json())
         .then((data) => {
-          this.setState({ contacts : data })
-          console.log(this.state.contacts)
+          this.setState({stat : data} )
         })
         .catch(console.log)
 
@@ -46,12 +45,7 @@ export default class statExclin extends Component {
   render() {
     return (
       <div>
-
-        <center><h1>Estadísticas</h1></center>
-        <h3>¿Qué desea hacer?</h3>
-
-
-
+        <Stat stat={this.state.stat} />
       </div>
     );
   }

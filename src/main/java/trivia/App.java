@@ -47,8 +47,9 @@ public class App
           return res;
         }
 
-  public static JSONObject userToJSON(Statistic cat){
+  public static JSONObject catToJSON(Statistic cat){
         JSONObject res = new JSONObject();
+        res.put("category",cat.get("category"));
         res.put("amount_user_right",cat.get("amount_user_right"));
         res.put("amount_user_wrong",cat.get("amount_user_wrong"));
         return res;
@@ -225,10 +226,12 @@ public class App
 
 
             Statistic category_stat = Statistic.findFirst("category = ?", bodyParams.get("category"));
-            JSONObject st= userToJSON(category_stat);
+            JSONObject st= catToJSON(category_stat);
+            List<JSONObject> lista = new ArrayList<JSONObject>();
+            lista.add(st);
 
             res.type("application/json");
-            return st ;
+            return lista ;
 
         });
 
