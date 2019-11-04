@@ -36,15 +36,16 @@ export default class home extends Component {
           
           <div className= "App-header2">
           <center><h1>Bienvenido a TriviaVet Admin</h1></center>
-          <h3>¿Qué desea hacer?</h3>
+          <div className= "h3">
+            <h3>¿Qué desea hacer?</h3>
+          </div>
           <div className="menu">
             <ButtonGroup>
-              <DropdownButton id="dropdown-basic-button " variant="info" title="Preguntas">
+              <DropdownButton className="button" id="dropdown-basic-button " variant="secondary" title="Preguntas">
                 <Dropdown.Item href="/loadQuestion">Cargar una pregunta</Dropdown.Item>
-                <Dropdown.Item href="/modifyQues">Modificar una pregunta</Dropdown.Item>
                 <Dropdown.Item href="/deleteQues">Borrar una pregunta</Dropdown.Item>
               </DropdownButton>
-              <DropdownButton id="dropdown-basic-button " variant="info" title="Estadisticas">
+              <DropdownButton className="button" id="dropdown-basic-button " variant="secondary" title="Estadisticas">
                 <Dropdown.Item href="/exClin">Examen Clínica</Dropdown.Item>
                 <Dropdown.Item href="/farma">Farmacología</Dropdown.Item>
                 <Dropdown.Item href="/edpide">Epidemiología</Dropdown.Item>
@@ -52,11 +53,11 @@ export default class home extends Component {
                 <Dropdown.Item href="/quiru">Quirúrgica</Dropdown.Item>
                 <Dropdown.Item href="/clinMed">Clínica Médica</Dropdown.Item>
               </DropdownButton>
-              <div className="menu">
-                <Button href="/privilegesAdmin" variant="info" type="submit">Dar Privilegios</Button>
+              <div className="button">
+                <Button href="/privilegesAdmin" variant="secondary" type="submit">Dar Privilegios</Button>
               </div>
-              <div className="menu">
-                <Button href="/" variant="info" type="submit">Cerrar Sesión</Button>
+              <div className="button">
+                <Button href="/" variant="secondary" type="submit">Cerrar Sesión</Button>
               </div>
             </ButtonGroup>
           </div>
