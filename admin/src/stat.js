@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Stat = ({ stat }) => {
+const StatCat = ({ statCat }) => {
   return (
     <div>
       <center><h1>Estadisticas de la categoria</h1></center>
-      {stat.map((point) => (
+      {statCat.map((point) => (
         <div class="card">
           <div class="card-body">
             <center><h4 class="card-title">{point.category}</h4></center>
@@ -18,4 +18,4 @@ const Stat = ({ stat }) => {
   )
 };
 
-export default Stat
+export default StatCat

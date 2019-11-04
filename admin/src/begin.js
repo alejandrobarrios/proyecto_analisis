@@ -31,13 +31,11 @@ import "./App.css";
       render () {
         return (
           <div>
-            <div className="title">
-            <center><h1>Welcome to TriviaVet</h1></center>
             <div className="App-header">
+            <center><h1>Welcome to TriviaVet</h1></center>
             <MyForm addUser={this.addUser} />
             <img className="begin-logo" src={logo} alt="logo"/>
             <Login/>
-            </div>
             </div>
           </div>
 

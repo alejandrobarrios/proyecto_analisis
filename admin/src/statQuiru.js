@@ -2,13 +2,15 @@ import React, {Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./App.css";
 import Stat from './stat.js';
+import StatQ from './statQ.js';
 import {Redirect} from 'react-router-dom';
 
 export default class statQuiru extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stat: [],
+      statCat: [],
+      statQues:[],
       redirect: false,
 
     };
@@ -37,9 +39,20 @@ export default class statQuiru extends Component {
       })
         .then(response => response.json())
         .then((data) => {
-          this.setState({ stat : data })
+          this.setState({ statCat : data })
         })
         .catch(console.log)
+
+        fetch('http://localhost:4567/admin/statQues',{
+          method: 'POST',
+          body: '{"category":"quirurgica"}'
+          })
+          .then(response => response.json())
+          .then((data) => {
+            this.setState({statQues : data} )
+            console.log(this.state.statQues)
+          })
+            .catch(console.log)
 
     }
 
@@ -58,7 +71,8 @@ export default class statQuiru extends Component {
     return (
       <div>
       {this.renderRedirect()}
-        <Stat stat={this.state.stat} />
+      <Stat statCat={this.state.statCat} />
+      <StatQ statQues={this.state.statQues} />
 
         <center><button
             block

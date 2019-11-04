@@ -54,6 +54,14 @@ public class App
         res.put("amount_user_wrong",cat.get("amount_user_wrong"));
         return res;
       }
+
+  public static JSONObject questionToJSON(Question q){
+            JSONObject res = new JSONObject();
+            res.put("description",q.get("description"));
+            res.put("amount_user_right",q.get("amount_user_right"));
+            res.put("amount_user_wrong",q.get("amount_user_wrong"));
+            return res;
+          }
     public static void main( String[] args ){
         before((request, response) -> {
             if (Base.hasConnection()) {
@@ -230,6 +238,21 @@ public class App
             List<JSONObject> lista = new ArrayList<JSONObject>();
             lista.add(st);
 
+            res.type("application/json");
+            return lista ;
+
+        });
+
+        post("/admin/statQues", (req,res) -> {
+            Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
+
+
+            LazyList<Question> question_stat = Question.where("category = ?", bodyParams.get("category"));
+            List<JSONObject> lista = new ArrayList<JSONObject>();
+            for(Question ques: question_stat){
+              JSONObject st= questionToJSON(ques);
+              lista.add(st);
+            }
             res.type("application/json");
             return lista ;
 
