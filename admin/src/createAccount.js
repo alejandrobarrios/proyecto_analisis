@@ -94,44 +94,11 @@ export default class CreateAccount extends Component {
 
 
   render() {
-     const styleBox = {
-       box1: {
-         color: '#F2B558',
-         fontSize:'20px',
-          position: 'absolute',
-          top: 75,
-         left: 250,
-         right:0,
-         width: 100,
-         height: 100,
-          },
-          box2: {
-            color: '#F2B558',
-            fontSize:'20px',
-             position: 'absolute',
-             top: 45,
-            left: 250,
-            right:0,
-            width: 20,
-            height: 20,
-             },
-     }
-
-        const styles2 = {
-            fontSize:'15px',
-        }
-        const styles3 = {
-            fontSize:'12px',
-          }
-        const styles4 = {
-            fontSize:'15px',
-            top: 1000,
-          }
     return (
       <div nameClass="App-header">
         <h4>Crear Cuenta</h4>
         <form  onSubmit={this.handleSubmit}>
-          <label> 
+          <label>
             <input placeholder="Nombre de Usuario" type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
           </label>
         <br/>

@@ -38,12 +38,11 @@ import "./App.css";
             <div>
               <MyForm addUser={this.addUser} />
             </div>
-            <div>
             <img className="begin-logo" src={logo} alt="logo"/>
-            </div>
             <div>
               <Login/>
             </div>
+
             </div>
           </div>
 

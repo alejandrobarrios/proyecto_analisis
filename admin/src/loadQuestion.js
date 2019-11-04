@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
 import "./App.css";
 import {Redirect} from 'react-router-dom';
-import { Button, DropdownButton, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
 
 
 export default class loadQuestion extends Component {
@@ -87,7 +87,7 @@ export default class loadQuestion extends Component {
 
 
   render() {
-    
+
     return (
       <div className="App-header">
       {this.renderRedirect()}
@@ -102,34 +102,34 @@ export default class loadQuestion extends Component {
           </label>
         <br/>
           <label className="button">
-            Descripción de la pregunta: 
+            Descripción de la pregunta:
             <input className="box" type="text" name="description"  value={this.state.description} onChange={this.handleChange} />
           </label>
         <br/>
           <label className="button">
-            Opción uno correcta: 
+            Opción uno correcta:
             <input className="box" type="text" name="option1"  value={this.state.option1} onChange={this.handleChange} />
           </label>
         <br/>
           <label className="button">
-            Opción dos incorrecta: 
+            Opción dos incorrecta:
             <input className="box" type="text" name="option2"  value={this.state.option2} onChange={this.handleChange} />
           </label>
         <br/>
           <label className="button">
-            Opción tres incorrecta: 
+            Opción tres incorrecta:
             <input className="box" type="text" name="option3"  value={this.state.option3} onChange={this.handleChange} />
           </label>
         <br/>
           <label className="button">
-            Opción cuatro incorrecta: 
+            Opción cuatro incorrecta:
             <input className="box" type="text" name="option4"  value={this.state.option4} onChange={this.handleChange} />
           </label>
         <br/>
         <div>
           <center> <Button  className="button2" variant="secondary" type="submit">Cargar pregunta</Button></center>
         </div>
-       
+
         </form>
       </div>
       <div>

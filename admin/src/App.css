@@ -38,12 +38,12 @@ p {
   font-size: calc(10px + 2vmin);
   color: white;
   justify-content: center;
-  
+
 }
 
 .App-header2 {
-  
-  
+
+
   display: flex;
   margin-top: -10px;
   flex-direction: column;
@@ -51,7 +51,7 @@ p {
 
   font-size: calc(10px + 2vmin);
   color: white;
-  
+
 }
 
 
@@ -89,7 +89,7 @@ h4  {
 }
 
 .box{
-  
+
   font-size: 100%;
   margin:10px;
   text-transform: uppercase;
@@ -121,4 +121,3 @@ h4  {
   height:35px;
   justify-content: center;
 }
- 

@@ -86,20 +86,6 @@ export default class login extends Component {
               height: 100,
                },
           }
-        const styles2 = {
-            fontSize:'20px',
-            top: 180,
-            left: 500,
-            right:0,
-
-        }
-        const styles3 = {
-            fontSize:'12px',
-          }
-
-          const styles4 = {
-              fontSize:'15px',
-            }
        if (this.state.redirect === true) {
           return <Redirect to='/home' />
         }

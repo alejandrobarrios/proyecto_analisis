@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import {Button, DropdownButton, Dropdown, ButtonGroup } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import "./App.css";
 import {Redirect, Link} from 'react-router-dom';
 import logo from './trviavetlogo.png';
@@ -26,16 +26,6 @@ export default class loadQuestion extends Component {
 
 
   render() {
-    const styles2 = {
-        fontSize:'20px',
-        top: 180,
-        left: 500,
-        right:0,
-
-    }
-    const styles3 = {
-        fontSize:'12px',
-      }
 
       const styles4 = {
           color: '#afafaf',
