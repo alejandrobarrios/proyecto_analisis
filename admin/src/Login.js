@@ -56,7 +56,7 @@ export default class login extends Component {
     })
     .catch((error) => {
       console.log(error);
-      alert('No se pudo encontrar ' + this.state.username + '. O su contraseña no es la cargada' )
+      alert('Usuiario ' + this.state.username + ' inexistente. O su contraseña no coincide' );
 
       });
 
