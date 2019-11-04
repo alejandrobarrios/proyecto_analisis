@@ -1,16 +1,24 @@
 import React from 'react'
-
+const ColoredLine = ({ color }) => (
+    <hr
+        style={{
+            color: color,
+            backgroundColor: color,
+            height: 3,
+            width: 1000
+        }}
+    />
+);
 const Questi = ({ qu }) => {
   return (
-    <div>
-      <center><h1>Preguntas de la categoria</h1></center>
+    <div className="arr2">
+      <center><h4>Preguntas de la categoría</h4></center>
       {qu.map((point) => (
-        <div class="card">
+        <div>
           <div class="card-body">
-            <h5>El id de la pregunta es: {point.id}</h5>
-            <br/>
-            <h5>La pregunta es: {point.description}</h5>
+            <h5>ID: {point.id} | -  Pregunta: {point.description}</h5>
           </div>
+          <ColoredLine color="white" />
         </div>
       ))}
     </div>

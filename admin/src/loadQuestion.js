@@ -89,7 +89,7 @@ export default class loadQuestion extends Component {
   render() {
 
     return (
-      <div className="App-header">
+      <div className="App-header4">
       {this.renderRedirect()}
       <h2>Carga de pregunta</h2>
       <div>

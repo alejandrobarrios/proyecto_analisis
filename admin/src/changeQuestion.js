@@ -31,21 +31,25 @@ export default class loadQuestion extends Component {
           color: '#afafaf',
         }
     return (
-      <div className="App-header">
-      {this.renderRedirect()}
-      <img className="begin-logo" src={logo} alt="logo" />
-      <div className="App-header2">
-      <center><h1>Seleccione la categoria a la cual pertenece la preguanta que modificara</h1></center>
+      <div className="App-header4">
+        <div className="App-header4 arr">
+        {this.renderRedirect()}
+        <img className="begin-logo" src={logo} alt="logo" />
+        <div className="App-header2">
+        <center><h4>- Seleccione la categoría de la pregunta a modificar -</h4></center>
 
-        <Link style={styles4} to="/modEC" className="link">Examen Clinica</Link>
-        <Link style={styles4} to="/modF" className="link">Farmacologia</Link>
-        <Link style={styles4} to="/modEp" className="link">Epidemiologia</Link>
-        <Link style={styles4} to="/modEn" className="link">Enfermedades</Link>
-        <Link style={styles4} to="/modQ" className="link">Quirurgico</Link>
-        <Link style={styles4} to="/modCM" className="link">Clinica Medica</Link>
+          <Link to="/modEC" className="link1">• Examen Clínica •</Link>
+          <Link to="/modF" className="link1">• Farmacología •</Link>
+          <Link to="/modEp" className="link1">• Epidemiología •</Link>
+          <Link to="/modEn" className="link1">• Enfermedades •</Link>
+          <Link to="/modQ" className="link1">• Quirúrgico •</Link>
+          <Link to="/modCM" className="link1">• Clínica Médica •</Link>
 
-      </div>
-      <Button  className="button2" variant="secondary" onClick={this.setRedirect}> Volver a inicio</Button>
+        </div>
+        <div className="arr2">
+          <Button className="button2" variant="secondary" onClick={this.setRedirect}> Volver a inicio</Button>
+        </div>
+        </div>
       </div>
     );
   }

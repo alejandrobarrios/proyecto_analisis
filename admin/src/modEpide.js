@@ -1,6 +1,7 @@
 import React, {Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import "./App.css";
+import {Button} from 'react-bootstrap';
 import Que from './questions.js';
 import {Redirect} from 'react-router-dom';
 
@@ -93,30 +94,22 @@ export default class modEpide extends Component {
 
   render() {
     return (
-      <div>
+      <div className="App-header4">
         {this.renderRedirect()}
-        <h2>Para seleccionar la pregunta a borrar, debe ingresar el id de la pregunta.</h2>
-        <form onSubmit={this.handleQ}>
+        <h2>Para borrar la pregunta debe ingresar el id</h2>
+        <form className="button" onSubmit={this.handleQ}>
 
         <br/>
           <label>
-            Ingrese el id:
-            <input type="text" name="identificad" value={this.state.identificad} onChange={this.handleChange} />
+          <input placeholder="Ingresa el Id" type="text" name="identificad" value={this.state.identificad} onChange={this.handleChange} />
           </label>
         <br/>
-        <input type="submit" value="Buscar Pregunta" />
+        <Button className="button" variant="secondary" type="submit">Buscar Pregunta</Button>
         </form>
 
         <Que qu={this.state.qu} />
 
-        <center><button
-            block
-            bsSize="large"
-            onClick={this.setRedirect}
-          >
-            Volver a Home
-        </button>
-        </center>
+        <Button onClick={this.setRedirect} className="button arr2" variant="secondary" type="submit">Volver</Button>
       </div>
     );
   }

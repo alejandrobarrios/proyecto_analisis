@@ -45,7 +45,7 @@ export default class home extends Component {
                 <Dropdown.Item href="/loadQuestion">Cargar una pregunta</Dropdown.Item>
                 <Dropdown.Item href="/deleteQues">Borrar una pregunta</Dropdown.Item>
               </DropdownButton>
-              <DropdownButton className="button" id="dropdown-basic-button " variant="secondary" title="Estadisticas">
+              <DropdownButton className="button" id="dropdown-basic-button " variant="secondary" title="Estadísticas">
                 <Dropdown.Item href="/exClin">Examen Clínica</Dropdown.Item>
                 <Dropdown.Item href="/farma">Farmacología</Dropdown.Item>
                 <Dropdown.Item href="/edpide">Epidemiología</Dropdown.Item>

@@ -16,12 +16,21 @@ p {
   font-size: 150%;
 }
 
+.arr {
+  margin-top: -20px;
+}
+
+.arr2 {
+  margin-top: 20px;
+}
+
 .begin-logo {
   animation: begin-logo-spin infinite 20s linear;
   height: 35vmin;
   pointer-events: none;
   display: flex;
   align-items:center;
+
 }
 
 .button {
@@ -33,17 +42,17 @@ p {
   min-height: 100vh;
   display: flex;
   top: 0;
-  flex-direction: column;
+  flex-direction: row;
   align-items:center;
   font-size: calc(10px + 2vmin);
   color: white;
   justify-content: center;
-
+  
 }
 
 .App-header2 {
-
-
+  
+  
   display: flex;
   margin-top: -10px;
   flex-direction: column;
@@ -51,13 +60,33 @@ p {
 
   font-size: calc(10px + 2vmin);
   color: white;
-
+  
 }
 
-
-.hola {
-  font-size: 21;
+.App-header3 {
+  background-color: #3b5998;
+ 
+  display: flex;
+  
+  flex-direction: column;
+  margin: 20px;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  
+  
 }
+
+.App-header4 {
+  background-color: #3b5998;
+  min-height: 100vh;
+  display: flex;
+  top: 0;
+  flex-direction: column;
+  align-items:center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  justify-content: center;
+  }
 
 .App-link {
   color: #09d3ac;
@@ -85,8 +114,23 @@ h3  {
 h4  {
  font-family: "Montserrat";
   font-size: 30%;
-
 }
+
+
+h5  {
+ font-family: "Montserrat";
+  font-size: 100%;
+  color: #fff;
+}
+
+
+.link1  {
+ font-family: "Montserrat";
+  font-size: 80%;
+  color: #ffffff;
+}
+
+
 
 .box{
 
@@ -121,3 +165,4 @@ h4  {
   height:35px;
   justify-content: center;
 }
+ 
