@@ -1,5 +1,6 @@
 import React, {Component } from 'react';
 import "./App.css";
+import { Button } from 'react-bootstrap';
 
 
 export default class privilegesAdmin extends Component {
@@ -65,17 +66,17 @@ export default class privilegesAdmin extends Component {
 
   render() {
     return (
-      <div>
-      <h2>Dar Permiso</h2>
+      <div className = "App-header">
+      <h2>Ingrese el usuario a dar Permiso de Admin</h2>
       <form onSubmit={this.handlePrivilege}>
 
       <br/>
         <label>
-          Username:
-          <input type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
+          <input type="text" placeholder="Usuario" name="username"  value={this.state.username} onChange={this.handleChange} />
         </label>
       <br/>
-      <input type="submit" value="Dar Privilegios" />
+      <Button className="button" variant="secondary" type="submit">Dar Privilegios</Button>
+    
       </form>
       </div>
     );

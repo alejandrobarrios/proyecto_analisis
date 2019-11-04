@@ -1,4 +1,5 @@
 import React, {Component } from 'react';
+import {Button} from 'react-bootstrap';
 
 
 export default class CreateAccount extends Component {
@@ -127,42 +128,31 @@ export default class CreateAccount extends Component {
             top: 1000,
           }
     return (
-      <div >
-      <h3 style ={styleBox.box2}>Create Account</h3>
-      <form style={styleBox.box1} onSubmit={this.handleSubmit}>
-
-      <br/>
-        <label style ={styles2}>
-          User Name:
-          <input style={styles3} type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
-        </label>
-      <br/>
-      <br/>
-        <label style ={styles2}>
-          Password:
-          <input style={styles3} type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
-        </label>
-      <br/>
-      <br/>
-        <label style ={styles2}>
-          Firts Name:
-          <input style={styles3} type="text" name="firstName"  value={this.state.name} onChange={this.handleChange} />
-        </label>
-      <br/>
-      <br/>
-        <label style ={styles2}>
-          Last Name:
-          <input style={styles3} type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange} />
-        </label>
-      <br/>
-      <br/>
-        <label style ={styles2}>
-          DNI:
-          <input style={styles3} type="text" name="dni" value={this.state.dni} onChange={this.handleChange} />
-        </label>
-      <br/>
-      <input style={styles4} type="submit" value="Crear Cuenta" />
-      </form>
+      <div nameClass="App-header">
+        <h4>Crear Cuenta</h4>
+        <form  onSubmit={this.handleSubmit}>
+          <label> 
+            <input placeholder="Nombre de Usuario" type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
+          </label>
+        <br/>
+          <label>
+            <input placeholder="Contraseña" type="text" name="password"  value={this.state.password} onChange={this.handleChange} />
+          </label>
+        <br/>
+          <label>
+            <input placeholder="Nombre" type="text" name="firstName"  value={this.state.name} onChange={this.handleChange} />
+          </label>
+        <br/>
+          <label>
+            <input placeholder="Apellido" type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange} />
+          </label>
+        <br/>
+          <label>
+            <input placeholder="DNI" type="text" name="dni" value={this.state.dni} onChange={this.handleChange} />
+          </label>
+        <br/>
+        <Button className="button" variant="secondary" type="submit">Crear Cuenta</Button>
+        </form>
 
       </div>
     );

@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-
+import {Button} from 'react-bootstrap'
 import {Redirect } from 'react-router-dom';
 
 
@@ -106,24 +106,23 @@ export default class login extends Component {
 
 
     return (
-      <div>
+      <div className="App-header">
       <h2 style={styles.box1}>Login</h2>
       <form style={styles.box1} onSubmit={this.handleLogIn}>
 
 
       <br/>
-        <label style={styles2}>
-          User Name:
-          <input style={styles3} type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
+        <div>
+        <label>
+          <input placeholder="Usuario" type="text" name="username"  value={this.state.username} onChange={this.handleChange} />
         </label>
-      <br/>
-      <br/>
-        <label style={styles2}>
-          Password:
-          <input style={styles3} type="password" name="password"  value={this.state.password} onChange={this.handleChange} />
+        </div>
+        <div>
+        <label>
+          <input placeholder="Contraseña" type="password" name="password"  value={this.state.password} onChange={this.handleChange} />
         </label>
-      <br/>
-      <input style={styles4}  type="submit" value="Enviar" />
+        </div>
+        <Button className="button" variant="secondary" type="submit">Enviar</Button>
       </form>
       </div>
     );
