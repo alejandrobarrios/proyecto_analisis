@@ -1,7 +1,8 @@
 import React, {Component } from 'react';
-import {Button} from 'react-bootstrap';
+import {Button, DropdownButton, Dropdown, ButtonGroup } from 'react-bootstrap';
 import "./App.css";
 import {Redirect} from 'react-router-dom';
+import logo from './trviavetlogo.png';
 
 
 export default class loadQuestion extends Component {
@@ -100,26 +101,18 @@ export default class loadQuestion extends Component {
 
     return (
       <div className="App-header">
-      {this.renderRedirect()}
-      <h2>Carga de pregunta</h2>
-      <form onSubmit={this.handleLogQuestion}>
-
-      <br/>
-        <label style={styles2}>
-          Categoria a la cual pertenece la pregunta:
-        <input style={styles3} type="text" name="category"  value={this.state.category} onChange={this.handleChange} />
-        </label>
-      <br/>
-        
-      </form>
-      <center><Button
-          block
-          bsSize="large"
-          onClick={this.setRedirect}
-        >
-          Volver a Home
-      </Button>
-      </center>
+      <img className="begin-logo" src={logo} alt="logo" />
+      <div className="App-header2">
+      <center><h1>Seleccione la categoria a la cual pertenece la preguanta que modificara</h1></center>
+        <DropdownButton id="dropdown-basic-button " variant="info" title="Estadisticas">
+          <Dropdown.Item href="/modEC">Examen Clínica</Dropdown.Item>
+          <Dropdown.Item href="/modF">Farmacología</Dropdown.Item>
+          <Dropdown.Item href="/modEp">Epidemiología</Dropdown.Item>
+          <Dropdown.Item href="/modEn">Enfermedades</Dropdown.Item>
+          <Dropdown.Item href="/modQ">Quirúrgica</Dropdown.Item>
+          <Dropdown.Item href="/modCM">Clínica Médica</Dropdown.Item>
+        </DropdownButton>
+      </div>
       </div>
     );
   }

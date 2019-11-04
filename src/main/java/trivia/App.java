@@ -57,6 +57,7 @@ public class App
 
   public static JSONObject questionToJSON(Question q){
             JSONObject res = new JSONObject();
+            res.put("id",q.get("id"));
             res.put("description",q.get("description"));
             res.put("amount_user_right",q.get("amount_user_right"));
             res.put("amount_user_wrong",q.get("amount_user_wrong"));
@@ -569,7 +570,7 @@ public class App
         });
 
         //delete an question
-        delete("/questions", (req, res) -> {
+        delete("/admin/delquestions", (req, res) -> {
 
             Map<String, Object> bodyParams = new Gson().fromJson(req.body(), Map.class);
             Question question = Question.findFirst("id = ?", bodyParams.get("id"));

@@ -13,6 +13,8 @@ import StatEnferm from './statEnferm';
 import StatQuiru from './statQuiru';
 import StatMedic from './statMedic';
 import LoadQues from './loadQuestion';
+import ChangeQues from './changeQuestion';
+import ModExC from './modExC';
 
 
 
@@ -76,6 +78,12 @@ import LoadQues from './loadQuestion';
                             <Route
                               path="/loadQuestion"
                               component={LoadQues} />
+                              <Route
+                                path="/modifyQues"
+                                component={ChangeQues} />
+                                <Route
+                                  path="/modEC"
+                                  component={ModExC} />
                 </Switch>
               </div>
           </BrowserRouter>

@@ -1,0 +1,110 @@
+import React, {Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import "./App.css";
+import Que from './questions.js';
+import {Redirect} from 'react-router-dom';
+
+export default class modExC extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      qu: [],
+      identificad: ''
+
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleQ = this.handleQ.bind(this);
+  }
+
+  handleChange (event) {
+    //this.setState({value: event.target.value});
+
+    this.setState({
+      [event.target.name] : event.target.value
+    });
+
+  }
+
+  componentDidMount() {
+
+
+       //fetch('http://jsonplaceholder.typicode.com/users')
+       fetch('http://localhost:4567/admin/statQues',{
+        method: 'POST',
+        body: '{"category":"examen_clinica"}'
+        })
+        .then(response => response.json())
+        .then((data) => {
+          this.setState({ qu : data} )
+        })
+          .catch(console.log)
+
+
+    }
+
+    handleQ (event) {
+      //console.log(this.state);
+      //this.props.addUser(this.state.firstName, this.state.lastName);//ejecuto addUser que pase desde App
+
+      event.preventDefault();
+      //doSomethingWithEvent(event);
+
+      fetch('http://localhost:4567/admin/delquestions', {
+
+        method: 'DELETE',
+        body: JSON.stringify({
+          id: this.state.identificad,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+      .then(response =>
+        alert(' se pudo encontrar' + this.state.identificad ))
+      .catch((error) => {
+        alert('No se pudo encontrar' + this.state.identificad);
+
+        });
+
+
+      }
+
+
+  onSubmit =(event) =>{
+
+    //para no refrescar el formulario cada vez que presiono el boton
+    console.log(this.state);
+    event.preventDefault();
+  }
+
+
+
+  render() {
+    return (
+      <div>
+        <h2>Para seleccionar la pregunta a borrar, debe ingresar el id de la pregunta.</h2>
+        <form onSubmit={this.handleQ}>
+
+        <br/>
+          <label>
+            Ingrese el id:
+            <input type="text" name="identificad" value={this.state.identificad} onChange={this.handleChange} />
+          </label>
+        <br/>
+        <input type="submit" value="Buscar Pregunta" />
+        </form>
+
+        <Que qu={this.state.qu} />
+
+        <center><button
+            block
+            bsSize="large"
+            onClick={this.setRedirect}
+          >
+            Volver a Home
+        </button>
+        </center>
+      </div>
+    );
+  }
+}
