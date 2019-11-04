@@ -1,6 +1,7 @@
 import React, {Component } from 'react';
 import "./App.css";
 import { Button } from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
 
 
 export default class privilegesAdmin extends Component {
@@ -8,15 +9,24 @@ export default class privilegesAdmin extends Component {
     super(props);
     this.state = {
       username:'',
+      redirect:false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handlePrivilege = this.handlePrivilege.bind(this);
   }
 
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
 
-
-
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to= "/home" />
+    }
+  }
 
   handleChange (event) {
     //this.setState({value: event.target.value});
@@ -30,7 +40,7 @@ export default class privilegesAdmin extends Component {
   handlePrivilege (event) {
     //console.log(this.state);
     //this.props.addUser(this.state.firstName, this.state.lastName);//ejecuto addUser que pase desde App
-    
+
     event.preventDefault();
     //doSomethingWithEvent(event);
 
@@ -51,7 +61,7 @@ export default class privilegesAdmin extends Component {
 
       });
 
-   
+
     }
 
   onSubmit =(event) =>{
@@ -67,6 +77,7 @@ export default class privilegesAdmin extends Component {
   render() {
     return (
       <div className = "App-header">
+      {this.renderRedirect()}
       <h2>Ingrese el usuario a dar Permiso de Admin</h2>
       <form onSubmit={this.handlePrivilege}>
 
@@ -76,8 +87,11 @@ export default class privilegesAdmin extends Component {
         </label>
       <br/>
       <Button className="button" variant="secondary" type="submit">Dar Privilegios</Button>
-    
+
       </form>
+      <Button className="button" variant="secondary" onClick={this.setRedirect}>
+          Volver a Home
+      </Button>
       </div>
     );
   }

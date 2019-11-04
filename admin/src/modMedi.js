@@ -4,7 +4,7 @@ import "./App.css";
 import Que from './questions.js';
 import {Redirect} from 'react-router-dom';
 
-export default class modExC extends Component {
+export default class modMedi extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +43,7 @@ export default class modExC extends Component {
        //fetch('http://jsonplaceholder.typicode.com/users')
        fetch('http://localhost:4567/admin/statQues',{
         method: 'POST',
-        body: '{"category":"examen_clinica"}'
+        body: '{"category":"clinica_medica"}'
         })
         .then(response => response.json())
         .then((data) => {
