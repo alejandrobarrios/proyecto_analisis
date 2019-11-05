@@ -73,19 +73,6 @@ export default class login extends Component {
 
 
   render() {
-
-    const styles = {
-            box1: {
-              color: '#F2B558',
-              fontSize:'20px',
-               position: 'absolute',
-               top: 120,
-              left: 900,
-              right:0,
-              width: 100,
-              height: 100,
-               },
-          }
        if (this.state.redirect === true) {
           return <Redirect to='/home' />
         }
