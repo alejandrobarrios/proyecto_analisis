@@ -92,9 +92,9 @@ export default class login extends Component {
 
 
     return (
-      <div className="App-header">
-      <h2 style={styles.box1}>Login</h2>
-      <form style={styles.box1} onSubmit={this.handleLogIn}>
+      <div >
+      <h2>Login</h2>
+      <form  onSubmit={this.handleLogIn}>
 
 
       <br/>

@@ -30,20 +30,17 @@ import "./App.css";
 
       render () {
         return (
-          <div className="App-header">
-            <div className="button ">
-            <div>
-            <center><h1>Bienvenido a TriviaVet Admin</h1></center>
-            </div>
-            <div>
+          <div className= "imagen" >
+          <div className= "card-body">
+          <center><h1>Bienvenido a TriviaVet Admin</h1></center>
+          <center><img className="begin-logo" src={logo} alt="logo"/></center>
+          </div>
+          <div className="App-header7">
+              <Login />
+          </div>
+          <div className="App-header8">
               <MyForm addUser={this.addUser} />
-            </div>
-            <img className="begin-logo" src={logo} alt="logo"/>
-            <div>
-              <Login/>
-            </div>
-
-            </div>
+          </div>
           </div>
 
     );
