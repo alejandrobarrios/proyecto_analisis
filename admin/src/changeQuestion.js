@@ -27,9 +27,6 @@ export default class loadQuestion extends Component {
 
   render() {
 
-      const styles4 = {
-          color: '#afafaf',
-        }
     return (
       <div className="App-header4">
         <div className="App-header4 arr">

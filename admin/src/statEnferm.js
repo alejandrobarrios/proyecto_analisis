@@ -4,6 +4,7 @@ import "./App.css";
 import Stat from './stat.js';
 import StatQ from './statQ.js';
 import {Redirect} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
 
 export default class statEnferm extends Component {
   constructor(props) {
@@ -69,17 +70,11 @@ export default class statEnferm extends Component {
 
   render() {
     return (
-      <div>
+      <div className="card-body">
       {this.renderRedirect()}
         <Stat statCat={this.state.statCat} />
         <StatQ statQues={this.state.statQues} />
-        <center><button
-            block
-            bsSize="large"
-            onClick={this.setRedirect}
-          >
-            Volver a Home
-        </button>
+        <center><Button onClick={this.setRedirect} className="button arr2" variant="secondary" type="submit">Volver</Button>
         </center>
       </div>
     );
